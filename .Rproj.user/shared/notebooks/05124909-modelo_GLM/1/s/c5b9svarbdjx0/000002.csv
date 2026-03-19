@@ -1,0 +1,46 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5cilcbmxpYnJhcnkoZHBseXIpXG5cbiMgQ29udmVydGlyIGI0IGEgZm9ybWF0byBhbmNob1xuYjRfd2lkZSA8LSBiNCAlPiVcbiAgcGl2b3Rfd2lkZXIobmFtZXNfZnJvbSA9IGdhbWVfdHlwZSwgdmFsdWVzX2Zyb20gPSBuLCB2YWx1ZXNfZmlsbCA9IGxpc3QobiA9IDApKVxuXG4jIFBydWViYSB0IHBhcmVhZGFcbnRfdGVzdF9yZXN1bHQgPC0gdC50ZXN0KGI0X3dpZGUkY29tcGV0aXRpdmUsIGI0X3dpZGUkaW5kaXZpZHVhbCwgcGFpcmVkID0gVFJVRSlcblxuIyBNb3N0cmFyIHJlc3VsdGFkb3NcbnByaW50KHRfdGVzdF9yZXN1bHQpXG5gYGAifQ== -->
+
+```r
+library(tidyr)
+library(dplyr)
+
+# Convertir b4 a formato ancho
+b4_wide <- b4 %>%
+  pivot_wider(names_from = game_type, values_from = n, values_fill = list(n = 0))
+
+# Prueba t pareada
+t_test_result <- t.test(b4_wide$competitive, b4_wide$individual, paired = TRUE)
+
+# Mostrar resultados
+print(t_test_result)
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+library(tidyr)
+library(dplyr)
+
+# Convertir b4 a formato ancho
+b4_wide <- b4 %>%
+  pivot_wider(names_from = game_type, values_from = n, values_fill = list(n = 0))
+
+# Prueba t pareada
+t_test_result <- t.test(b4_wide$competitive, b4_wide$individual, paired = TRUE)
+
+# Mostrar resultados
+print(t_test_result)
+```"
+"1","
+	Paired t-test
+
+data:  b4_wide$competitive and b4_wide$individual
+t = 24.739, df = 123, p-value < 2.2e-16
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 81.61163 95.80773
+sample estimates:
+mean difference 
+       88.70968 
+"

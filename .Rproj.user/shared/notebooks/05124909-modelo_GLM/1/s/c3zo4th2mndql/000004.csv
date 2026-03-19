@@ -1,0 +1,11 @@
+"1","
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6NCwibmNvbCI6Miwic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyI0IMOXIDIiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFBMzJSc1U3RE1CUkZuY1NoYmFRV0pDb3hNckRBa0VnbERDeElHWUNGRFlHVXBZTkpUQm8xdGFQWUxVeUlEK0duK0FNK2dSbWhCanYxZzhvRGx1TGNkNTlQbm5WemU1bkdRUm9naER5RWZRZDV2cExJdjcrN0RzOFJ3cTRxSElUUlFMK2YxYUY5SmJTNXB4NE1qUW1JVXhBeGlETzFqZlRaWkl5NmxZelRsN244akpQRDZjSFZ1NXdtUnhkZmJ6Zml3eHJtTTdLZ3dneHl3V3pLRmFsTTBWdFF3bzdaaVFVT0d2NFVBVHpVOEt2YTJyYjl0aWRrRlJFd0Fjd2dKNUpFajQzaVZiVzJrQjZ2WmNtWmdseWRRMThEWFh1enRqL2tOUDgwZDVkTTN6QVBzOW1TemNPSjFmWnFWbGowMEdpOHBkM043ZHpXNEgyRFk1ck51TkU3bEJVbG8zK1JDVUVLS1AyS1BGQ0kwOHZweXNpUmlyQkxNS3Fia2ttSVJya2lrbHorL29FZzR4VTRYVmhvL1FOMnFZQjVUd0lBQUE9PSJ9 -->
+
+<div data-pagedtable=\"false\">
+  <script data-pagedtable-source type=\"application/json\">
+{\"columns\":[{\"label\":[\"rival\"],\"name\":[1],\"type\":[\"chr\"],\"align\":[\"left\"]},{\"label\":[\"mean(n)\"],\"name\":[2],\"type\":[\"dbl\"],\"align\":[\"right\"]}],\"data\":[{\"1\":\"1\",\"2\":\"5.000000\"},{\"1\":\"2\",\"2\":\"5.086420\"},{\"1\":\"3\",\"2\":\"7.840909\"},{\"1\":\"4\",\"2\":\"9.621053\"}],\"options\":{\"columns\":{\"min\":{},\"max\":[10],\"total\":[2]},\"rows\":{\"min\":[10],\"max\":[10],\"total\":[4]},\"pages\":{}}}
+  </script>
+</div>
+
+<!-- rnb-frame-end -->
+"

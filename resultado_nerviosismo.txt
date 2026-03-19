@@ -1,0 +1,903 @@
+
+Adjuntando el paquete: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+------------------------------------------------------------------------------
+You have loaded plyr after dplyr - this is likely to cause problems.
+If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+library(plyr); library(dplyr)
+------------------------------------------------------------------------------
+
+Adjuntando el paquete: ‘plyr’
+
+The following objects are masked from ‘package:dplyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise,
+    summarize
+
+Cargando paquete requerido: Matrix
+
+Adjuntando el paquete: ‘lmerTest’
+
+The following object is masked from ‘package:lme4’:
+
+    lmer
+
+The following object is masked from ‘package:stats’:
+
+    step
+
+Cargando paquete requerido: carData
+
+Adjuntando el paquete: ‘car’
+
+The following object is masked from ‘package:dplyr’:
+
+    recode
+
+Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'
+[1] "Analisis para Nerviosismo"
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: formula
+   Data: emocion
+
+REML criterion at convergence: 2088.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5278 -0.5371 -0.0171  0.3974  4.2587 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ codigo   (Intercept) 2.068    1.438   
+ Residual             1.261    1.123   
+Number of obs: 576, groups:  codigo, 144
+
+Fixed effects:
+                                                        Estimate Std. Error
+(Intercept)                                             -1.23927    0.94858
+resultadoCojugadorm                                     -0.06338    0.24085
+resultadoParticipantem                                   0.90624    0.24085
+BECK_SESION                                              0.02739    0.01542
+sexo2                                                    0.09575    0.32291
+sexo3                                                   -0.71744    1.57503
+edad                                                     0.06780    0.03614
+resultadoCojugadorm:resultadoParticipantem              -0.66512    0.34062
+resultadoCojugadorm:BECK_SESION                          0.01073    0.01289
+resultadoParticipantem:BECK_SESION                       0.05894    0.01289
+resultadoCojugadorm:resultadoParticipantem:BECK_SESION  -0.04681    0.01823
+                                                              df t value
+(Intercept)                                            145.94362  -1.306
+resultadoCojugadorm                                    426.00000  -0.263
+resultadoParticipantem                                 426.00000   3.763
+BECK_SESION                                            245.25808   1.776
+sexo2                                                  139.00000   0.297
+sexo3                                                  139.00000  -0.456
+edad                                                   139.00000   1.876
+resultadoCojugadorm:resultadoParticipantem             426.00000  -1.953
+resultadoCojugadorm:BECK_SESION                        426.00000   0.833
+resultadoParticipantem:BECK_SESION                     426.00000   4.572
+resultadoCojugadorm:resultadoParticipantem:BECK_SESION 426.00000  -2.567
+                                                       Pr(>|t|)    
+(Intercept)                                            0.193455    
+resultadoCojugadorm                                    0.792574    
+resultadoParticipantem                                 0.000192 ***
+BECK_SESION                                            0.076902 .  
+sexo2                                                  0.767270    
+sexo3                                                  0.649455    
+edad                                                   0.062752 .  
+resultadoCojugadorm:resultadoParticipantem             0.051510 .  
+resultadoCojugadorm:BECK_SESION                        0.405579    
+resultadoParticipantem:BECK_SESION                     6.33e-06 ***
+resultadoCojugadorm:resultadoParticipantem:BECK_SESION 0.010586 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rsltdC rsltdP BECK_S sexo2  sexo3  edad   rslC:P rC:BEC
+rsltdCjgdrm -0.127                                                        
+rsltdPrtcpn -0.127  0.500                                                 
+BECK_SESION -0.316  0.349  0.349                                          
+sexo2       -0.270  0.000  0.000 -0.222                                   
+sexo3        0.027  0.000  0.000  0.019  0.130                            
+edad        -0.934  0.000  0.000  0.137  0.071 -0.088                     
+rsltdCjgd:P  0.090 -0.707 -0.707 -0.247  0.000  0.000  0.000              
+rC:BECK_SES  0.106 -0.836 -0.418 -0.418  0.000  0.000  0.000  0.591       
+rP:BECK_SES  0.106 -0.418 -0.836 -0.418  0.000  0.000  0.000  0.591  0.500
+rC:P:BECK_S -0.075  0.591  0.591  0.296  0.000  0.000  0.000 -0.836 -0.707
+            rP:BEC
+rsltdCjgdrm       
+rsltdPrtcpn       
+BECK_SESION       
+sexo2             
+sexo3             
+edad              
+rsltdCjgd:P       
+rC:BECK_SES       
+rP:BECK_SES       
+rC:P:BECK_S -0.707
+[1] "#### Resultado Anova ####"
+Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df)
+
+Response: value
+                                                           F Df Df.res
+(Intercept)                                           1.7068  1 145.94
+resultadoCojugador                                    0.0692  1 426.00
+resultadoParticipante                                14.1574  1 426.00
+BECK_SESION                                           3.1557  1 245.26
+sexo                                                  0.1681  2 139.00
+edad                                                  3.5194  1 139.00
+resultadoCojugador:resultadoParticipante              3.8130  1 426.00
+resultadoCojugador:BECK_SESION                        0.6931  1 426.00
+resultadoParticipante:BECK_SESION                    20.9052  1 426.00
+resultadoCojugador:resultadoParticipante:BECK_SESION  6.5917  1 426.00
+                                                        Pr(>F)    
+(Intercept)                                          0.1934552    
+resultadoCojugador                                   0.7925735    
+resultadoParticipante                                0.0001917 ***
+BECK_SESION                                          0.0769024 .  
+sexo                                                 0.8454060    
+edad                                                 0.0627516 .  
+resultadoCojugador:resultadoParticipante             0.0515100 .  
+resultadoCojugador:BECK_SESION                       0.4055788    
+resultadoParticipante:BECK_SESION                    6.334e-06 ***
+resultadoCojugador:resultadoParticipante:BECK_SESION 0.0105856 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoParticipante emmean    SE  df lower.CL upper.CL
+ b                      0.602 0.533 141   -0.451     1.66
+ m                      1.731 0.533 141    0.677     2.78
+
+Results are averaged over the levels of: resultadoCojugador, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                    1.46 0.533 141    0.410     2.52
+ m                    0.87 0.533 141   -0.184     1.92
+
+Results are averaged over the levels of: resultadoParticipante, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+$emmeans
+ resultadoParticipante resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                     b                   0.550 0.537 146  -0.5111     1.61
+ m                     b                   2.377 0.537 146   1.3153     3.44
+ b                     m                   0.655 0.537 146  -0.4070     1.72
+ m                     m                   1.085 0.537 146   0.0236     2.15
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast  estimate    SE  df t.ratio p.value
+ b b - m b   -1.826 0.132 426 -13.802  <.0001
+ b b - b m   -0.104 0.132 426  -0.787  0.8603
+ b b - m m   -0.535 0.132 426  -4.041  0.0004
+ m b - b m    1.722 0.132 426  13.015  <.0001
+ m b - m m    1.292 0.132 426   9.761  <.0001
+ b m - m m   -0.431 0.132 426  -3.254  0.0067
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+[1] "##### EMTRENDS #####"
+ resultadoParticipante resultadoCojugador BECK_SESION.trend     SE  df lower.CL
+ b                     b                             0.0274 0.0154 245 -0.00298
+ m                     b                             0.0863 0.0154 245  0.05596
+ b                     m                             0.0381 0.0154 245  0.00775
+ m                     m                             0.0503 0.0154 245  0.01989
+ upper.CL
+   0.0578
+   0.1167
+   0.0685
+   0.0806
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate     SE  df t.ratio p.value
+ b b - m b  -0.0589 0.0129 426  -4.572  <.0001
+ b b - b m  -0.0107 0.0129 426  -0.833  0.6942
+ b b - m m  -0.0229 0.0129 426  -1.774  0.2304
+ m b - b m   0.0482 0.0129 426   3.740  0.0010
+ m b - m m   0.0361 0.0129 426   2.798  0.0215
+ b m - m m  -0.0121 0.0129 426  -0.941  0.6942
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 6 tests 
+Aviso:
+Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead. 
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: formula
+   Data: emocion
+
+REML criterion at convergence: 2112.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.4391 -0.5432 -0.0010  0.3694  4.2864 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ codigo   (Intercept) 2.076    1.441   
+ Residual             1.309    1.144   
+Number of obs: 576, groups:  codigo, 144
+
+Fixed effects:
+                                                        Estimate Std. Error
+(Intercept)                                            -1.493963   0.973432
+resultadoCojugadorm                                    -0.075761   0.274825
+resultadoParticipantem                                  1.206004   0.274825
+LSAS_Total                                              0.013840   0.006517
+sexo2                                                   0.276603   0.315477
+sexo3                                                  -1.190615   1.583829
+edad                                                    0.066022   0.036251
+resultadoCojugadorm:resultadoParticipantem             -0.865946   0.388662
+resultadoCojugadorm:LSAS_Total                          0.004241   0.005644
+resultadoParticipantem:LSAS_Total                       0.014621   0.005644
+resultadoCojugadorm:resultadoParticipantem:LSAS_Total  -0.012488   0.007982
+                                                              df t value
+(Intercept)                                           147.651835  -1.535
+resultadoCojugadorm                                   426.000000  -0.276
+resultadoParticipantem                                426.000000   4.388
+LSAS_Total                                            256.286829   2.124
+sexo2                                                 138.999999   0.877
+sexo3                                                 138.999999  -0.752
+edad                                                  139.000000   1.821
+resultadoCojugadorm:resultadoParticipantem            426.000000  -2.228
+resultadoCojugadorm:LSAS_Total                        426.000000   0.751
+resultadoParticipantem:LSAS_Total                     426.000000   2.591
+resultadoCojugadorm:resultadoParticipantem:LSAS_Total 426.000000  -1.565
+                                                      Pr(>|t|)    
+(Intercept)                                            0.12699    
+resultadoCojugadorm                                    0.78294    
+resultadoParticipantem                                1.44e-05 ***
+LSAS_Total                                             0.03464 *  
+sexo2                                                  0.38212    
+sexo3                                                  0.45348    
+edad                                                   0.07072 .  
+resultadoCojugadorm:resultadoParticipantem             0.02640 *  
+resultadoCojugadorm:LSAS_Total                         0.45286    
+resultadoParticipantem:LSAS_Total                      0.00991 ** 
+resultadoCojugadorm:resultadoParticipantem:LSAS_Total  0.11841    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rsltdC rsltdP LSAS_T sexo2  sexo3  edad   rslC:P rC:LSA
+rsltdCjgdrm -0.141                                                        
+rsltdPrtcpn -0.141  0.500                                                 
+LSAS_Total  -0.369  0.377  0.377                                          
+sexo2       -0.306  0.000  0.000 -0.102                                   
+sexo3        0.053  0.000  0.000 -0.050  0.147                            
+edad        -0.922  0.000  0.000  0.129  0.097 -0.100                     
+rsltdCjgd:P  0.100 -0.707 -0.707 -0.267  0.000  0.000  0.000              
+rslC:LSAS_T  0.123 -0.871 -0.436 -0.433  0.000  0.000  0.000  0.616       
+rslP:LSAS_T  0.123 -0.436 -0.871 -0.433  0.000  0.000  0.000  0.616  0.500
+rC:P:LSAS_T -0.087  0.616  0.616  0.306  0.000  0.000  0.000 -0.871 -0.707
+            rP:LSA
+rsltdCjgdrm       
+rsltdPrtcpn       
+LSAS_Total        
+sexo2             
+sexo3             
+edad              
+rsltdCjgd:P       
+rslC:LSAS_T       
+rslP:LSAS_T       
+rC:P:LSAS_T -0.707
+[1] "#### Resultado Anova ####"
+Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df)
+
+Response: value
+                                                          F Df Df.res    Pr(>F)
+(Intercept)                                          2.3554  1 147.65  0.126988
+resultadoCojugador                                   0.0760  1 426.00  0.782937
+resultadoParticipante                               19.2568  1 426.00 1.442e-05
+LSAS_Total                                           4.5110  1 256.29  0.034636
+sexo                                                 0.7803  2 139.00  0.460273
+edad                                                 3.3169  1 139.00  0.070720
+resultadoCojugador:resultadoParticipante             4.9641  1 426.00  0.026401
+resultadoCojugador:LSAS_Total                        0.5645  1 426.00  0.452860
+resultadoParticipante:LSAS_Total                     6.7113  1 426.00  0.009909
+resultadoCojugador:resultadoParticipante:LSAS_Total  2.4481  1 426.00  0.118412
+                                                       
+(Intercept)                                            
+resultadoCojugador                                     
+resultadoParticipante                               ***
+LSAS_Total                                          *  
+sexo                                                   
+edad                                                .  
+resultadoCojugador:resultadoParticipante            *  
+resultadoCojugador:LSAS_Total                          
+resultadoParticipante:LSAS_Total                    ** 
+resultadoCojugador:resultadoParticipante:LSAS_Total    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoParticipante emmean    SE  df lower.CL upper.CL
+ b                      0.369 0.533 141   -0.685     1.42
+ m                      1.497 0.533 141    0.443     2.55
+
+Results are averaged over the levels of: resultadoCojugador, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                   1.230 0.533 141    0.176     2.28
+ m                   0.636 0.533 141   -0.418     1.69
+
+Results are averaged over the levels of: resultadoParticipante, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+$emmeans
+ resultadoParticipante resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                     b                   0.317 0.537 146   -0.745     1.38
+ m                     b                   2.143 0.537 146    1.081     3.21
+ b                     m                   0.421 0.537 146   -0.641     1.48
+ m                     m                   0.851 0.537 146   -0.211     1.91
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast  estimate    SE  df t.ratio p.value
+ b b - m b   -1.826 0.135 426 -13.545  <.0001
+ b b - b m   -0.104 0.135 426  -0.773  0.8668
+ b b - m m   -0.535 0.135 426  -3.966  0.0005
+ m b - b m    1.722 0.135 426  12.772  <.0001
+ m b - m m    1.292 0.135 426   9.579  <.0001
+ b m - m m   -0.431 0.135 426  -3.193  0.0082
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+[1] "##### EMTRENDS #####"
+ resultadoParticipante resultadoCojugador LSAS_Total.trend      SE  df lower.CL
+ b                     b                            0.0138 0.00652 256  0.00101
+ m                     b                            0.0285 0.00652 256  0.01563
+ b                     m                            0.0181 0.00652 256  0.00525
+ m                     m                            0.0202 0.00652 256  0.00738
+ upper.CL
+   0.0267
+   0.0413
+   0.0309
+   0.0330
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate      SE  df t.ratio p.value
+ b b - m b -0.01462 0.00564 426  -2.591  0.0595
+ b b - b m -0.00424 0.00564 426  -0.751  0.9057
+ b b - m m -0.00637 0.00564 426  -1.129  0.7783
+ m b - b m  0.01038 0.00564 426   1.839  0.3329
+ m b - m m  0.00825 0.00564 426   1.461  0.5786
+ b m - m m -0.00213 0.00564 426  -0.378  0.9057
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 6 tests 
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: formula
+   Data: emocion
+
+REML criterion at convergence: 2097.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5417 -0.5271 -0.0386  0.4033  4.3076 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ codigo   (Intercept) 2.164    1.471   
+ Residual             1.270    1.127   
+Number of obs: 576, groups:  codigo, 144
+
+Fixed effects:
+                                                        Estimate Std. Error
+(Intercept)                                             -1.08808    0.98639
+resultadoCojugadorm                                     -0.07138    0.29376
+resultadoParticipantem                                   0.72391    0.29376
+STAI_ESTADO                                              0.01757    0.01491
+sexo2                                                    0.26034    0.32264
+sexo3                                                   -0.85365    1.60669
+edad                                                     0.05851    0.03667
+resultadoCojugadorm:resultadoParticipantem              -0.46951    0.41545
+resultadoCojugadorm:STAI_ESTADO                          0.00844    0.01260
+resultadoParticipantem:STAI_ESTADO                       0.05301    0.01260
+resultadoCojugadorm:resultadoParticipantem:STAI_ESTADO  -0.04454    0.01782
+                                                              df t value
+(Intercept)                                            148.67171  -1.103
+resultadoCojugadorm                                    426.00000  -0.243
+resultadoParticipantem                                 426.00000   2.464
+STAI_ESTADO                                            248.48283   1.179
+sexo2                                                  138.99999   0.807
+sexo3                                                  138.99999  -0.531
+edad                                                   138.99999   1.596
+resultadoCojugadorm:resultadoParticipantem             426.00000  -1.130
+resultadoCojugadorm:STAI_ESTADO                        426.00000   0.670
+resultadoParticipantem:STAI_ESTADO                     426.00000   4.207
+resultadoCojugadorm:resultadoParticipantem:STAI_ESTADO 426.00000  -2.500
+                                                       Pr(>|t|)    
+(Intercept)                                              0.2718    
+resultadoCojugadorm                                      0.8081    
+resultadoParticipantem                                   0.0141 *  
+STAI_ESTADO                                              0.2396    
+sexo2                                                    0.4211    
+sexo3                                                    0.5961    
+edad                                                     0.1128    
+resultadoCojugadorm:resultadoParticipantem               0.2591    
+resultadoCojugadorm:STAI_ESTADO                          0.5033    
+resultadoParticipantem:STAI_ESTADO                     3.15e-05 ***
+resultadoCojugadorm:resultadoParticipantem:STAI_ESTADO   0.0128 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rsltdC rsltdP STAI_E sexo2  sexo3  edad   rslC:P rC:STA
+rsltdCjgdrm -0.149                                                        
+rsltdPrtcpn -0.149  0.500                                                 
+STAI_ESTADO -0.366  0.377  0.377                                          
+sexo2       -0.292  0.000  0.000 -0.140                                   
+sexo3        0.033  0.000  0.000  0.000  0.139                            
+edad        -0.915  0.000  0.000  0.101  0.095 -0.092                     
+rsltdCjgd:P  0.105 -0.707 -0.707 -0.267  0.000  0.000  0.000              
+rC:STAI_EST  0.133 -0.892 -0.446 -0.423  0.000  0.000  0.000  0.631       
+rP:STAI_EST  0.133 -0.446 -0.892 -0.423  0.000  0.000  0.000  0.631  0.500
+rC:P:STAI_E -0.094  0.631  0.631  0.299  0.000  0.000  0.000 -0.892 -0.707
+            rP:STA
+rsltdCjgdrm       
+rsltdPrtcpn       
+STAI_ESTADO       
+sexo2             
+sexo3             
+edad              
+rsltdCjgd:P       
+rC:STAI_EST       
+rP:STAI_EST       
+rC:P:STAI_E -0.707
+[1] "#### Resultado Anova ####"
+Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df)
+
+Response: value
+                                                           F Df Df.res
+(Intercept)                                           1.2168  1 148.67
+resultadoCojugador                                    0.0590  1 426.00
+resultadoParticipante                                 6.0725  1 426.00
+STAI_ESTADO                                           1.3898  1 248.48
+sexo                                                  0.5366  2 139.00
+edad                                                  2.5465  1 139.00
+resultadoCojugador:resultadoParticipante              1.2772  1 426.00
+resultadoCojugador:STAI_ESTADO                        0.4488  1 426.00
+resultadoParticipante:STAI_ESTADO                    17.7014  1 426.00
+resultadoCojugador:resultadoParticipante:STAI_ESTADO  6.2484  1 426.00
+                                                        Pr(>F)    
+(Intercept)                                            0.27177    
+resultadoCojugador                                     0.80814    
+resultadoParticipante                                  0.01412 *  
+STAI_ESTADO                                            0.23957    
+sexo                                                   0.58593    
+edad                                                   0.11281    
+resultadoCojugador:resultadoParticipante               0.25906    
+resultadoCojugador:STAI_ESTADO                         0.50327    
+resultadoParticipante:STAI_ESTADO                    3.153e-05 ***
+resultadoCojugador:resultadoParticipante:STAI_ESTADO   0.01281 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoParticipante emmean    SE  df lower.CL upper.CL
+ b                      0.486 0.542 141   -0.586     1.56
+ m                      1.614 0.542 141    0.543     2.69
+
+Results are averaged over the levels of: resultadoCojugador, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                   1.347 0.542 141    0.276     2.42
+ m                   0.753 0.542 141   -0.318     1.82
+
+Results are averaged over the levels of: resultadoParticipante, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+$emmeans
+ resultadoParticipante resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                     b                   0.434 0.546 145   -0.645     1.51
+ m                     b                   2.260 0.546 145    1.181     3.34
+ b                     m                   0.538 0.546 145   -0.541     1.62
+ m                     m                   0.969 0.546 145   -0.111     2.05
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast  estimate    SE  df t.ratio p.value
+ b b - m b   -1.826 0.133 426 -13.754  <.0001
+ b b - b m   -0.104 0.133 426  -0.784  0.8615
+ b b - m m   -0.535 0.133 426  -4.027  0.0004
+ m b - b m    1.722 0.133 426  12.969  <.0001
+ m b - m m    1.292 0.133 426   9.727  <.0001
+ b m - m m   -0.431 0.133 426  -3.242  0.0070
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+[1] "##### EMTRENDS #####"
+ resultadoParticipante resultadoCojugador STAI_ESTADO.trend     SE  df lower.CL
+ b                     b                             0.0176 0.0149 248 -0.01179
+ m                     b                             0.0706 0.0149 248  0.04122
+ b                     m                             0.0260 0.0149 248 -0.00335
+ m                     m                             0.0345 0.0149 248  0.00512
+ upper.CL
+   0.0469
+   0.0999
+   0.0554
+   0.0638
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate     SE  df t.ratio p.value
+ b b - m b -0.05301 0.0126 426  -4.207  0.0002
+ b b - b m -0.00844 0.0126 426  -0.670  1.0000
+ b b - m m -0.01691 0.0126 426  -1.342  0.5408
+ m b - b m  0.04457 0.0126 426   3.537  0.0022
+ m b - m m  0.03610 0.0126 426   2.865  0.0175
+ b m - m m -0.00847 0.0126 426  -0.672  1.0000
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 6 tests 
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: formula
+   Data: emocion
+
+REML criterion at convergence: 2075.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5860 -0.5182 -0.0312  0.4020  4.3034 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ codigo   (Intercept) 2.005    1.416   
+ Residual             1.231    1.110   
+Number of obs: 576, groups:  codigo, 144
+
+Fixed effects:
+                                                        Estimate Std. Error
+(Intercept)                                            -1.249338   0.947287
+resultadoCojugadorm                                    -0.091122   0.316634
+resultadoParticipantem                                  0.279361   0.316634
+STAI_RASGO                                              0.026956   0.012666
+sexo2                                                   0.056226   0.317943
+sexo3                                                  -1.143210   1.552590
+edad                                                    0.056884   0.035239
+resultadoCojugadorm:resultadoParticipantem             -0.114745   0.447788
+resultadoCojugadorm:STAI_RASGO                          0.007274   0.010741
+resultadoParticipantem:STAI_RASGO                       0.057623   0.010741
+resultadoCojugadorm:resultadoParticipantem:STAI_RASGO  -0.047718   0.015190
+                                                              df t value
+(Intercept)                                           151.328105  -1.319
+resultadoCojugadorm                                   426.000000  -0.288
+resultadoParticipantem                                426.000000   0.882
+STAI_RASGO                                            249.505493   2.128
+sexo2                                                 139.000000   0.177
+sexo3                                                 138.999999  -0.736
+edad                                                  139.000006   1.614
+resultadoCojugadorm:resultadoParticipantem            426.000000  -0.256
+resultadoCojugadorm:STAI_RASGO                        426.000000   0.677
+resultadoParticipantem:STAI_RASGO                     426.000000   5.365
+resultadoCojugadorm:resultadoParticipantem:STAI_RASGO 426.000000  -3.141
+                                                      Pr(>|t|)    
+(Intercept)                                             0.1892    
+resultadoCojugadorm                                     0.7737    
+resultadoParticipantem                                  0.3781    
+STAI_RASGO                                              0.0343 *  
+sexo2                                                   0.8599    
+sexo3                                                   0.4628    
+edad                                                    0.1087    
+resultadoCojugadorm:resultadoParticipantem              0.7979    
+resultadoCojugadorm:STAI_RASGO                          0.4986    
+resultadoParticipantem:STAI_RASGO                     1.33e-07 ***
+resultadoCojugadorm:resultadoParticipantem:STAI_RASGO   0.0018 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rsltdC rsltdP STAI_R sexo2  sexo3  edad   rslC:P rC:STA
+rsltdCjgdrm -0.167                                                        
+rsltdPrtcpn -0.167  0.500                                                 
+STAI_RASGO  -0.354  0.386  0.386                                          
+sexo2       -0.263  0.000  0.000 -0.220                                   
+sexo3        0.046  0.000  0.000 -0.037  0.147                            
+edad        -0.906  0.000  0.000  0.061  0.095 -0.095                     
+rsltdCjgd:P  0.118 -0.707 -0.707 -0.273  0.000  0.000  0.000              
+rC:STAI_RAS  0.152 -0.911 -0.455 -0.424  0.000  0.000  0.000  0.644       
+rP:STAI_RAS  0.152 -0.455 -0.911 -0.424  0.000  0.000  0.000  0.644  0.500
+rC:P:STAI_R -0.108  0.644  0.644  0.300  0.000  0.000  0.000 -0.911 -0.707
+            rP:STA
+rsltdCjgdrm       
+rsltdPrtcpn       
+STAI_RASGO        
+sexo2             
+sexo3             
+edad              
+rsltdCjgd:P       
+rC:STAI_RAS       
+rP:STAI_RAS       
+rC:P:STAI_R -0.707
+[1] "#### Resultado Anova ####"
+Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df)
+
+Response: value
+                                                          F Df Df.res    Pr(>F)
+(Intercept)                                          1.7394  1 151.33  0.189209
+resultadoCojugador                                   0.0828  1 426.00  0.773652
+resultadoParticipante                                0.7784  1 426.00  0.378120
+STAI_RASGO                                           4.5294  1 249.51  0.034298
+sexo                                                 0.3126  2 139.00  0.732051
+edad                                                 2.6057  1 139.00  0.108746
+resultadoCojugador:resultadoParticipante             0.0657  1 426.00  0.797883
+resultadoCojugador:STAI_RASGO                        0.4586  1 426.00  0.498627
+resultadoParticipante:STAI_RASGO                    28.7816  1 426.00 1.332e-07
+resultadoCojugador:resultadoParticipante:STAI_RASGO  9.8684  1 426.00  0.001799
+                                                       
+(Intercept)                                            
+resultadoCojugador                                     
+resultadoParticipante                                  
+STAI_RASGO                                          *  
+sexo                                                   
+edad                                                   
+resultadoCojugador:resultadoParticipante               
+resultadoCojugador:STAI_RASGO                          
+resultadoParticipante:STAI_RASGO                    ***
+resultadoCojugador:resultadoParticipante:STAI_RASGO ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoParticipante emmean    SE  df lower.CL upper.CL
+ b                      0.481 0.523 141   -0.553     1.51
+ m                      1.609 0.523 141    0.575     2.64
+
+Results are averaged over the levels of: resultadoCojugador, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                   1.342 0.523 141    0.308     2.38
+ m                   0.748 0.523 141   -0.286     1.78
+
+Results are averaged over the levels of: resultadoParticipante, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+$emmeans
+ resultadoParticipante resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                     b                   0.429 0.527 146  -0.6132     1.47
+ m                     b                   2.255 0.527 146   1.2132     3.30
+ b                     m                   0.533 0.527 146  -0.5091     1.57
+ m                     m                   0.963 0.527 146  -0.0785     2.01
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast  estimate    SE  df t.ratio p.value
+ b b - m b   -1.826 0.131 426 -13.965  <.0001
+ b b - b m   -0.104 0.131 426  -0.796  0.8560
+ b b - m m   -0.535 0.131 426  -4.089  0.0003
+ m b - b m    1.722 0.131 426  13.169  <.0001
+ m b - m m    1.292 0.131 426   9.877  <.0001
+ b m - m m   -0.431 0.131 426  -3.292  0.0059
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+[1] "##### EMTRENDS #####"
+ resultadoParticipante resultadoCojugador STAI_RASGO.trend     SE  df lower.CL
+ b                     b                            0.0270 0.0127 250  0.00201
+ m                     b                            0.0846 0.0127 250  0.05963
+ b                     m                            0.0342 0.0127 250  0.00928
+ m                     m                            0.0441 0.0127 250  0.01919
+ upper.CL
+   0.0519
+   0.1095
+   0.0592
+   0.0691
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate     SE  df t.ratio p.value
+ b b - m b -0.05762 0.0107 426  -5.365  <.0001
+ b b - b m -0.00727 0.0107 426  -0.677  0.7139
+ b b - m m -0.01718 0.0107 426  -1.599  0.3314
+ m b - b m  0.05035 0.0107 426   4.688  <.0001
+ m b - m m  0.04044 0.0107 426   3.765  0.0008
+ b m - m m -0.00991 0.0107 426  -0.922  0.7139
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 6 tests 
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: formula
+   Data: emocion
+
+REML criterion at convergence: 2059.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5481 -0.5256 -0.0095  0.4027  4.3002 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ codigo   (Intercept) 1.972    1.404   
+ Residual             1.236    1.112   
+Number of obs: 576, groups:  codigo, 144
+
+Fixed effects:
+                                                Estimate Std. Error        df
+(Intercept)                                     -0.82138    0.88182 141.32782
+resultadoCojugadorm                              0.10455    0.13104 426.00000
+resultadoParticipantem                           1.82867    0.13104 426.00000
+PCA                                              0.21433    0.09505 249.15009
+sexo2                                            0.04202    0.31559 139.00000
+sexo3                                           -0.98914    1.54080 139.00000
+edad                                             0.07014    0.03530 138.99999
+resultadoCojugadorm:resultadoParticipantem      -1.39771    0.18532 426.00000
+resultadoCojugadorm:PCA                          0.07175    0.08051 426.00000
+resultadoParticipantem:PCA                       0.42845    0.08051 426.00000
+resultadoCojugadorm:resultadoParticipantem:PCA  -0.35280    0.11386 426.00000
+                                               t value Pr(>|t|)    
+(Intercept)                                     -0.931  0.35320    
+resultadoCojugadorm                              0.798  0.42542    
+resultadoParticipantem                          13.955  < 2e-16 ***
+PCA                                              2.255  0.02501 *  
+sexo2                                            0.133  0.89426    
+sexo3                                           -0.642  0.52195    
+edad                                             1.987  0.04890 *  
+resultadoCojugadorm:resultadoParticipantem      -7.542 2.82e-13 ***
+resultadoCojugadorm:PCA                          0.891  0.37331    
+resultadoParticipantem:PCA                       5.321 1.67e-07 ***
+resultadoCojugadorm:resultadoParticipantem:PCA  -3.098  0.00207 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rsltdC rsltdP PCA    sexo2  sexo3  edad   rslC:P rC:PCA
+rsltdCjgdrm -0.074                                                        
+rsltdPrtcpn -0.074  0.500                                                 
+PCA         -0.057 -0.001 -0.001                                          
+sexo2       -0.346  0.000  0.000 -0.218                                   
+sexo3        0.037  0.000  0.000 -0.016  0.141                            
+edad        -0.946  0.000  0.000  0.127  0.074 -0.095                     
+rsltdCjgd:P  0.053 -0.707 -0.707  0.001  0.000  0.000  0.000              
+rsltdCj:PCA  0.000  0.003  0.002 -0.424  0.000  0.000  0.000 -0.002       
+rsltdPr:PCA  0.000  0.002  0.003 -0.424  0.000  0.000  0.000 -0.002  0.500
+rsltC:P:PCA  0.000 -0.002 -0.002  0.299  0.000  0.000  0.000  0.003 -0.707
+            rP:PCA
+rsltdCjgdrm       
+rsltdPrtcpn       
+PCA               
+sexo2             
+sexo3             
+edad              
+rsltdCjgd:P       
+rsltdCj:PCA       
+rsltdPr:PCA       
+rsltC:P:PCA -0.707
+[1] "#### Resultado Anova ####"
+Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df)
+
+Response: value
+                                                    F Df Df.res    Pr(>F)    
+(Intercept)                                    0.8676  1 141.33  0.353203    
+resultadoCojugador                             0.6365  1 426.00  0.425415    
+resultadoParticipante                        194.7395  1 426.00 < 2.2e-16 ***
+PCA                                            5.0845  1 249.15  0.025009 *  
+sexo                                           0.2316  2 139.00  0.793578    
+edad                                           3.9479  1 139.00  0.048896 *  
+resultadoCojugador:resultadoParticipante      56.8838  1 426.00 2.818e-13 ***
+resultadoCojugador:PCA                         0.7943  1 426.00  0.373311    
+resultadoParticipante:PCA                     28.3183  1 426.00 1.667e-07 ***
+resultadoCojugador:resultadoParticipante:PCA   9.6004  1 426.00  0.002074 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoParticipante emmean   SE  df lower.CL upper.CL
+ b                      0.537 0.52 141   -0.491     1.57
+ m                      1.666 0.52 141    0.638     2.69
+
+Results are averaged over the levels of: resultadoCojugador, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+ resultadoCojugador emmean   SE  df lower.CL upper.CL
+ b                   1.398 0.52 141    0.370     2.43
+ m                   0.805 0.52 141   -0.223     1.83
+
+Results are averaged over the levels of: resultadoParticipante, sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+NOTE: Results may be misleading due to involvement in interactions
+$emmeans
+ resultadoParticipante resultadoCojugador emmean    SE  df lower.CL upper.CL
+ b                     b                   0.485 0.524 146  -0.5506     1.52
+ m                     b                   2.312 0.524 146   1.2758     3.35
+ b                     m                   0.589 0.524 146  -0.4465     1.63
+ m                     m                   1.020 0.524 146  -0.0159     2.06
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast  estimate    SE  df t.ratio p.value
+ b b - m b   -1.826 0.131 426 -13.938  <.0001
+ b b - b m   -0.104 0.131 426  -0.795  0.8567
+ b b - m m   -0.535 0.131 426  -4.081  0.0003
+ m b - b m    1.722 0.131 426  13.143  <.0001
+ m b - m m    1.292 0.131 426   9.857  <.0001
+ b m - m m   -0.431 0.131 426  -3.286  0.0060
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: tukey method for comparing a family of 4 estimates 
+
+[1] "##### EMTRENDS #####"
+ resultadoParticipante resultadoCojugador PCA.trend     SE  df lower.CL
+ b                     b                      0.214 0.0951 249   0.0271
+ m                     b                      0.643 0.0951 249   0.4556
+ b                     m                      0.286 0.0951 249   0.0989
+ m                     m                      0.362 0.0951 249   0.1745
+ upper.CL
+    0.402
+    0.830
+    0.473
+    0.549
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate     SE  df t.ratio p.value
+ b b - m b  -0.4284 0.0805 426  -5.321  <.0001
+ b b - b m  -0.0718 0.0805 426  -0.891  0.6959
+ b b - m m  -0.1474 0.0805 426  -1.831  0.2035
+ m b - b m   0.3567 0.0805 426   4.430  0.0001
+ m b - m m   0.2810 0.0805 426   3.491  0.0021
+ b m - m m  -0.0757 0.0805 426  -0.940  0.6959
+
+Results are averaged over the levels of: sexo 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 6 tests 

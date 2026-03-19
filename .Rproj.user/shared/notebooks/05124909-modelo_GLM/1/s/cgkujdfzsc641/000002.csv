@@ -1,0 +1,28 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyAyLiBFdmFsdWFjacOzbiBkZWwgYWp1c3RlIGRlbCBtb2RlbG9cbmxpYnJhcnkocGVyZm9ybWFuY2UpXG5yMl9uYWthZ2F3YShtb2RlbG9fNi4yKSAjIFLCsiBjb25kaWNpb25hbCB5IG1hcmdpbmFsIChwc2V1ZG8gLSByMilcbiNjb21wYXJvIGNvbiB1biBtb2RlbG8gc2luIGludGVyYWNjaW9uIFxubW9kZWxvX3Npbl9pbnRlcmFjY2lvbiA8LSBnbG1lcihnYW1lX3R5cGUuZiB+IHJpdmFsLm4gKyBzY2FsZShCRUNLX1NFU0lPTikgKyBwYXlfY29tcGV0aXRpdmUubiArICgxfGNvZGUpLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZGF0YSA9IGRhdG9zTGltcGlvcywgZmFtaWx5ID0gYmlub21pYWwpXG5hbm92YShtb2RlbG9fNi4yLCBtb2RlbG9fc2luX2ludGVyYWNjaW9uLCB0ZXN0PVwiQ2hpc3FcIilcblxuXG5gYGAifQ== -->
+
+```r
+# 2. Evaluación del ajuste del modelo
+library(performance)
+r2_nakagawa(modelo_6.2) # R² condicional y marginal (pseudo - r2)
+#comparo con un modelo sin interaccion 
+modelo_sin_interaccion <- glmer(game_type.f ~ rival.n + scale(BECK_SESION) + pay_competitive.n + (1|code), 
+                                data = datosLimpios, family = binomial)
+anova(modelo_6.2, modelo_sin_interaccion, test=\"Chisq\")
+
+
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+# 2. Evaluación del ajuste del modelo
+library(performance)
+r2_nakagawa(modelo_6.2) # R² condicional y marginal (pseudo - r2)
+#comparo con un modelo sin interaccion 
+modelo_sin_interaccion <- glmer(game_type.f ~ rival.n + scale(BECK_SESION) + pay_competitive.n + (1|code), 
+                                data = datosLimpios, family = binomial)
+anova(modelo_6.2, modelo_sin_interaccion, test=\"Chisq\")
+
+
+```"

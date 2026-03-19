@@ -1,0 +1,980 @@
+---
+title: "GLM"
+author: "Sebastián Morales"
+date: "31/10/2024"
+output: html_notebook
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Modelos
+```{r, echo=FALSE, message=FALSE}
+library(magrittr)
+library(plyr)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(geepack)
+library(gee)
+library(lme4)
+library(lmerTest)
+library(car)
+library(lsmeans)
+library(emmeans)
+library(effectsize)
+
+#Levanto los datos Limpios
+setwd("/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_final_MAESTRIA_R")
+
+ datos <- load("/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_final_MAESTRIA_R/input/datosLimpios2.RData")
+
+#genero las tablas
+table(is.na(datosLimpios$game_type))
+table((datosLimpios$game_type))
+prop.table(table(datosLimpios$game_type))
+table(is.na(datosLimpios$rival))
+table(datosLimpios$rival)
+prop.table(table(datosLimpios$rival))
+```
+# boxplot y calculo de la media    
+```{r,echo=FALSE, message=FALSE}
+# boxplot
+datosLimpios %>%
+  filter(game_type=="competitive") %>%
+  group_by(code,game_type,rival) %>% 
+  dplyr::summarise(n=n()) %>% ggplot(aes(x=factor(rival), y=n)) + 
+  geom_boxplot()
+#medias
+datosLimpios %>%
+  filter(game_type=="competitive") %>%
+  group_by(code,rival) %>% 
+  dplyr::summarise(n=n()) %>% 
+  group_by(rival) %>%
+dplyr::summarize(mean(n))
+```
+
+# Grafico elecciones competitivas por rival
+```{r,echo=FALSE, message=FALSE}
+# agrupado por game_type y rival
+library(ggpubr)
+library(magrittr)
+library(tidyverse)
+library(plotrix)
+b1 <- datosLimpios %>%
+    group_by(code,game_type,rival) %>% 
+  dplyr::summarise(n=n())  
+b1 %>%  
+  filter(game_type!= "") %>% 
+  filter(game_type == 'competitive') %>%
+  mutate(rival = as.factor(rival),
+              game_type = as.factor(game_type)) %>%
+  group_by(game_type, rival) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/32,
+    sd = std.error(n),
+    n = n()) %>%
+  ggplot(aes(x = rival, y = mean, fill = rival)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - sd, ymax = mean + sd), 
+    position = position_dodge2(padding = 0.5)
+  ) +
+  labs(
+    x= '',
+    y= 'porcentaje de elecciones competitivas',
+    title = ""
+  )+ scale_x_discrete(labels=c("1","2","3","4")) +scale_fill_discrete("rivales",labels=c("uno","dos","tres","cuatro"))
+
+write.csv(b1, here::here("data/rival.csv"))
+```
+# Grafico elecciones competitivas por pago
+
+```{r,echo=FALSE, message=FALSE}
+# agrupado por game_type y rival
+library(ggpubr)
+library(magrittr)
+library(tidyverse)
+library(plotrix)
+
+c3 <- datosLimpios %>%
+    group_by(code,game_type,pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+c3 %>%  
+  filter(game_type!= "") %>% 
+  filter(game_type == 'competitive') %>%
+  mutate(pay_competitive = as.factor(pay_competitive),
+              game_type = as.factor(game_type)) %>%
+  group_by(game_type, pay_competitive) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/32,
+    se = std.error(n),
+    n = n()) %>%
+  ggplot(aes(x = pay_competitive, y = mean, fill = pay_competitive)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - se, ymax = mean + se), 
+    position = position_dodge2(padding = 0.5)
+  ) +
+  labs(
+    x= '',
+    y= 'porcentaje de elecciones competitivas',
+    title = "") +
+  scale_x_discrete(labels=c("1","2","3","4")) +
+scale_fill_discrete("nivel de recompensa",labels=c("uno","dos","tres","cuatro"))
+
+write.csv(c3, here::here("data/recompensa.csv"))
+```
+
+# ----Lineas de tendencia con Beck web segun rival----
+```{r,r.echo=FALSE, message=FALSE}
+#Efecto del Beck web en las decisiones segun rival
+library(ggplot2)
+library(tidyverse)
+
+library(ggplot2)
+library(tidyverse)
+
+
+# Convertir las variables relevantes a los tipos de datos adecuados
+datosLimpios <- datosLimpios %>%
+  mutate(puntaje_beck = Beck_web, tipo_de_juego = as.factor(game_type), rival = as.factor(rival))
+
+# Filtrar los datos solo para los juegos individuales
+datos_competir <- datosLimpios %>%
+  filter(tipo_de_juego == "competitive")
+
+# Calcular la cantidad de elecciones individuales por sujeto y rival
+datos_rival <- datos_competir %>%
+  group_by(rival, code, puntaje_beck) %>%
+  dplyr::summarise(cantidad_elecciones = n())
+
+# Crear el scatterplot con líneas de tendencia por rival y coloridas
+ggplot(datos_rival, aes(x = puntaje_beck, y = cantidad_elecciones, color = rival)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, aes(color = rival)) +  # Nadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Cantidad de elecciones competitivas",
+    title = "Líneas de tendencia por rival"
+  )
+
+
+
+
+
+```
+
+# ----Lineas de tendencia con Beck web segun pago----
+```{r echo=FALSE, message=FALSE}
+#Efecto del Beck web en las decisiones segun pago competitivo
+library(ggplot2)
+library(tidyverse)
+
+library(ggplot2)
+library(tidyverse)
+
+
+# Convertir las variables relevantes a los tipos de datos adecuados
+datosLimpios <- datosLimpios %>%
+  mutate(puntaje_beck = Beck_web, tipo_de_juego = as.factor(game_type), nivel_recompensa = as.factor(pay_competitive))
+
+# Filtrar los datos solo para los juegos indviduales
+datos_competir <- datosLimpios %>%
+  filter(tipo_de_juego == "competitive")
+
+# Calcular la cantidad de elecciones individuales por sujeto y recompensa
+datos_competir <- datos_competir %>%
+  group_by(nivel_recompensa, code, puntaje_beck) %>%
+  dplyr::summarise(cantidad_elecciones = n())
+
+# Crear el scatterplot con líneas de tendencia por nivel de recompensa y coloridas
+ggplot(datos_competir, aes(x = puntaje_beck, y = cantidad_elecciones, color = nivel_recompensa)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, aes(color = nivel_recompensa)) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Cantidad de elecciones competitivas",
+    title = "Líneas de tendencia por nivel de recompensa"
+  )
+
+```
+
+#Grafico linea de tendencia con Beck Sesion segun rival
+```{r, echo=TRUE, message=TRUE}
+#Efecto del BECK SESION en las decisiones segun rival
+library(ggplot2)
+library(tidyverse)
+
+library(ggplot2)
+library(tidyverse)
+
+
+# Convertir las variables relevantes a los tipos de datos adecuados
+datosLimpios <- datosLimpios %>%
+  mutate(puntaje_beck = scale(BECK_SESION), tipo_de_juego = as.factor(game_type), rival = as.factor(rival), pay_competitive = as.factor(pay_competitive))
+
+# Filtrar los datos solo para los juegos individuales
+datos_competir <- datosLimpios %>%
+  filter(tipo_de_juego == "competitive")
+
+# Calcular la cantidad de elecciones individuales por sujeto y rival
+datos_rival <- datos_competir %>%
+  group_by(rival,pay_competitive, code, puntaje_beck) %>%
+  dplyr::summarise(cantidad_elecciones = n())
+
+# Crear el scatterplot con líneas de tendencia por rival y coloridas
+# Verificar que 'rival' es un factor
+datos_rival$rival <- as.factor(datos_rival$rival)
+
+# Asegurarse de que 'pay_competitive' es un factor
+datos_rival$pay_competitive <- as.factor(datos_rival$pay_competitive)
+
+# Crear el scatterplot con líneas de tendencia por rival y coloridas
+ggplot(datos_rival, aes(x = puntaje_beck, y = cantidad_elecciones, color = rival)) +
+  geom_point() +
+  #facet_grid(. ~ pay_competitive) + # si quiero separado por nivel de recompensa descomentar esta linea
+  geom_smooth(method = "lm", se = TRUE, aes(color = rival)) +  # Nadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Cantidad de elecciones competitivas",
+    title = "Líneas de tendencia por rival"
+  )
+
+
+```
+# Grafico linea de tendencia Beck sesion segun pago
+```{r echo=FALSE, message=FALSE}
+#Efecto del Beck SESION en las decisiones segun pago competitivo
+library(ggplot2)
+library(tidyverse)
+
+
+# Convertir las variables relevantes a los tipos de datos adecuados
+datosLimpios <- datosLimpios %>%
+  mutate(puntaje_beck = BECK_SESION, tipo_de_juego = as.factor(game_type), nivel_recompensa = as.factor(pay_competitive))
+
+# Filtrar los datos solo para los juegos competitivo
+datos_competir <- datosLimpios %>%
+  filter(tipo_de_juego == "individual")
+
+# Calcular la cantidad de elecciones competitivas por sujeto y recompensa
+datos_competir <- datos_competir %>%
+  group_by(nivel_recompensa, code, puntaje_beck, rival.f) %>%
+  dplyr::summarise(cantidad_elecciones = n())
+
+datosLimpios %>% 
+  group_by(code,rival.f,nivel_recompensa,puntaje_beck) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(tipo_de_juego %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = puntaje_beck, y = p_ind, color = rival.f)) +
+  geom_point() +
+  #facet_wrap(~nivel_recompensa)+
+  geom_smooth(method = "lm", se = F, aes(color = nivel_recompensa)) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Cantidad de elecciones individuales",
+    title = "Líneas de tendencia por nivel de recompensa"
+  )
+
+# Crear el scatterplot con líneas de tendencia por nivel de recompensa
+ggplot(datos_competir, aes(x = puntaje_beck, y = cantidad_elecciones, color = nivel_recompensa)) +
+  geom_point() +
+  facet_wrap(~rival.f)+
+  geom_smooth(method = "lm", se = TRUE, aes(color = nivel_recompensa)) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Cantidad de elecciones individuales",
+    title = "Líneas de tendencia por nivel de recompensa"
+  )
+
+```
+# Grafico linea de tendencias con LSAS segun rival
+```{r}
+#Efecto del LSAS en las decisiones competitivas segun rival
+library(ggplot2)
+library(tidyverse)
+
+library(ggplot2)
+library(tidyverse)
+
+
+# Convertir las variables relevantes a los tipos de datos adecuados
+datosLimpios <- datosLimpios %>%
+  mutate(puntaje_lsas = LSAS_Total, tipo_de_juego = as.factor(game_type), rival = as.factor(rival))
+
+# Filtrar los datos solo para los juegos competitivo
+datos_competir <- datosLimpios %>%
+  filter(tipo_de_juego == "competitive")
+
+# Calcular la cantidad de elecciones competitivas por sujeto y rival
+datos_rival <- datos_competir %>%
+  group_by(rival, code, puntaje_lsas) %>%
+  dplyr::summarise(cantidad_elecciones = n())
+
+# Crear el scatterplot con líneas de tendencia por rival
+ggplot(datos_rival, aes(x = puntaje_lsas, y = cantidad_elecciones, color = rival)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, aes(color = rival)) +  #  color a las líneas de tendencia
+  labs(
+    x = "Puntaje de LSAS",
+    y = "Cantidad de elecciones competitivas",
+    title = "Líneas de tendencia por rival"
+  )
+```
+# Grafico de linea de tendencia con LSAS segun pago
+```{r}
+#Efecto del LSAS en las decisiones segun pago  para elecciones competitivas
+library(ggplot2)
+library(tidyverse)
+
+
+# Convertir las variables relevantes a los tipos de datos adecuados
+datosLimpios <- datosLimpios %>%
+  mutate(puntaje_lsas = scale(LSAS_Total), tipo_de_juego = as.factor(game_type), nivel_recompensa = as.factor(pay_competitive))
+
+# Filtrar los datos solo para los juegos competitivo
+datos_competir <- datosLimpios %>%
+  filter(tipo_de_juego == "competitive")
+
+# Calcular la cantidad de elecciones competitivas por sujeto y recompensa
+datos_competir <- datos_competir %>%
+  group_by(nivel_recompensa, code, puntaje_lsas) %>%
+  dplyr::summarise(cantidad_elecciones = n())
+
+# Crear el scatterplot con líneas de tendencia por nivel de recompensa 
+ggplot(datos_competir, aes(x = puntaje_lsas, y = cantidad_elecciones, color = nivel_recompensa)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE, aes(color = nivel_recompensa)) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de LSAS",
+    y = "Cantidad de elecciones competitivas",
+    title = "Líneas de tendencia por nivel de recompensa"
+  )
+```
+# ---Grafico de barras con variables agrupadas ----
+
+# Grafico de barras porcentaje de elecciones competitivas según rival y pago (agrupado por rival)
+```{r,r.echo=FALSE, message=FALSE}
+
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(plotrix)
+c2 <- datosLimpios %>%
+    group_by(code,game_type,rival,pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+c2 %>%  
+  filter(game_type!= "") %>% 
+  filter(game_type == 'competitive') %>%
+  mutate(rival = as.factor(rival),
+              game_type = as.factor(game_type),
+         pay_competitive = as.factor(pay_competitive)) %>%
+  group_by(pay_competitive, rival) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/32,
+    sd = std.error(n),
+    n = n()) %>%
+  ggplot(aes(x = rival, y = mean, fill = pay_competitive)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - sd, ymax = mean + sd), 
+    position = position_dodge2(padding = 0.5)
+  ) +
+  labs(
+    x= 'categoria del rival',
+    y= 'porcentaje de elecciones competitivas',
+    title = ""
+  )+ scale_x_discrete(labels=c("1","2","3","4")) +scale_fill_discrete("nivel de recompensa",labels=c("uno","dos","tres","cuatro"))
+write.csv(c2, here::here("data/rivales_deplegadoporrival.csv"))
+
+
+
+```
+# Grafico de barras porcentaje de elecciones competitivas según rival y pago (agrupado por pago)
+```{r,r.echo=FALSE, message=FALSE}
+
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(plotrix)
+d2 <- datosLimpios %>%
+    group_by(code,game_type,rival,pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+d2 %>%  
+  filter(game_type!= "") %>% 
+  filter(game_type == 'competitive') %>%
+  mutate(rival = as.factor(rival),
+              game_type = as.factor(game_type),
+         pay_competitive = as.factor(pay_competitive)) %>%
+  group_by(pay_competitive, rival) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/32,
+    sd = std.error(n),
+    n = n()) %>%
+  ggplot(aes(x = pay_competitive, y = mean, fill = rival)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - sd, ymax = mean + sd), 
+    position = position_dodge2(padding = 0.5)
+  ) +
+  labs(
+    x= 'nivel de recompensa',
+    y= 'porcentaje de elecciones competitivas',
+    title = ""
+  )+ scale_x_discrete(labels=c("1","2","3","4")) +scale_fill_discrete("rival",
+                                                                      labels=c("uno","dos","tres","cuatro"))
+write.csv(d2, here::here("data/competir_desplegado_pago.csv"))
+
+```
+
+
+# Agrupados por individual, rival y participantes. 
+
+```{r,r.echo=FALSE, message=FALSE}
+
+
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(plotrix)
+
+d1 <- datosLimpios %>%
+    group_by(code,game_type,rival, pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+d1 %>%  
+  filter(game_type!= "") %>% 
+  filter(game_type == 'individual') %>%
+  mutate(rival = as.factor(rival),
+              game_type = as.factor(game_type),
+         code = as.factor(code)) %>%
+  group_by(code, rival) %>%
+  dplyr::summarise(
+    sd = std.error(n),
+    n = n()*100/32) %>%group_by(code) %>% 
+ 
+  ggplot(aes(x = rival, y = n, fill= rival)) +
+  geom_col(position = position_dodge()) +
+  # error bar_errorbar(
+  #   aes(ymin = n - sd, ymax = n + sd),
+  #    position = position_dodge2(padding = 0.5)
+  # ) + 
+  labs(
+    x= 'code del participante',
+    y= 'porcentaje de elecciones individuales',
+    title = "") +
+  scale_fill_discrete("rivales",labels=c("uno","dos","tres","cuatro")) + facet_wrap(~code)
+   
+
+```
+#Agrupado por individual, recompensa y participante. 
+```{r,r.echo=FALSE, message=FALSE}
+
+
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(plotrix)
+
+d1 <- datosLimpios %>%
+    group_by(code,game_type,rival, pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+d1 %>%  
+  filter(game_type!= "") %>% 
+  filter(game_type == 'individual') %>%
+  mutate(pay_competitive = as.factor(pay_competitive),
+              game_type = as.factor(game_type),
+         code = as.factor(code)) %>%
+  group_by(code, pay_competitive) %>%
+  dplyr::summarise(
+    sd = std.error(n),
+    n = n()*100/32) %>%group_by(code) %>% 
+ 
+  ggplot(aes(x = pay_competitive, y = n, fill= pay_competitive)) +
+  geom_col(position = position_dodge()) +
+  # error bar_errorbar(
+  #   aes(ymin = n - sd, ymax = n + sd),
+  #    position = position_dodge2(padding = 0.5)
+  # ) + 
+  labs(
+    x= 'code del participante',
+    y= 'porcentaje de elecciones individuales',
+    title = "") +
+  scale_fill_discrete("nivel de recompensa",labels=c("uno","dos","tres","cuatro")) +
+  facet_wrap(~code)
+   
+
+```
+
+# Grafico de barras datos agrupados segun tipo de juego (approach o avoidance)
+```{r, echo=TRUE, message=TRUE}
+b4 <- datosLimpios %>%
+  group_by(code,game_type,) %>% 
+  dplyr::summarise(n=n()) 
+b4 %>%  filter(game_type!= "") %>% mutate(
+              game_type = as.factor(game_type)) %>%
+  group_by(game_type) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/128,
+    sd = sd(n),
+    n = n(),
+    se = sd / sqrt(n)
+  ) %>% ggplot(aes( x= game_type, y = mean)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - se, ymax = mean + se),
+    position = position_dodge2(padding = 0.1)
+  ) +
+  labs(
+    x= '',
+    y= 'porcentaje de elecciones',
+    title = "Elecciones según tipo de juego"
+  )
+write.csv(b4,here::here("data/cantidades_elecciones.csv"))
+```
+# Realizo una prueba t para comparar los grupos
+```{r}
+library(tidyr)
+library(dplyr)
+
+# Convertir b4 a formato ancho
+b4_wide <- b4 %>%
+  pivot_wider(names_from = game_type, values_from = n, values_fill = list(n = 0))
+
+# Prueba t pareada
+t_test_result <- t.test(b4_wide$competitive, b4_wide$individual, paired = TRUE)
+
+# Mostrar resultados
+print(t_test_result)
+
+```
+
+# Tabla de outcomes
+```{r}
+#tabla de outcomes
+
+library(tidyr)
+
+decision_maker<-datosLimpios %>%  mutate(d = game_type.f) %>%  group_by(code,d,nro_bloque) %>% dplyr::summarise(n=n()) %>% spread(d,n)
+
+outcomes_competitive <- datosLimpios %>% filter(game_type=="competitive") %>% mutate(d = paste0("outcome_",outcome_competitive,outcome_rival))%>%  group_by(code,d,nro_bloque) %>% dplyr::summarise(n=n()) %>% spread(d,n)
+
+outcomes_individual <- datosLimpios%>% filter(game_type=="individual") %>% mutate(d = paste0("outcome_",outcome_individual)) %>%  group_by(code,d,nro_bloque) %>% dplyr::summarise(n=n()) %>% spread(d,n)
+
+OUT <- merge (outcomes_competitive,outcomes_individual, all = TRUE)
+OUT <- merge(decision_maker, OUT, all = TRUE)
+write.csv(OUT,here::here("data/decisiones.csv"))
+
+```
+
+
+# ----Modelos generalizados ----
+
+``` {r,echo=FALSE, message=FALSE}
+library(lme4)
+library(sjPlot)
+library(sjmisc)
+#Modelo 1 y 2
+modelo_1 <- glm(factor(game_type)~rival,data = datosLimpios,family = binomial)
+modelo_2 <- glmer(factor(game_type)~rival+(1|code),data = datosLimpios,    family= binomial)
+summary(modelo_1)
+summary(modelo_2)
+tab_model(modelo_1,modelo_2)
+plot_model(modelo_2)
+#calculo grilla de referencia
+game_type.glmer.rg = ref_grid(modelo_2)
+
+game_type.glmer.emm.rival = emmeans(game_type.glmer.rg, "rival")
+summary(game_type.glmer.emm.rival)
+
+
+
+contrast(game_type.glmer.emm.rival, "pairwise")
+Anova(modelo_2,type = 3)
+
+
+```
+``` {r,echo=FALSE, message=FALSE}
+ lrt <- function (modelo_1, modelo_2) {
+  L0 <- logLik(modelo_1)
+  L1 <- logLik(modelo_2)
+  L01 <- as.vector(- 2 * (L0 - L1))
+  df <- attr(L1, "df") - attr(L0, "df")
+  list(L01 = L01, df = df,
+       "p-value" = pchisq(L01, df, lower.tail = FALSE))
+  }
+lrt(modelo_1, modelo_2)
+
+logLik(modelo_1)
+logLik(modelo_2)
+
+d0 <- deviance(modelo_1)
+d1 <- deviance(modelo_2)
+LR <- d0 - d1
+pchisq(LR, 1, lower = FALSE)
+Anova(modelo_2)
+```
+El modelo 2 es más explicativo  que el modelo 1.
+
+# MODELO USADO en la tesis de grado
+
+
+```{r,echo=TRUE, message= TRUE}
+modelo_4 <- glmer(factor(game_type)~pay_competitive.f*rival.f+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
+# tab_model(modelo_3,modelo_4)
+# plot_model(modelo_3)
+tab_model(modelo_4)
+plot_model(modelo_4)
+#calculo grilla de referencia
+
+game_type.glmer.rg = ref_grid(modelo_4)
+
+
+#calculo medias marginales 
+game_type.glmer.emm.pay_competitive = emmeans(game_type.glmer.rg, pairwise~"pay_competitive.f")
+summary(game_type.glmer.emm.pay_competitive)
+
+game_type.glmer.emm.rival = emmeans(game_type.glmer.rg, pairwise~"rival.f")
+summary(game_type.glmer.emm.rival)
+
+
+
+
+contrast(game_type.glmer.emm.pay_competitive, "pairwise")
+contrast(game_type.glmer.emm.rival, "pairwise")
+
+# Results are given on the log odds ratio (not the response) scale. 
+# P value adjustment: tukey method for comparing a family of 5 estimates 
+ 
+
+# Likelihood ratio test
+# lrt <- function (modelo_3, modelo_4) {
+#   L0 <- logLik(modelo_3)
+#   L1 <- logLik(modelo_4)
+#   L01 <- as.vector(- 2 * (L0 - L1))
+#   df <- attr(L1, "df") - attr(L0, "df")
+#   list(L01 = L01, df = df,
+#        "p-value" = pchisq(L01, df, lower.tail = FALSE))
+#   }
+# lrt(modelo_3, modelo_4)
+# 
+# logLik(modelo_3)
+# logLik(modelo_4)
+# 
+# d0 <- deviance(modelo_3)
+# d1 <- deviance(modelo_4)
+# LR <- d0 - d1
+# pchisq(LR, 1, lower = FALSE)
+# anova(modelo_3,modelo_4)
+Anova(modelo_4)
+
+```
+#---- MODELO CON BECK ----
+``` {r,echo=FALSE, message=FALSE}
+library(lme4)
+library(sjPlot)
+library(sjmisc)
+library(car)
+library(carData)
+
+#Modelo 6.1 con beck web
+#modelo 6.2 con BECK SESION y las variables como numero
+#modelo 6.3 con BECK SESION Y las variables como factores
+
+#Modelo con Beck web
+modelo_6.1 <- glmer(game_type.f~rival.f*scale(Beck_web)*pay_competitive.f+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
+summary(modelo_6.1)
+Anova(modelo_6.1, type = 3)
+#Comparar pendientes del Beck web
+pends_beck_web = emtrends(modelo_6.1,~rival.f,var="Beck_web")
+contrast(pends_beck_web,method="pairwise",adjust = "holm")
+
+pends_beck_web = emtrends(modelo_6.1,~pay_competitive.f,var="Beck_web")
+contrast(pends_beck_web,method="pairwise",adjust = "holm")
+
+#tab_model(modelo_6.1)
+tab_model(modelo_6.1)
+plot_model(modelo_6.1)
+#Modelo con beck SESION parametros numericos y esclados
+modelo_6.2 <- glmer(game_type.f~scale(rival.n)*scale(BECK_SESION)*scale(pay_competitive.n)+sexo+edad+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
+summary(modelo_6.2)
+
+Anova(modelo_6.2, type = 3)
+#tab_model(modelo_6.2)
+sjPlot::tab_model(modelo_6.2)
+sjPlot::plot_model(modelo_6.2)
+
+anova(modelo_6.1,modelo_6.2)
+
+#Modolo con factores
+modelo_6.3 <- glmer(game_type.f~rival.f*scale(BECK_SESION)*pay_competitive.f+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
+summary(modelo_6.3)
+Anova(modelo_6.3, type = 3)
+
+anova(modelo_6.2,modelo_6.3)
+#comparar pendientes
+pends_beck = emtrends(modelo_6.2,~rival.f,var="BECK_SESION")
+contrast(pends_beck,method="pairwise",adjust = "holm")
+
+# Likelihood ratio test
+lrt <- function (modelo_6.1, modelo_6.2) {
+  L0 <- logLik(modelo_6.1)
+  L1 <- logLik(modelo_6.2)
+  L01 <- as.vector(- 2 * (L0 - L1))
+  df <- attr(L1, "df") - attr(L0, "df")
+  list(L01 = L01, df = df,
+       "p-value" = pchisq(L01, df, lower.tail = FALSE))
+  }
+lrt(modelo_6.1, modelo_6.2)
+
+logLik(modelo_6.1)
+logLik(modelo_6.2)
+
+d0 <- deviance(modelo_6.1)
+d1 <- deviance(modelo_6.2)
+LR <- d0 - d1
+pchisq(LR, 1, lower = FALSE)
+anova(modelo_6.1,modelo_6.2)
+
+#calculo grilla de referencia
+game_type.glmer.beck_sesion.rg = ref_grid(modelo_6.3)
+#calculo medias marginales para variable
+game_type.glmer.beck_sesion.emm.rival = emmeans(game_type.glmer.beck_sesion.rg, "rival.n")
+
+game_type.glmer.beck_sesion.emm.pay = emmeans(game_type.glmer.beck_sesion.rg, "pay_competitive.n")
+game_type.glmer.beck_sesion.emm.payrival = emmeans(game_type.glmer.beck_sesion.rg,c("pay_competitive.n", "rival.n"))
+game_type.glmer.beck_sesion.emm.pay_rival = emmeans(game_type.glmer.beck_sesion.rg,"pay_competitive.n", by="rival.n")
+game_type.glmer.beck_sesion.emm.rival_pay = emmeans(game_type.glmer.beck_sesion.rg,by="pay_competitive.n", "rival.n")
+
+summary(game_type.glmer.beck_sesion.emm.rival)
+
+summary(game_type.glmer.beck_sesion.emm.pay)
+
+summary(game_type.glmer.beck_sesion.emm.payrival)
+
+summary(game_type.glmer.beck_sesion.emm.pay_rival)
+
+#contraste 
+contrast(game_type.glmer.beck_sesion.emm.rival, "pairwise")
+contrast(game_type.glmer.beck_sesion.emm.payrival, "pairwise")
+contrast(game_type.glmer.beck_sesion.emm.pay_rival, "pairwise")
+contrast(game_type.glmer.beck_sesion.emm.rival_pay, "pairwise")
+contrast(game_type.glmer.beck_sesion.emm.pay, "pairwise")
+
+#comparar pendientes
+
+pends_beck_sesion = emtrends(modelo_6.2,parwise ~rival.n*pay_competitive.n,var="BECK_SESION")
+contrast(pends_beck_sesion,method="pairwise",adjust = "holm")
+
+pends_beck_sesion = emtrends(modelo_6.2,~pay_competitive.n,var="BECK_SESION")
+contrast(pends_beck_sesion,method="pairwise",adjust = "holm")
+
+```
+
+```{r}
+library(ggeffects)
+#1. Interpretación de la interacción
+predicciones <- ggpredict(modelo_6.3, terms = c("rival.f",  "pay_competitive.f", "BECK_SESION"))
+plot(predicciones)
+
+library(ggplot2)
+library(ggeffects)
+
+library(ggplot2)
+library(ggeffects)
+
+# Obtener predicciones
+predicciones <- ggpredict(modelo_6.3, terms = c("BECK_SESION", "rival.f", "pay_competitive.f"))
+
+# Graficar con BECK_SESION en el eje X, colores según rival.f y paneles según pay_competitive.f
+ggplot(predicciones, aes(x = x, y = predicted, color = group)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.2, linetype = "dotted") +
+  facet_wrap(~facet, scales = "free_y") +  # Paneles por pay_competitive.f
+  labs(x = "BECK_SESION", y = "Predicción", color = "Rival", fill = "Rival") +
+  theme_minimal()
+
+
+
+```
+```{r}
+# 2. Evaluación del ajuste del modelo
+library(performance)
+r2_nakagawa(modelo_6.2) # R² condicional y marginal (pseudo - r2)
+#comparo con un modelo sin interaccion 
+modelo_sin_interaccion <- glmer(game_type.f ~ rival.n + scale(BECK_SESION) + pay_competitive.n + (1|code), 
+                                data = datosLimpios, family = binomial)
+anova(modelo_6.2, modelo_sin_interaccion, test="Chisq")
+
+
+```
+```{r}
+# 3 Visualizar los efectos
+library(emmeans)
+library(interactions)
+# Definir puntos de interés para cada variable numérica
+emmeans_out <- emmeans(modelo_6.2, ~ rival.n * pay_competitive.n * BECK_SESION, 
+                       at = list(BECK_SESION = c(-1, 0, 1), 
+                                 rival.n = seq(min(datosLimpios$rival.n), max(datosLimpios$rival.n), length.out = 4),
+                                 pay_competitive.n = seq(min(datosLimpios$pay_competitive.n), max(datosLimpios$pay_competitive.n), length.out = 4)))
+emmeans_prob <- summary(emmeans_out, type = "response")
+print(emmeans_prob)
+
+sim_slopes(modelo_6.2, pred = "scale(BECK_SESION)", modx = rival.n, mod2 = pay_competitive.n)
+
+```
+
+```{r}
+library(DHARMa)
+residuos <- simulateResiduals(modelo_6.2)
+plot(residuos)
+
+```
+
+
+
+#---MODELOS CON LSAS ----
+```{r,recho=FALSE,message=FALSE}
+
+#modelo 15
+library(lme4)
+library(sjPlot)
+library(sjmisc)
+library(car)
+library(carData)
+
+
+#modelo_15 <- glm(factor(game_type)~rival.f*pay_competitive.f,data*LSAS_Total = datosLimpios,family = binomial)
+
+
+modelo_15 <- glmer(game_type.f~rival*scale(LSAS_Total)*pay_competitive+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa")) #las variables son factores
+summary(modelo_15)
+Anova(modelo_15, type = 3)
+#tab_model(modelo_15)
+tab_model(modelo_15)
+plot_model(modelo_15)
+#Con LSAS_Fear modelo 15.1
+modelo_15.1 <- glmer(game_type.f~rival*scale(LSAS_Fear)*pay_competitive+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
+summary(modelo_15.1)
+Anova(modelo_15.1, type = 3)
+#tab_model(modelo_15.1)
+sjPlot::tab_model(modelo_15.1)
+plot_model(modelo_15.1)
+#Con LSAS_Anxiety modelo 15.2
+modelo_15.2 <- glmer(game_type.f~rival*scale(LSAS_Anxiety)*pay_competitive+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
+summary(modelo_15.2)
+Anova(modelo_15.2, type = 3)
+#tab_model(modelo_15.2)
+sjPlot::tab_model(modelo_15.2)
+plot_model(modelo_15.2)
+
+# Likelihood ratio test
+lrt <- function (modelo_15.1, modelo_15.2) {
+  L0 <- logLik(modelo_15.1)
+  L1 <- logLik(modelo_15.2)
+  L01 <- as.vector(- 2 * (L0 - L1))
+  df <- attr(L1, "df") - attr(L0, "df")
+  list(L01 = L01, df = df,
+       "p-value" = pchisq(L01, df, lower.tail = FALSE))
+  }
+lrt(modelo_15.1, modelo_15.2)
+
+logLik(modelo_15.1)
+logLik(modelo_15.2)
+
+d0 <- deviance(modelo_15.1)
+d1 <- deviance(modelo_15.2)
+LR <- d0 - d1
+pchisq(LR, 1, lower = FALSE)
+anova(modelo_15.1,modelo_15.2)
+#calculo grilla de referencia
+game_type.glmer.lsas_total.rg = ref_grid(modelo_15)
+game_type.glmer.lsas_fear.rg = ref_grid(modelo_15.1)
+game_type.glmer.lsas_anxiety.rg = ref_grid(modelo_15.2)
+#calculo medias marginales para variable
+game_type.glmer.lsas_total.emm.rival = emmeans(game_type.glmer.lsas_total.rg, "rival")
+game_type.glmer.lsas_fear.emm.rival = emmeans(game_type.glmer.lsas_fear.rg, "rival")
+game_type.glmer.lsas_anxiety.emm.rival = emmeans(game_type.glmer.lsas_anxiety.rg, "rival")
+
+game_type.glmer.lsas_total.emm.pay = emmeans(game_type.glmer.lsas_total.rg, "pay_competitive")
+game_type.glmer.lsas_total.emm.payrival = emmeans(game_type.glmer.lsas_total.rg,c("pay_competitive", "rival"))
+game_type.glmer.lsas_total.emm.pay_rival = emmeans(game_type.glmer.lsas_total.rg,"pay_competitive", by="rival")
+game_type.glmer.lsas_total.emm.rival_pay = emmeans(game_type.glmer.lsas_total.rg,by="pay_competitive", "rival")
+
+game_type.glmer.lsas_fear.emm.pay = emmeans(game_type.glmer.lsas_fear.rg, "pay_competitive")
+game_type.glmer.lsas_anxiety.emm.pay = emmeans(game_type.glmer.lsas_anxiety.rg, "pay_competitive")
+
+summary(game_type.glmer.lsas_total.emm.rival)
+summary(game_type.glmer.lsas_fear.emm.rival)
+summary(game_type.glmer.lsas_anxiety.emm.rival)
+
+summary(game_type.glmer.lsas_total.emm.pay)
+summary(game_type.glmer.lsas_fear.emm.pay)
+summary(game_type.glmer.lsas_anxiety.emm.pay)
+
+#contraste 
+contrast(game_type.glmer.lsas_total.emm.rival, "pairwise")
+contrast(game_type.glmer.lsas_total.emm.payrival, "pairwise")
+contrast(game_type.glmer.lsas_total.emm.pay_rival, "pairwise")
+contrast(game_type.glmer.lsas_total.emm.rival_pay, "pairwise")
+
+contrast(game_type.glmer.lsas_fear.emm.rival, "pairwise")
+contrast(game_type.glmer.lsas_anxiety.emm.rival, "pairwise")
+
+contrast(game_type.glmer.lsas_total.emm.pay, "pairwise")
+contrast(game_type.glmer.lsas_fear.emm.pay, "pairwise")
+contrast(game_type.glmer.lsas_anxiety.emm.pay, "pairwise")
+
+
+#comparar pendientes para pagos
+pends_lsas = emtrends(modelo_15, 
+                       pairwise ~ pay_competitive, # Interacción con rival
+                       var = "LSAS_Total")
+contrast(pends_lsas,method="pairwise",adjust = "holm")
+# Extraer las tendencias estimadas
+tendencias_summary <- summary(pends_lsas$emtrends)
+
+# Graficar con ggplot2
+library(ggplot2)
+
+ggplot(tendencias_summary, aes(x = pay_competitive, y = LSAS_Total.trend)) +
+  geom_point(size = 3, color = "blue") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  labs(title = "Tendencias de LSAS Total por niveles de recompensa",
+       x = "pago",
+       y = "Pendiente de LSAS_Total") +
+  theme_minimal()
+```
+```{r}
+library(emmeans)
+
+# Calcular tendencias de LSAS_Total por niveles de rival
+tendencias <- emtrends(modelo_15, 
+                       pairwise ~ rival, # Interacción con rival
+                       var = "LSAS_Total")
+contrast(tendencias,method="pairwise",adjust = "holm")
+# Mostrar resultados
+print(tendencias)
+
+# Extraer las tendencias estimadas
+tendencias_summary <- summary(tendencias$emtrends)
+
+# Graficar con ggplot2
+library(ggplot2)
+
+ggplot(tendencias_summary, aes(x = rival, y = LSAS_Total.trend)) +
+  geom_point(size = 3, color = "blue") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  labs(title = "Tendencias de LSAS Total por niveles de rival",
+       x = "Rival",
+       y = "Pendiente de LSAS_Total") +
+  theme_minimal()
+
+save.image("./GLM.RData")
+
+```
+

@@ -1,0 +1,28 @@
+Linear mixed model fit by REML. t-tests use Satterthwaite's method ['lmerModLmerTest']
+Formula: mean_intensity ~ PCA * contrast + (1 | codigo)
+   Data: df_model
+
+REML criterion at convergence: 651.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.2960 -0.3539 -0.0076  0.3463  4.6406 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ codigo   (Intercept) 0.6096   0.7807  
+ Residual             0.4844   0.6960  
+Number of obs: 234, groups:  codigo, 117
+
+Fixed effects:
+                Estimate Std. Error        df t value Pr(>|t|)
+(Intercept)     -0.15372    0.09670 175.50532  -1.590    0.114
+PCA             -0.01091    0.05695 175.50532  -0.192    0.848
+contrastMM       0.07018    0.09100 115.00000   0.771    0.442
+PCA:contrastMM   0.01692    0.05359 115.00000   0.316    0.753
+
+Correlation of Fixed Effects:
+            (Intr) PCA    cntrMM
+PCA         -0.009              
+contrastMM  -0.471  0.004       
+PCA:cntrsMM  0.004 -0.471 -0.009

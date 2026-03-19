@@ -1,0 +1,106 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWxvXzQgPC0gZ2xtZXIoZmFjdG9yKGdhbWVfdHlwZSl+cGF5X2NvbXBldGl0aXZlLmYqcml2YWwuZisoMXxjb2RlKSxkYXRhID0gZGF0b3NMaW1waW9zLGZhbWlseSA9IGJpbm9taWFsLGNvbnRyb2w9Z2xtZXJDb250cm9sKG9wdEN0cmw9bGlzdChtYXhmdW4gPSAxMDAwMDApLG9wdGltaXplciA9IFwiYm9ieXFhXCIpKVxuIyB0YWJfbW9kZWwobW9kZWxvXzMsbW9kZWxvXzQpXG4jIHBsb3RfbW9kZWwobW9kZWxvXzMpXG50YWJfbW9kZWwobW9kZWxvXzQpXG5wbG90X21vZGVsKG1vZGVsb180KVxuI2NhbGN1bG8gZ3JpbGxhIGRlIHJlZmVyZW5jaWFcblxuZ2FtZV90eXBlLmdsbWVyLnJnID0gcmVmX2dyaWQobW9kZWxvXzQpXG5cblxuI2NhbGN1bG8gbWVkaWFzIG1hcmdpbmFsZXMgXG5nYW1lX3R5cGUuZ2xtZXIuZW1tLnBheV9jb21wZXRpdGl2ZSA9IGVtbWVhbnMoZ2FtZV90eXBlLmdsbWVyLnJnLCBwYWlyd2lzZX5cInBheV9jb21wZXRpdGl2ZS5mXCIpXG5zdW1tYXJ5KGdhbWVfdHlwZS5nbG1lci5lbW0ucGF5X2NvbXBldGl0aXZlKVxuXG5nYW1lX3R5cGUuZ2xtZXIuZW1tLnJpdmFsID0gZW1tZWFucyhnYW1lX3R5cGUuZ2xtZXIucmcsIHBhaXJ3aXNlflwicml2YWwuZlwiKVxuc3VtbWFyeShnYW1lX3R5cGUuZ2xtZXIuZW1tLnJpdmFsKVxuXG5cblxuXG5jb250cmFzdChnYW1lX3R5cGUuZ2xtZXIuZW1tLnBheV9jb21wZXRpdGl2ZSwgXCJwYWlyd2lzZVwiKVxuY29udHJhc3QoZ2FtZV90eXBlLmdsbWVyLmVtbS5yaXZhbCwgXCJwYWlyd2lzZVwiKVxuXG4jIFJlc3VsdHMgYXJlIGdpdmVuIG9uIHRoZSBsb2cgb2RkcyByYXRpbyAobm90IHRoZSByZXNwb25zZSkgc2NhbGUuIFxuIyBQIHZhbHVlIGFkanVzdG1lbnQ6IHR1a2V5IG1ldGhvZCBmb3IgY29tcGFyaW5nIGEgZmFtaWx5IG9mIDUgZXN0aW1hdGVzIFxuIFxuXG4jIExpa2VsaWhvb2QgcmF0aW8gdGVzdFxuIyBscnQgPC0gZnVuY3Rpb24gKG1vZGVsb18zLCBtb2RlbG9fNCkge1xuIyAgIEwwIDwtIGxvZ0xpayhtb2RlbG9fMylcbiMgICBMMSA8LSBsb2dMaWsobW9kZWxvXzQpXG4jICAgTDAxIDwtIGFzLnZlY3RvcigtIDIgKiAoTDAgLSBMMSkpXG4jICAgZGYgPC0gYXR0cihMMSwgXCJkZlwiKSAtIGF0dHIoTDAsIFwiZGZcIilcbiMgICBsaXN0KEwwMSA9IEwwMSwgZGYgPSBkZixcbiMgICAgICAgIFwicC12YWx1ZVwiID0gcGNoaXNxKEwwMSwgZGYsIGxvd2VyLnRhaWwgPSBGQUxTRSkpXG4jICAgfVxuIyBscnQobW9kZWxvXzMsIG1vZGVsb180KVxuIyBcbiMgbG9nTGlrKG1vZGVsb18zKVxuIyBsb2dMaWsobW9kZWxvXzQpXG4jIFxuIyBkMCA8LSBkZXZpYW5jZShtb2RlbG9fMylcbiMgZDEgPC0gZGV2aWFuY2UobW9kZWxvXzQpXG4jIExSIDwtIGQwIC0gZDFcbiMgcGNoaXNxKExSLCAxLCBsb3dlciA9IEZBTFNFKVxuIyBhbm92YShtb2RlbG9fMyxtb2RlbG9fNClcbkFub3ZhKG1vZGVsb180KVxuXG5gYGAifQ== -->
+
+```r
+modelo_4 <- glmer(factor(game_type)~pay_competitive.f*rival.f+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = \"bobyqa\"))
+# tab_model(modelo_3,modelo_4)
+# plot_model(modelo_3)
+tab_model(modelo_4)
+plot_model(modelo_4)
+#calculo grilla de referencia
+
+game_type.glmer.rg = ref_grid(modelo_4)
+
+
+#calculo medias marginales 
+game_type.glmer.emm.pay_competitive = emmeans(game_type.glmer.rg, pairwise~\"pay_competitive.f\")
+summary(game_type.glmer.emm.pay_competitive)
+
+game_type.glmer.emm.rival = emmeans(game_type.glmer.rg, pairwise~\"rival.f\")
+summary(game_type.glmer.emm.rival)
+
+
+
+
+contrast(game_type.glmer.emm.pay_competitive, \"pairwise\")
+contrast(game_type.glmer.emm.rival, \"pairwise\")
+
+# Results are given on the log odds ratio (not the response) scale. 
+# P value adjustment: tukey method for comparing a family of 5 estimates 
+ 
+
+# Likelihood ratio test
+# lrt <- function (modelo_3, modelo_4) {
+#   L0 <- logLik(modelo_3)
+#   L1 <- logLik(modelo_4)
+#   L01 <- as.vector(- 2 * (L0 - L1))
+#   df <- attr(L1, \"df\") - attr(L0, \"df\")
+#   list(L01 = L01, df = df,
+#        \"p-value\" = pchisq(L01, df, lower.tail = FALSE))
+#   }
+# lrt(modelo_3, modelo_4)
+# 
+# logLik(modelo_3)
+# logLik(modelo_4)
+# 
+# d0 <- deviance(modelo_3)
+# d1 <- deviance(modelo_4)
+# LR <- d0 - d1
+# pchisq(LR, 1, lower = FALSE)
+# anova(modelo_3,modelo_4)
+Anova(modelo_4)
+
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+modelo_4 <- glmer(factor(game_type)~pay_competitive.f*rival.f+(1|code),data = datosLimpios,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = \"bobyqa\"))
+# tab_model(modelo_3,modelo_4)
+# plot_model(modelo_3)
+tab_model(modelo_4)
+plot_model(modelo_4)
+#calculo grilla de referencia
+
+game_type.glmer.rg = ref_grid(modelo_4)
+
+
+#calculo medias marginales 
+game_type.glmer.emm.pay_competitive = emmeans(game_type.glmer.rg, pairwise~\"pay_competitive.f\")
+summary(game_type.glmer.emm.pay_competitive)
+
+game_type.glmer.emm.rival = emmeans(game_type.glmer.rg, pairwise~\"rival.f\")
+summary(game_type.glmer.emm.rival)
+
+
+
+
+contrast(game_type.glmer.emm.pay_competitive, \"pairwise\")
+contrast(game_type.glmer.emm.rival, \"pairwise\")
+
+# Results are given on the log odds ratio (not the response) scale. 
+# P value adjustment: tukey method for comparing a family of 5 estimates 
+ 
+
+# Likelihood ratio test
+# lrt <- function (modelo_3, modelo_4) {
+#   L0 <- logLik(modelo_3)
+#   L1 <- logLik(modelo_4)
+#   L01 <- as.vector(- 2 * (L0 - L1))
+#   df <- attr(L1, \"df\") - attr(L0, \"df\")
+#   list(L01 = L01, df = df,
+#        \"p-value\" = pchisq(L01, df, lower.tail = FALSE))
+#   }
+# lrt(modelo_3, modelo_4)
+# 
+# logLik(modelo_3)
+# logLik(modelo_4)
+# 
+# d0 <- deviance(modelo_3)
+# d1 <- deviance(modelo_4)
+# LR <- d0 - d1
+# pchisq(LR, 1, lower = FALSE)
+# anova(modelo_3,modelo_4)
+Anova(modelo_4)
+
+```"

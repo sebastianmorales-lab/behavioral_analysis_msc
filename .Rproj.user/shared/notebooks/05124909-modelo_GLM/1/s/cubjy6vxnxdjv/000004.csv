@@ -1,0 +1,14 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG53cml0ZS5jc3YoYzMsIGhlcmU6OmhlcmUoXCJkYXRhL3JlY29tcGVuc2EuY3N2XCIpKVxuYGBgIn0= -->
+
+```r
+
+write.csv(c3, here::here(\"data/recompensa.csv\"))
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+
+write.csv(c3, here::here(\"data/recompensa.csv\"))
+```"

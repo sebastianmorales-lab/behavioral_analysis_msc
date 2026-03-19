@@ -1,0 +1,58 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ2VmZmVjdHMpXG4jMS4gSW50ZXJwcmV0YWNpw7NuIGRlIGxhIGludGVyYWNjacOzblxucHJlZGljY2lvbmVzIDwtIGdncHJlZGljdChtb2RlbG9fNi4zLCB0ZXJtcyA9IGMoXCJyaXZhbC5mXCIsICBcInBheV9jb21wZXRpdGl2ZS5mXCIsIFwiQkVDS19TRVNJT05cIikpXG5wbG90KHByZWRpY2Npb25lcylcblxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShnZ2VmZmVjdHMpXG5cbmxpYnJhcnkoZ2dwbG90MilcbmxpYnJhcnkoZ2dlZmZlY3RzKVxuXG4jIE9idGVuZXIgcHJlZGljY2lvbmVzXG5wcmVkaWNjaW9uZXMgPC0gZ2dwcmVkaWN0KG1vZGVsb182LjMsIHRlcm1zID0gYyhcIkJFQ0tfU0VTSU9OXCIsIFwicml2YWwuZlwiLCBcInBheV9jb21wZXRpdGl2ZS5mXCIpKVxuXG4jIEdyYWZpY2FyIGNvbiBCRUNLX1NFU0lPTiBlbiBlbCBlamUgWCwgY29sb3JlcyBzZWfDum4gcml2YWwuZiB5IHBhbmVsZXMgc2Vnw7puIHBheV9jb21wZXRpdGl2ZS5mXG5nZ3Bsb3QocHJlZGljY2lvbmVzLCBhZXMoeCA9IHgsIHkgPSBwcmVkaWN0ZWQsIGNvbG9yID0gZ3JvdXApKSArXG4gIGdlb21fbGluZSgpICtcbiAgZ2VvbV9yaWJib24oYWVzKHltaW4gPSBjb25mLmxvdywgeW1heCA9IGNvbmYuaGlnaCwgZmlsbCA9IGdyb3VwKSwgYWxwaGEgPSAwLjIsIGxpbmV0eXBlID0gXCJkb3R0ZWRcIikgK1xuICBmYWNldF93cmFwKH5mYWNldCwgc2NhbGVzID0gXCJmcmVlX3lcIikgKyAgIyBQYW5lbGVzIHBvciBwYXlfY29tcGV0aXRpdmUuZlxuICBsYWJzKHggPSBcIkJFQ0tfU0VTSU9OXCIsIHkgPSBcIlByZWRpY2Npw7NuXCIsIGNvbG9yID0gXCJSaXZhbFwiLCBmaWxsID0gXCJSaXZhbFwiKSArXG4gIHRoZW1lX21pbmltYWwoKVxuXG5cblxuYGBgIn0= -->
+
+```r
+library(ggeffects)
+#1. Interpretación de la interacción
+predicciones <- ggpredict(modelo_6.3, terms = c(\"rival.f\",  \"pay_competitive.f\", \"BECK_SESION\"))
+plot(predicciones)
+
+library(ggplot2)
+library(ggeffects)
+
+library(ggplot2)
+library(ggeffects)
+
+# Obtener predicciones
+predicciones <- ggpredict(modelo_6.3, terms = c(\"BECK_SESION\", \"rival.f\", \"pay_competitive.f\"))
+
+# Graficar con BECK_SESION en el eje X, colores según rival.f y paneles según pay_competitive.f
+ggplot(predicciones, aes(x = x, y = predicted, color = group)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.2, linetype = \"dotted\") +
+  facet_wrap(~facet, scales = \"free_y\") +  # Paneles por pay_competitive.f
+  labs(x = \"BECK_SESION\", y = \"Predicción\", color = \"Rival\", fill = \"Rival\") +
+  theme_minimal()
+
+
+
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+library(ggeffects)
+#1. Interpretación de la interacción
+predicciones <- ggpredict(modelo_6.3, terms = c(\"rival.f\",  \"pay_competitive.f\", \"BECK_SESION\"))
+plot(predicciones)
+
+library(ggplot2)
+library(ggeffects)
+
+library(ggplot2)
+library(ggeffects)
+
+# Obtener predicciones
+predicciones <- ggpredict(modelo_6.3, terms = c(\"BECK_SESION\", \"rival.f\", \"pay_competitive.f\"))
+
+# Graficar con BECK_SESION en el eje X, colores según rival.f y paneles según pay_competitive.f
+ggplot(predicciones, aes(x = x, y = predicted, color = group)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.2, linetype = \"dotted\") +
+  facet_wrap(~facet, scales = \"free_y\") +  # Paneles por pay_competitive.f
+  labs(x = \"BECK_SESION\", y = \"Predicción\", color = \"Rival\", fill = \"Rival\") +
+  theme_minimal()
+
+
+
+```"

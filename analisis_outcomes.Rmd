@@ -1,0 +1,560 @@
+---
+title: "analisis_outcomes"
+author: "Sebastián Morales"
+date: "27/05/2025"
+output:
+  html_notebook: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#----Modelos para analisis de outcomes----
+
+```{r, echo=FALSE, message=FALSE, comment=FALSE, warning=FALSE}
+library(reshape2)
+library(tidyverse)
+library(stringr)
+library(ez)
+library(lme4)
+library(lmerTest)
+library(car)
+library(emmeans)
+library(ggplot2)
+library(plyr)
+library(cowplot)
+library(ggpubr)
+library(plotrix)
+library(geomtextpath)
+```
+
+#--- Levantar datos---
+
+levanto los datos del csv y lo convierto en un data frame, y hago factor el codigo
+
+```{r , echo=FALSE}
+emocionales = read.csv("./emocionales/emocionales.csv")
+emocionales$codigo=as.factor(emocionales$codigo)
+psicologicos = read.csv("./psicologicos/psicologicos.csv")
+cuestionarios = right_join(x=emocionales, y= psicologicos, by= "codigo")
+```
+
+#--- Analisis mediante modelos lineales (con Beck)---
+
+```{r echo=F, message=F, comment=F}
+# Definir colores para las líneas de tendencia según las variables
+colores_lineas <- c("green", "yellow", "orange", "red")  # Colores para bb, bm, mb y mm respectivamente
+etiquetas_lineas <- c("bb", "bm", "mb", "mm")
+
+analyse_emotion <- function(name, col_ref) {
+  col_emocion_desde = which(colnames(cuestionarios) == col_ref)
+  col_emocion_hasta = col_emocion_desde + 3
+  
+  emocion_wide = cuestionarios[, c(
+    which(colnames(cuestionarios) == "codigo"),
+    col_emocion_desde:col_emocion_hasta
+  )]
+  
+  emocion_wide <- emocion_wide[complete.cases(emocion_wide),]
+  
+  colnames(emocion_wide) <- c("codigo", "emocion_bb", "emocion_bm", "emocion_mb", "emocion_mm")
+  
+  emocion = melt(emocion_wide, id = c("codigo"))
+  emocion$value = as.numeric(emocion$value)
+  
+  emocion <- merge(emocion, cuestionarios[, c("codigo", "Beck_web", "sexo")], by = "codigo")
+  # Definir los colores para las líneas de tendencia
+colores <- c("green", "yellow", "orange", "red")
+# Convertir la variable 'sexo' a factor para usarla como linetype
+emocion$sexo <- as.factor(emocion$sexo)
+  
+  # Código para el gráfico de barras original
+  datosGrafico = ddply(emocion, c("variable"), summarize, media = mean(value, na.rm = T), sd = std.error(value, na.rm = T))
+  graficoBarra = ggplot(data = datosGrafico, mapping = aes(x = variable, y = media)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_errorbar(mapping = aes(ymin = pmax(media - sd, 0), ymax = media + sd), position = "dodge") +
+    scale_x_discrete(labels = c("bb", "bm", "mb", "mm")) +
+    ylab("Media Emocion Reportada") +
+    theme(axis.title.x = element_blank(), axis.text.x = element_text(size = 18),
+          strip.text = element_text(family = 'Anton', face = 'bold', size = 24, hjust = 0)) +
+    scale_y_continuous(limits = c(-1, 8)) +
+    ggtitle(paste(name, " - Gráfico de Barras Original"))
+  
+  plot(graficoBarra)
+# Código gráfico de dispersión con líneas de tendencia separadas por sexo y por variable
+graficoDispersion <- ggplot(data = emocion, aes(x = Beck_web, y = value, color = variable)) + #linetype = sexo
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ x, size = 1, alpha = 0.5, se = FALSE) +
+  scale_color_manual(values = c("blue", "pink", "green", "orange", "red")) +  # Colores para las variables
+  scale_linetype_manual(values = c("solid", "dashed")) +  # Tipo de línea para sexo (M y F)
+  ylab("Valor Emoción") +
+  theme_minimal() +  # Cambiar tema si lo deseas
+  ggtitle("Gráfico de Dispersión con Líneas de Tendencia Separadas por Sexo y Variable")
+
+# Mostrar el gráfico corregido
+print(graficoDispersion)
+
+  
+  emocion$resultadoParticipante_bool = factor(str_detect(emocion$variable, "emocion_b."))
+  emocion$resultadoParticipante = as.factor(ifelse(emocion$resultadoParticipante_bool == T, 'b', 'm'))
+  
+  emocion$resultadoCojugador_bool = factor(str_detect(emocion$variable, "emocion_.b"))
+  emocion$resultadoCojugador = as.factor(ifelse(emocion$resultadoCojugador_bool == T, 'b', 'm'))
+  
+  modelo = lmer(data = emocion, value ~ resultadoCojugador * resultadoParticipante * Beck_web + (1 | codigo))
+  print(summary(modelo))
+  anovaOutcome = Anova(modelo, type = 3, test.statistic = "F")
+  modelo.ref.grid = ref_grid(modelo)
+  print(name)
+  print(anovaOutcome)
+  plot(modelo)
+  print(emmeans(modelo.ref.grid, ~ resultadoParticipante))
+  print(emmeans(modelo.ref.grid, ~ resultadoCojugador))
+  print(emmeans(modelo.ref.grid, pairwise ~ resultadoParticipante * resultadoCojugador))
+  print(emmeans(modelo.ref.grid, ~ resultadoParticipante * resultadoCojugador))
+  print(emmeans(modelo.ref.grid, pairwise ~ resultadoParticipante * resultadoCojugador))
+  
+  return(modelo.ref.grid)
+}
+
+```
+
+##Se define la funcion analyse_emotion. Hace los gaficos y los calculos estadisticos para las distintas emociones.
+
+```{r , echo=F}
+  analyse_emotion <- function(name, col_ref) {
+    col_emocion_desde = which(colnames(cuestionarios)==col_ref);
+    col_emocion_hasta = col_emocion_desde + 3;
+    
+    emocion_wide = cuestionarios[,c(
+      which(colnames(cuestionarios)=="codigo"),
+  #    which(colnames(cuestionarios)=="clinico"),
+  #    which(colnames(cuestionarios)=="Grupo"),
+      col_emocion_desde:col_emocion_hasta)];
+    
+    #If there is a N/A in one cell, remove participant in this analysis
+    emocion_wide <- emocion_wide[complete.cases(emocion_wide),];
+    
+    colnames(emocion_wide)<-c("codigo","emocion_bb","emocion_bm","emocion_mb","emocion_mm")
+    
+    emocion=melt(emocion_wide,id=c("codigo"))
+    emocion$value = as.numeric(emocion$value)
+    
+    # Merge Beck_web from cuestionarios to emocion based on codigo
+    emocion <- merge(emocion, cuestionarios[, c("codigo", "Beck_web")], by = "codigo")
+    
+   datosGrafico = ddply(emocion,c("variable"),summarize,media=mean(value,na.rm=T),sd = std.error(value,na.rm=T))
+   graficoOutcome = ggplot(data = datosGrafico, mapping = aes(x = variable, y = media))
+      
+    graficoOutcome=graficoOutcome + geom_bar(stat = "identity", position = "dodge") + geom_errorbar(mapping = aes(x=variable,ymin=pmax(media-sd,0),ymax=media+sd),position = "dodge") +
+      #scale_fill_discrete(labels=c("control","clinico")) +
+     scale_x_discrete(labels=c("bb", "bm","mb","mm")) +
+      ylab("Media Emocion Reportada") + 
+      theme (axis.title.x=element_blank(), axis.text.x = element_text(size = 18),
+            strip.text=element_text(family='Anton', face='bold', size=24, hjust=0)) +
+              scale_y_continuous(limits = c(-1,8)) + ggtitle(name)
+    plot(graficoOutcome)
+  
+  # element_blank()
+  emocion$resultadoParticipante_bool = factor(str_detect(emocion$variable, "emocion_b."))
+  emocion$resultadoParticipante = as.factor(ifelse(emocion$resultadoParticipante_bool==T, 'b', 'm'))
+  
+  emocion$resultadoCojugador_bool=factor(str_detect(emocion$variable, "emocion_.b"))
+  emocion$resultadoCojugador = as.factor(ifelse(emocion$resultadoCojugador_bool==T, 'b', 'm'))
+  
+  #anovaOutcome = ezANOVA(data=emocion, dv = value, wid = codigo,within = c("resultadoParticipante","resultadoCojugador"),between = clinico, type = 3, return_aov=TRUE)
+  modelo = lmer(data=emocion, value~resultadoCojugador*resultadoParticipante+Beck_web+(1|codigo))
+  print(summary(modelo))
+  anovaOutcome=Anova(modelo,type=3,test.statistic = "F")
+  modelo.ref.grid = ref_grid(modelo)
+  print(name)
+  print(anovaOutcome)
+  plot(modelo)
+  #pairwise.t.test(emocion$value,emocion$variable,p.adjust.method = "bonf",paired = TRUE)
+  print(emmeans(modelo.ref.grid,~resultadoParticipante))
+  print(emmeans(modelo.ref.grid,~resultadoCojugador))
+  print(emmeans(modelo.ref.grid,pairwise~resultadoParticipante*resultadoCojugador))
+  print(emmeans(modelo.ref.grid,~resultadoParticipante*resultadoCojugador))
+  print(emmeans(modelo.ref.grid,pairwise~resultadoParticipante*resultadoCojugador))
+  return(modelo.ref.grid)
+}
+```
+# --- FUNCION ANALISIS EMOCIONAL GENERALIZADA ---
+## Se define la emocion y la variable psicologica que se quiere analizar
+```{r}
+analyse_emotion <- function(name, col_ref, variable_psicologica) {
+  # Determinar columnas de interés basadas en el parámetro col_ref
+  col_var_desde <- which(colnames(cuestionarios) == col_ref)
+  col_var_hasta <- col_var_desde + 3
+  
+  # Subset del dataframe con las columnas específicas
+  var_wide <- cuestionarios[, c(
+    which(colnames(cuestionarios) == "codigo"),
+    col_var_desde:col_var_hasta
+  )]
+  
+  # Eliminar participantes con datos incompletos
+  var_wide <- var_wide[complete.cases(var_wide), ]
+  
+  # Renombrar columnas para trabajar con una estructura estándar
+  colnames(var_wide) <- c("codigo", "var_bb", "var_bm", "var_mb", "var_mm")
+  
+  # Transformar a formato largo
+  library(reshape2)
+  emocion <- melt(var_wide, id = c("codigo"))
+  emocion$value <- as.numeric(emocion$value)
+  
+  # Unir con la variable psicológica y limpiar los datos
+  emocion <- merge(emocion, cuestionarios[, c("codigo", variable_psicologica, "sexo","edad")], by = "codigo")
+  emocion[[variable_psicologica]] <- as.numeric(as.character(emocion[[variable_psicologica]]))
+  emocion$edad <- as.numeric(emocion$edad)
+  emocion$sexo <- as.factor(emocion$sexo)
+  emocion <- emocion[complete.cases(emocion[[variable_psicologica]], emocion$value), ]
+  
+  # Resumir datos para la gráfica
+  datosGrafico <- ddply(emocion, c("variable"), summarize,
+                        media = mean(value, na.rm = TRUE),
+                        sd = std.error(value, na.rm = TRUE))
+  
+  # Definir paleta de colores consistente
+  paleta_emociones <- c("#1b9e77", "#d95f02", "#7570b3", "#e7298a")
+  
+  # Ajustar etiqueta de la variable psicológica
+  etiqueta_var <- if(variable_psicologica == "PCA") "Puntuación A-D" else variable_psicologica
+  
+  # Crear gráfico de barras con estilo mejorado y alta resolución
+  graficoOutcome <- ggplot(data = datosGrafico, mapping = aes(x = variable, y = media)) +
+    geom_bar(stat = "identity", position = "dodge", fill = "#6baed6") +
+    geom_errorbar(mapping = aes(x = variable, ymin = pmax(media - sd, 0), ymax = media + sd),
+                  position = "dodge", width = 0.2) +
+    scale_x_discrete(labels = c("bb", "bm", "mb", "mm")) +
+    ylab("Nivel de emoción") +
+    theme_minimal(base_size = 14) +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(size = 13, face = "bold"),
+      axis.text.y = element_text(size = 12),
+      plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+      plot.margin = margin(t = 15, r = 30, b = 15, l = 15), # Aumentado margen derecho para la leyenda
+      legend.position = "right",
+      legend.direction = "vertical",
+      legend.box.spacing = unit(0.5, "cm")
+    ) +
+    scale_y_continuous(limits = c(-1, 8)) +
+    ggtitle(name)
+
+  # Gráfico de dispersión con estilo mejorado y alta resolución
+  graficoDispersion <- ggplot(data = emocion, aes(x = !!sym(variable_psicologica), y = value, color = variable)) +
+    geom_smooth(method = "lm", formula = y ~ x, 
+              size = 1.2,            # Líneas más gruesas
+              alpha = 0.8,           # Más opacas
+              se = FALSE,            # Sin banda de error
+              lineend = "round",     # Extremos redondeados
+              linejoin = "round",    # Uniones redondeadas
+              linemitre = 10) +      # Mejor suavizado en las uniones
+    geom_point(alpha = 0.7, 
+              size = 2.5,
+              stroke = 0.5) +        # Borde de puntos más definido
+    scale_color_manual(
+      values = paleta_emociones, 
+      name = "Condición",
+      labels = c("bb", "bm", "mb", "mm")) +
+    ylab("Nivel de emoción") +
+    xlab(etiqueta_var) +
+    theme_minimal(base_size = 14) +
+    theme(
+      legend.position = "right",
+      legend.direction = "vertical",
+      legend.text = element_text(size = 11),
+      legend.box.spacing = unit(0.5, "cm"),
+      axis.text = element_text(size = 12),
+      plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+      plot.margin = margin(t = 15, r = 30, b = 15, l = 15)
+    ) +
+    ggtitle(paste(name, "vs", etiqueta_var))
+
+  # Configurar dispositivo gráfico para alta resolución
+  options(repr.plot.width = 12, repr.plot.height = 6)
+  
+  # Combinar gráficos usando cowplot con alta resolución
+  grafico_combinado <- plot_grid(
+    graficoOutcome, graficoDispersion,
+    labels = c("A", "B"),
+    nrow = 1,
+    rel_widths = c(1, 1.2),
+    align = 'h',
+    axis = 'b'
+  )
+  
+  # Mostrar gráfico combinado con alta resolución
+  print(grafico_combinado)
+
+  
+  # Crear factores para resultados de participante y cojugador
+  emocion$resultadoParticipante_bool <- factor(str_detect(emocion$variable, "var_b."))
+  emocion$resultadoParticipante <- as.factor(ifelse(emocion$resultadoParticipante_bool == TRUE, 'b', 'm'))
+  
+  emocion$resultadoCojugador_bool <- factor(str_detect(emocion$variable, "var_.b"))
+  emocion$resultadoCojugador <- as.factor(ifelse(emocion$resultadoCojugador_bool == TRUE, 'b', 'm'))
+  
+  # Ajustar modelo lineal mixto
+  formula <- as.formula(paste("value ~ resultadoCojugador * resultadoParticipante *", variable_psicologica, "+ sexo + edad +(1 | codigo)"))
+  modelo <- lmer(formula, data = emocion)
+  anovaOutcome <- Anova(modelo, type = 3, test.statistic = "F")
+  modelo.ref.grid <- ref_grid(modelo)
+  print(summary(modelo))
+  
+  # Resultado Anova y Gráficos
+  print("#### Resultado Anova ####")
+  print(anovaOutcome)
+  
+  # Gráficos del modelo y emmeans
+  plot(modelo)
+  print(emmeans(modelo.ref.grid, ~resultadoParticipante))
+  print(emmeans(modelo.ref.grid, ~resultadoCojugador))
+  print(emmeans(modelo.ref.grid, pairwise ~ resultadoParticipante * resultadoCojugador))
+
+  # Calcular y comparar pendientes (emtrends)
+  print('##### EMTRENDS #####')
+  pends <- emtrends(modelo, ~resultadoParticipante * resultadoCojugador, var = variable_psicologica)
+  print(pends)
+  print(contrast(pends, method = 'pairwise', adjust = 'holm'))
+
+  return(modelo.ref.grid)
+}
+
+
+```
+
+# ---FUNCION ANALISIS EMOCIONAL POR SUJETO---
+##Se define la funcion analyse_emotion_subject. Hace los gaficos para las distintas emociones por sujeto
+
+```{r , echo=F}
+analyse_emotion_subject <- function(name, col_ref) {
+  col_emocion_desde = which(colnames(cuestionarios)==col_ref);
+  col_emocion_hasta = col_emocion_desde + 3;
+  
+  emocion_wide = cuestionarios[,c(
+    which(colnames(cuestionarios)=="codigo"),
+#    which(colnames(cuestionarios)=="clinico"),
+#    which(colnames(cuestionarios)=="Grupo"),
+    col_emocion_desde:col_emocion_hasta)];
+  
+  #If there is a N/A in one cell, remove participant in this analysis
+  emocion_wide <- emocion_wide[complete.cases(emocion_wide),];
+  
+  colnames(emocion_wide)<-c("codigo","emocion_bb","emocion_bm","emocion_mb","emocion_mm")
+  
+  emocion=melt(emocion_wide,id=c("codigo"))
+  emocion$value = as.numeric(emocion$value)
+  
+  
+ datosGrafico = ddply(emocion,c("variable","codigo"),summarize,media=mean (value,na.rm=T),sd = std.error(value,na.rm=T))
+ graficoOutcome = ggplot(data = datosGrafico, mapping = aes(x = variable, y = media, fill =variable))
+    
+  graficoOutcome=graficoOutcome + geom_bar(stat = "identity", position = "dodge") +
+   geom_errorbar(mapping = aes(x=variable,ymin=pmax(media-sd,0),ymax=media+sd),position = "dodge") +
+    #scale_fill_discrete(labels=c("control","clinico")) +
+   scale_x_discrete(labels=c("bb", "bm","mb","mm")) +
+    scale_fill_discrete(labels = c("Participants right, Rival right","Participants right, Rival wrong", "Participants wrong, Rival right","Participants wrong, Rival right"))+
+   
+     ylab("Media Emocion Reportada") + 
+    theme (axis.title.x=element_blank(), axis.text.x = element_text(size = 6),
+          strip.text=element_text(family='Anton', face='bold', size=5, hjust=0),
+         axis.title.y = element_blank(), axis.text.y = element_text(size = 5.2)) +
+            scale_y_continuous(limits = c(-1,8)) + ggtitle(name) + facet_wrap(~codigo)
+  plot(graficoOutcome)
+  # element_blank()
+  emocion$resultadoParticipante_bool = factor(str_detect(emocion$variable, "emocion_b."))
+  emocion$resultadoParticipante = as.factor(ifelse(emocion$resultadoParticipante_bool==T, 'b', 'm'))
+  
+  emocion$resultadoCojugador_bool=factor(str_detect(emocion$variable, "emocion_.b"))
+  emocion$resultadoCojugador = as.factor(ifelse(emocion$resultadoCojugador_bool==T, 'b', 'm'))}
+
+```
+
+##---Elegir la emocion que quieras analizar---
+
+# Felicidad
+
+```{r echo=FALSE, message=FALSE}
+# Felicidad
+felicidad   <- analyse_emotion("felicidad", "Felicidad_bb", "BECK_SESION")
+felicidad   <- analyse_emotion("felicidad", "Felicidad_bb", "LSAS_Total")
+felicidad   <- analyse_emotion("felicidad", "Felicidad_bb", "STAI_ESTADO")
+felicidad   <- analyse_emotion("felicidad", "Felicidad_bb", "STAI_RASGO")
+```
+
+```{r, echo=FALSE, message=FALSE}
+#felicidad PCA
+felicidad   <- analyse_emotion("felicidad", "Felicidad_bb", "PCA")
+```
+
+## Felicidad por sujeto
+
+```{r}
+# Felicidad
+felicidad   <- analyse_emotion_subject("felicidad", "Felicidad_bb")
+```
+
+#Culpa
+
+```{r,echo=FALSE, message=FALSE}
+#culpa
+culpa       <- analyse_emotion("culpa", "Culpa_bb","BECK_SESION")
+culpa       <- analyse_emotion("culpa", "Culpa_bb","LSAS_Total")
+culpa       <- analyse_emotion("culpa", "Culpa_bb","STAI_ESTADO")
+culpa       <- analyse_emotion("culpa", "Culpa_bb","STAI_RASGO")
+
+```
+```{r}
+#PCA
+culpa       <- analyse_emotion("culpa", "Culpa_bb","PCA")
+```
+
+
+## Culpa por sujeto
+
+```{r}
+#culpa
+culpa       <- analyse_emotion_subject("culpa", "Culpa_bb")
+```
+
+#Decepcion
+
+```{r,echo=FALSE, message=FALSE}
+#decepcion
+decepcion       <- analyse_emotion("decepcion", "Decepcion_bb","BECK_SESION")
+decepcion        <- analyse_emotion("decepcion", "Decepcion_bb","LSAS_Total")
+decepcion       <- analyse_emotion("decepcion", "Decepcion_bb","STAI_ESTADO")
+decepcion        <- analyse_emotion("decepcion", "Decepcion_bb","STAI_RASGO")
+```
+```{r}
+#PCA
+decepcion   <- analyse_emotion("decepcion",  "Decepcion_bb", "PCA")
+```
+
+
+## Decepcion por sujeto
+
+```{r}
+#decepcion
+decepcion   <- analyse_emotion_subject("decepcion",  "Decepcion_bb")
+```
+
+# Enojo
+
+```{r,echo=FALSE, message=FALSE}
+#enojo
+enojo      <- analyse_emotion("enojo", "Enojo_bb","BECK_SESION")
+enojo      <- analyse_emotion("enojo", "Enojo_bb","LSAS_Total")
+enojo      <- analyse_emotion("enojo", "Enojo_bb","STAI_ESTADO")
+enojo      <- analyse_emotion("enojo", "Enojo_bb","STAI_RASGO")
+
+```
+
+```{r}
+#PCA
+enojo       <- analyse_emotion("enojo",  "Enojo_bb", "PCA")
+```
+
+
+## Enojo por sujeto
+
+```{r}
+#enojo
+enojo       <- analyse_emotion_subject("enojo",  "Enojo_bb")
+```
+
+# Tristeza
+
+```{r message=FALSE}
+#tristeza
+tristeza    <- analyse_emotion("tristeza",  "Tristeza_bb", "BECK_SESION")
+tristeza    <- analyse_emotion("tristeza",  "Tristeza_bb", "LSAS_Total")
+tristeza    <- analyse_emotion("tristeza",  "Tristeza_bb", "STAI_ESTADO")
+tristeza    <- analyse_emotion("tristeza",  "Tristeza_bb", "STAI_RASGO")
+```
+```{r}
+#PCA
+tristeza    <- analyse_emotion("tristeza",  "Tristeza_bb", "PCA")
+```
+
+
+## Tristeza por sujeto
+
+```{r}
+#tristeza
+tristeza    <- analyse_emotion_subject("tristeza",  "Tristeza_bb")
+```
+
+# Alivio
+
+```{r,echo=FALSE, message=FALSE}
+#alivio
+alivio      <- analyse_emotion("alivio",  "Alivio_bb", "BECK_SESION")
+alivio      <- analyse_emotion("alivio",  "Alivio_bb", "LSAS_Total")
+alivio      <- analyse_emotion("alivio",  "Alivio_bb", "STAI_ESTADO")
+alivio      <- analyse_emotion("alivio",  "Alivio_bb", "STAI_RASGO")
+```
+```{r}
+#PCA
+alivio      <- analyse_emotion("alivio",  "Alivio_bb", "PCA")
+```
+
+## Alivio por sujeto
+
+```{r,echo=FALSE, message=FALSE}
+#alivio
+alivio      <- analyse_emotion_subject("alivio",  "Alivio_bb")
+```
+
+# Vergüenza
+
+```{r,echo=FALSE, message=FALSE}
+#verguenza
+verguenza   <- analyse_emotion("vergüenza",   "Vergüenza_bb", "BECK_SESION")
+verguenza   <- analyse_emotion("vergüenza",   "Vergüenza_bb", "LSAS_Total")
+verguenza   <- analyse_emotion("vergüenza",   "Vergüenza_bb", "STAI_ESTADO")
+verguenza   <- analyse_emotion("vergüenza",   "Vergüenza_bb", "STAI_RASGO")
+```
+
+```{r}
+#PCA
+verguenza   <- analyse_emotion("vergüenza",   "Vergüenza_bb", "PCA")
+
+```
+
+## Vergüenza por sujeto
+
+```{r, echo=FALSE,message=FALSE}
+#verguenza
+verguenza   <- analyse_emotion_subject("verguenza",   "Vergüenza_bb")
+
+```
+
+# Nerviosismo
+
+```{r,echo=FALSE, message=FALSE}
+#nerviosismo
+nerviosismo <- analyse_emotion("nerviosismo", "Nerviosismo_bb","BECK_SESION")
+nerviosismo <- analyse_emotion("nerviosismo", "Nerviosismo_bb","LSAS_Total")
+nerviosismo <- analyse_emotion("nerviosismo", "Nerviosismo_bb","STAI_ESTADO")
+nerviosismo <- analyse_emotion("nerviosismo", "Nerviosismo_bb","STAI_RASGO")
+
+```
+
+```{r}
+#PCA
+nerviosismo <- analyse_emotion("nerviosismo", "Nerviosismo_bb","PCA")
+```
+
+## Nerviosismo por sujeto
+
+```{r, echo=FALSE,message=FALSE}
+#nerviosismo
+nerviosismo <- analyse_emotion_subject("nerviosismo", "Nerviosismo_bb")
+
+```

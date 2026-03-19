@@ -1,0 +1,4373 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={GLM},
+  pdfauthor={Sebastián Morales},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{GLM}
+\author{Sebastián Morales}
+\date{31/10/2024}
+
+\begin{document}
+\maketitle
+
+\hypertarget{modelos}{%
+\subsection{Modelos}\label{modelos}}
+
+\begin{verbatim}
+## 
+## FALSE 
+## 16965
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## competitive  individual 
+##       14216        2749
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## competitive  individual 
+##   0.8379605   0.1620395
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## FALSE 
+## 16965
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##    1    2    3    4 
+## 4240 4244 4237 4244
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##         1         2         3         4 
+## 0.2499263 0.2501621 0.2497495 0.2501621
+\end{verbatim}
+
+\hypertarget{boxplot-y-calculo-de-la-media}{%
+\section{boxplot y calculo de la
+media}\label{boxplot-y-calculo-de-la-media}}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{verbatim}
+## # A tibble: 4 x 2
+##   rival `mean(n)`
+##   <chr>     <dbl>
+## 1 1          28.6
+## 2 2          28.4
+## 3 3          26.4
+## 4 4          24.5
+\end{verbatim}
+
+\hypertarget{grafico-elecciones-competitivas-por-rival}{%
+\section{Grafico elecciones competitivas por
+rival}\label{grafico-elecciones-competitivas-por-rival}}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-3-1.pdf} \#
+Grafico elecciones competitivas por pago
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\hypertarget{lineas-de-tendencia-con-beck-web-segun-rival-}{%
+\section{----Lineas de tendencia con Beck web segun
+rival----}\label{lineas-de-tendencia-con-beck-web-segun-rival-}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Efecto del Beck web en las decisiones segun rival}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+
+\CommentTok{\# Convertir las variables relevantes a los tipos de datos adecuados}
+\NormalTok{datosLimpios }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje\_beck =}\NormalTok{ Beck\_web, }\AttributeTok{tipo\_de\_juego =} \FunctionTok{as.factor}\NormalTok{(game\_type), }\AttributeTok{rival =} \FunctionTok{as.factor}\NormalTok{(rival))}
+
+\CommentTok{\# Filtrar los datos solo para los juegos individuales}
+\NormalTok{datos\_competir }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(tipo\_de\_juego }\SpecialCharTok{==} \StringTok{"competitive"}\NormalTok{)}
+
+\CommentTok{\# Calcular la cantidad de elecciones individuales por sujeto y rival}
+\NormalTok{datos\_rival }\OtherTok{\textless{}{-}}\NormalTok{ datos\_competir }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(rival, code, puntaje\_beck) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{cantidad\_elecciones =} \FunctionTok{n}\NormalTok{())}
+
+\CommentTok{\# Crear el scatterplot con líneas de tendencia por rival y coloridas}
+\FunctionTok{ggplot}\NormalTok{(datos\_rival, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ puntaje\_beck, }\AttributeTok{y =}\NormalTok{ cantidad\_elecciones, }\AttributeTok{color =}\NormalTok{ rival)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ rival)) }\SpecialCharTok{+}  \CommentTok{\# Nadir color a las líneas de tendencia}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Puntaje de Beck"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Cantidad de elecciones competitivas"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Líneas de tendencia por rival"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\hypertarget{lineas-de-tendencia-con-beck-web-segun-pago-}{%
+\section{----Lineas de tendencia con Beck web segun
+pago----}\label{lineas-de-tendencia-con-beck-web-segun-pago-}}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\#Grafico linea de tendencia con Beck Sesion segun rival
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Efecto del BECK SESION en las decisiones segun rival}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+
+\CommentTok{\# Convertir las variables relevantes a los tipos de datos adecuados}
+\NormalTok{datosLimpios }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje\_beck =} \FunctionTok{scale}\NormalTok{(BECK\_SESION), }\AttributeTok{tipo\_de\_juego =} \FunctionTok{as.factor}\NormalTok{(game\_type), }\AttributeTok{rival =} \FunctionTok{as.factor}\NormalTok{(rival), }\AttributeTok{pay\_competitive =} \FunctionTok{as.factor}\NormalTok{(pay\_competitive))}
+
+\CommentTok{\# Filtrar los datos solo para los juegos individuales}
+\NormalTok{datos\_competir }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(tipo\_de\_juego }\SpecialCharTok{==} \StringTok{"competitive"}\NormalTok{)}
+
+\CommentTok{\# Calcular la cantidad de elecciones individuales por sujeto y rival}
+\NormalTok{datos\_rival }\OtherTok{\textless{}{-}}\NormalTok{ datos\_competir }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(rival,pay\_competitive, code, puntaje\_beck) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{cantidad\_elecciones =} \FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'rival', 'pay_competitive', 'code'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear el scatterplot con líneas de tendencia por rival y coloridas}
+\CommentTok{\# Verificar que \textquotesingle{}rival\textquotesingle{} es un factor}
+\NormalTok{datos\_rival}\SpecialCharTok{$}\NormalTok{rival }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(datos\_rival}\SpecialCharTok{$}\NormalTok{rival)}
+
+\CommentTok{\# Asegurarse de que \textquotesingle{}pay\_competitive\textquotesingle{} es un factor}
+\NormalTok{datos\_rival}\SpecialCharTok{$}\NormalTok{pay\_competitive }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(datos\_rival}\SpecialCharTok{$}\NormalTok{pay\_competitive)}
+
+\CommentTok{\# Crear el scatterplot con líneas de tendencia por rival y coloridas}
+\FunctionTok{ggplot}\NormalTok{(datos\_rival, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ puntaje\_beck, }\AttributeTok{y =}\NormalTok{ cantidad\_elecciones, }\AttributeTok{color =}\NormalTok{ rival)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \CommentTok{\#facet\_grid(. \textasciitilde{} pay\_competitive) + \# si quiero separado por nivel de recompensa descomentar esta linea}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ rival)) }\SpecialCharTok{+}  \CommentTok{\# Nadir color a las líneas de tendencia}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Puntaje de Beck"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Cantidad de elecciones competitivas"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Líneas de tendencia por rival"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-7-1.pdf} \#
+Grafico linea de tendencia Beck sesion segun pago
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-8-1.pdf} \#
+Grafico linea de tendencias con LSAS segun rival
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Efecto del LSAS en las decisiones competitivas segun rival}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+
+\CommentTok{\# Convertir las variables relevantes a los tipos de datos adecuados}
+\NormalTok{datosLimpios }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje\_lsas =}\NormalTok{ LSAS\_Total, }\AttributeTok{tipo\_de\_juego =} \FunctionTok{as.factor}\NormalTok{(game\_type), }\AttributeTok{rival =} \FunctionTok{as.factor}\NormalTok{(rival))}
+
+\CommentTok{\# Filtrar los datos solo para los juegos competitivo}
+\NormalTok{datos\_competir }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(tipo\_de\_juego }\SpecialCharTok{==} \StringTok{"competitive"}\NormalTok{)}
+
+\CommentTok{\# Calcular la cantidad de elecciones competitivas por sujeto y rival}
+\NormalTok{datos\_rival }\OtherTok{\textless{}{-}}\NormalTok{ datos\_competir }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(rival, code, puntaje\_lsas) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{cantidad\_elecciones =} \FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'rival', 'code'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear el scatterplot con líneas de tendencia por rival}
+\FunctionTok{ggplot}\NormalTok{(datos\_rival, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ puntaje\_lsas, }\AttributeTok{y =}\NormalTok{ cantidad\_elecciones, }\AttributeTok{color =}\NormalTok{ rival)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ rival)) }\SpecialCharTok{+}  \CommentTok{\#  color a las líneas de tendencia}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Puntaje de LSAS"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Cantidad de elecciones competitivas"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Líneas de tendencia por rival"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-9-1.pdf} \#
+Grafico de linea de tendencia con LSAS segun pago
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Efecto del LSAS en las decisiones segun pago  para elecciones competitivas}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+
+\CommentTok{\# Convertir las variables relevantes a los tipos de datos adecuados}
+\NormalTok{datosLimpios }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{puntaje\_lsas =} \FunctionTok{scale}\NormalTok{(LSAS\_Total), }\AttributeTok{tipo\_de\_juego =} \FunctionTok{as.factor}\NormalTok{(game\_type), }\AttributeTok{nivel\_recompensa =} \FunctionTok{as.factor}\NormalTok{(pay\_competitive))}
+
+\CommentTok{\# Filtrar los datos solo para los juegos competitivo}
+\NormalTok{datos\_competir }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(tipo\_de\_juego }\SpecialCharTok{==} \StringTok{"competitive"}\NormalTok{)}
+
+\CommentTok{\# Calcular la cantidad de elecciones competitivas por sujeto y recompensa}
+\NormalTok{datos\_competir }\OtherTok{\textless{}{-}}\NormalTok{ datos\_competir }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(nivel\_recompensa, code, puntaje\_lsas) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{cantidad\_elecciones =} \FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'nivel_recompensa', 'code'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear el scatterplot con líneas de tendencia por nivel de recompensa }
+\FunctionTok{ggplot}\NormalTok{(datos\_competir, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ puntaje\_lsas, }\AttributeTok{y =}\NormalTok{ cantidad\_elecciones, }\AttributeTok{color =}\NormalTok{ nivel\_recompensa)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ nivel\_recompensa)) }\SpecialCharTok{+}  \CommentTok{\# Añadir color a las líneas de tendencia}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Puntaje de LSAS"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Cantidad de elecciones competitivas"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Líneas de tendencia por nivel de recompensa"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-10-1.pdf}
+\# ---Grafico de barras con variables agrupadas ----
+
+\hypertarget{grafico-de-barras-porcentaje-de-elecciones-competitivas-seguxfan-rival-y-pago-agrupado-por-rival}{%
+\section{Grafico de barras porcentaje de elecciones competitivas según
+rival y pago (agrupado por
+rival)}\label{grafico-de-barras-porcentaje-de-elecciones-competitivas-seguxfan-rival-y-pago-agrupado-por-rival}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(plotrix)}
+\NormalTok{c2 }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(code,game\_type,rival,pay\_competitive) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{())  }
+\NormalTok{c2 }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(game\_type }\SpecialCharTok{==} \StringTok{\textquotesingle{}competitive\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rival =} \FunctionTok{as.factor}\NormalTok{(rival),}
+              \AttributeTok{game\_type =} \FunctionTok{as.factor}\NormalTok{(game\_type),}
+         \AttributeTok{pay\_competitive =} \FunctionTok{as.factor}\NormalTok{(pay\_competitive)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(pay\_competitive, rival) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(n)}\SpecialCharTok{*}\DecValTok{100}\SpecialCharTok{/}\DecValTok{32}\NormalTok{,}
+    \AttributeTok{sd =} \FunctionTok{std.error}\NormalTok{(n),}
+    \AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rival, }\AttributeTok{y =}\NormalTok{ mean, }\AttributeTok{fill =}\NormalTok{ pay\_competitive)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ mean }\SpecialCharTok{{-}}\NormalTok{ sd, }\AttributeTok{ymax =}\NormalTok{ mean }\SpecialCharTok{+}\NormalTok{ sd), }
+    \AttributeTok{position =} \FunctionTok{position\_dodge2}\NormalTok{(}\AttributeTok{padding =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=} \StringTok{\textquotesingle{}categoria del rival\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{y=} \StringTok{\textquotesingle{}porcentaje de elecciones competitivas\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{""}
+\NormalTok{  )}\SpecialCharTok{+} \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{,}\StringTok{"2"}\NormalTok{,}\StringTok{"3"}\NormalTok{,}\StringTok{"4"}\NormalTok{)) }\SpecialCharTok{+}\FunctionTok{scale\_fill\_discrete}\NormalTok{(}\StringTok{"nivel de recompensa"}\NormalTok{,}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"uno"}\NormalTok{,}\StringTok{"dos"}\NormalTok{,}\StringTok{"tres"}\NormalTok{,}\StringTok{"cuatro"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(c2, here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data/rivales\_deplegadoporrival.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{grafico-de-barras-porcentaje-de-elecciones-competitivas-seguxfan-rival-y-pago-agrupado-por-pago}{%
+\section{Grafico de barras porcentaje de elecciones competitivas según
+rival y pago (agrupado por
+pago)}\label{grafico-de-barras-porcentaje-de-elecciones-competitivas-seguxfan-rival-y-pago-agrupado-por-pago}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(plotrix)}
+\NormalTok{d2 }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(code,game\_type,rival,pay\_competitive) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{())  }
+\NormalTok{d2 }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(game\_type }\SpecialCharTok{==} \StringTok{\textquotesingle{}competitive\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rival =} \FunctionTok{as.factor}\NormalTok{(rival),}
+              \AttributeTok{game\_type =} \FunctionTok{as.factor}\NormalTok{(game\_type),}
+         \AttributeTok{pay\_competitive =} \FunctionTok{as.factor}\NormalTok{(pay\_competitive)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(pay\_competitive, rival) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(n)}\SpecialCharTok{*}\DecValTok{100}\SpecialCharTok{/}\DecValTok{32}\NormalTok{,}
+    \AttributeTok{sd =} \FunctionTok{std.error}\NormalTok{(n),}
+    \AttributeTok{n =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ pay\_competitive, }\AttributeTok{y =}\NormalTok{ mean, }\AttributeTok{fill =}\NormalTok{ rival)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ mean }\SpecialCharTok{{-}}\NormalTok{ sd, }\AttributeTok{ymax =}\NormalTok{ mean }\SpecialCharTok{+}\NormalTok{ sd), }
+    \AttributeTok{position =} \FunctionTok{position\_dodge2}\NormalTok{(}\AttributeTok{padding =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=} \StringTok{\textquotesingle{}nivel de recompensa\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{y=} \StringTok{\textquotesingle{}porcentaje de elecciones competitivas\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{""}
+\NormalTok{  )}\SpecialCharTok{+} \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{,}\StringTok{"2"}\NormalTok{,}\StringTok{"3"}\NormalTok{,}\StringTok{"4"}\NormalTok{)) }\SpecialCharTok{+}\FunctionTok{scale\_fill\_discrete}\NormalTok{(}\StringTok{"rival"}\NormalTok{,}
+                                                                      \AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"uno"}\NormalTok{,}\StringTok{"dos"}\NormalTok{,}\StringTok{"tres"}\NormalTok{,}\StringTok{"cuatro"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(d2, here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data/competir\_desplegado\_pago.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{agrupados-por-individual-rival-y-participantes.}{%
+\section{Agrupados por individual, rival y
+participantes.}\label{agrupados-por-individual-rival-y-participantes.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(plotrix)}
+
+\NormalTok{d1 }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(code,game\_type,rival, pay\_competitive) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{())  }
+\NormalTok{d1 }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(game\_type }\SpecialCharTok{==} \StringTok{\textquotesingle{}individual\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{rival =} \FunctionTok{as.factor}\NormalTok{(rival),}
+              \AttributeTok{game\_type =} \FunctionTok{as.factor}\NormalTok{(game\_type),}
+         \AttributeTok{code =} \FunctionTok{as.factor}\NormalTok{(code)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(code, rival) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{sd =} \FunctionTok{std.error}\NormalTok{(n),}
+    \AttributeTok{n =} \FunctionTok{n}\NormalTok{()}\SpecialCharTok{*}\DecValTok{100}\SpecialCharTok{/}\DecValTok{32}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{group\_by}\NormalTok{(code) }\SpecialCharTok{\%\textgreater{}\%} 
+ 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rival, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{fill=}\NormalTok{ rival)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{()) }\SpecialCharTok{+}
+  \CommentTok{\# error bar\_errorbar(}
+  \CommentTok{\#   aes(ymin = n {-} sd, ymax = n + sd),}
+  \CommentTok{\#    position = position\_dodge2(padding = 0.5)}
+  \CommentTok{\# ) + }
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=} \StringTok{\textquotesingle{}code del participante\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{y=} \StringTok{\textquotesingle{}porcentaje de elecciones individuales\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\StringTok{"rivales"}\NormalTok{,}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"uno"}\NormalTok{,}\StringTok{"dos"}\NormalTok{,}\StringTok{"tres"}\NormalTok{,}\StringTok{"cuatro"}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{code)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-13-1.pdf}
+\#Agrupado por individual, recompensa y participante.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(plotrix)}
+
+\NormalTok{d1 }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(code,game\_type,rival, pay\_competitive) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{())  }
+\NormalTok{d1 }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(game\_type }\SpecialCharTok{==} \StringTok{\textquotesingle{}individual\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pay\_competitive =} \FunctionTok{as.factor}\NormalTok{(pay\_competitive),}
+              \AttributeTok{game\_type =} \FunctionTok{as.factor}\NormalTok{(game\_type),}
+         \AttributeTok{code =} \FunctionTok{as.factor}\NormalTok{(code)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(code, pay\_competitive) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{sd =} \FunctionTok{std.error}\NormalTok{(n),}
+    \AttributeTok{n =} \FunctionTok{n}\NormalTok{()}\SpecialCharTok{*}\DecValTok{100}\SpecialCharTok{/}\DecValTok{32}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{group\_by}\NormalTok{(code) }\SpecialCharTok{\%\textgreater{}\%} 
+ 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ pay\_competitive, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{fill=}\NormalTok{ pay\_competitive)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{()) }\SpecialCharTok{+}
+  \CommentTok{\# error bar\_errorbar(}
+  \CommentTok{\#   aes(ymin = n {-} sd, ymax = n + sd),}
+  \CommentTok{\#    position = position\_dodge2(padding = 0.5)}
+  \CommentTok{\# ) + }
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=} \StringTok{\textquotesingle{}code del participante\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{y=} \StringTok{\textquotesingle{}porcentaje de elecciones individuales\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\StringTok{"nivel de recompensa"}\NormalTok{,}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"uno"}\NormalTok{,}\StringTok{"dos"}\NormalTok{,}\StringTok{"tres"}\NormalTok{,}\StringTok{"cuatro"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{code)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\hypertarget{grafico-de-barras-datos-agrupados-segun-tipo-de-juego-approach-o-avoidance}{%
+\section{Grafico de barras datos agrupados segun tipo de juego (approach
+o
+avoidance)}\label{grafico-de-barras-datos-agrupados-segun-tipo-de-juego-approach-o-avoidance}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b4 }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(code,game\_type,) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{()) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'code'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b4 }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{!=} \StringTok{""}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}
+              \AttributeTok{game\_type =} \FunctionTok{as.factor}\NormalTok{(game\_type)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(game\_type) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{mean =} \FunctionTok{mean}\NormalTok{(n)}\SpecialCharTok{*}\DecValTok{100}\SpecialCharTok{/}\DecValTok{128}\NormalTok{,}
+    \AttributeTok{sd =} \FunctionTok{sd}\NormalTok{(n),}
+    \AttributeTok{n =} \FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{se =}\NormalTok{ sd }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(n)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{( }\AttributeTok{x=}\NormalTok{ game\_type, }\AttributeTok{y =}\NormalTok{ mean)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ mean }\SpecialCharTok{{-}}\NormalTok{ se, }\AttributeTok{ymax =}\NormalTok{ mean }\SpecialCharTok{+}\NormalTok{ se),}
+    \AttributeTok{position =} \FunctionTok{position\_dodge2}\NormalTok{(}\AttributeTok{padding =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{y=} \StringTok{\textquotesingle{}media numero de elecciones\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Elecciones según tipo de juego"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(b4,here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data/cantidades\_elecciones.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{tabla-de-outcomes}{%
+\section{Tabla de outcomes}\label{tabla-de-outcomes}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tabla de outcomes}
+
+\FunctionTok{library}\NormalTok{(tidyr)}
+
+\NormalTok{decision\_maker}\OtherTok{\textless{}{-}}\NormalTok{datosLimpios }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{d =}\NormalTok{ game\_type.f) }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{group\_by}\NormalTok{(code,d,nro\_bloque) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{spread}\NormalTok{(d,n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'code', 'd'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{outcomes\_competitive }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{==}\StringTok{"competitive"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{d =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"outcome\_"}\NormalTok{,outcome\_competitive,outcome\_rival))}\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{group\_by}\NormalTok{(code,d,nro\_bloque) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{spread}\NormalTok{(d,n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'code', 'd'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{outcomes\_individual }\OtherTok{\textless{}{-}}\NormalTok{ datosLimpios}\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(game\_type}\SpecialCharTok{==}\StringTok{"individual"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{d =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"outcome\_"}\NormalTok{,outcome\_individual)) }\SpecialCharTok{\%\textgreater{}\%}  \FunctionTok{group\_by}\NormalTok{(code,d,nro\_bloque) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{n=}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{spread}\NormalTok{(d,n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'code', 'd'. You can override using the `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{OUT }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{ (outcomes\_competitive,outcomes\_individual, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{OUT }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(decision\_maker, OUT, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{write.csv}\NormalTok{(OUT,here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{(}\StringTok{"data/decisiones.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{modelos-generalizados--}{%
+\section{----Modelos generalizados ----}\label{modelos-generalizados--}}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = factor(game_type) ~ rival, family = binomial, data = datosLimpios)
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -2.10139    0.04929 -42.637   <2e-16 ***
+## rival2       0.07212    0.06873   1.049    0.294    
+## rival3       0.61252    0.06325   9.684   <2e-16 ***
+## rival4       0.94281    0.06103  15.448   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 15032  on 16964  degrees of freedom
+## Residual deviance: 14683  on 16961  degrees of freedom
+## AIC: 14691
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: factor(game_type) ~ rival + (1 | code)
+##    Data: datosLimpios
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##  11119.6  11158.3  -5554.8  11109.6    16960 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -7.2884 -0.4346 -0.1828 -0.0766 13.0522 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 4.408    2.1     
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -3.12547    0.19598 -15.948   <2e-16 ***
+## rival2       0.10040    0.07861   1.277    0.202    
+## rival3       0.80926    0.07273  11.127   <2e-16 ***
+## rival4       1.25719    0.07087  17.740   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Correlation of Fixed Effects:
+##        (Intr) rival2 rival3
+## rival2 -0.208              
+## rival3 -0.232  0.559       
+## rival4 -0.245  0.574  0.627
+\end{verbatim}
+
+~
+
+factor(game\_type)
+
+factor(game\_type)
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.12
+
+0.11~--~0.13
+
+\textless0.001
+
+0.04
+
+0.03~--~0.06
+
+\textless0.001
+
+rival {[}2{]}
+
+1.07
+
+0.94~--~1.23
+
+0.294
+
+1.11
+
+0.95~--~1.29
+
+0.202
+
+rival {[}3{]}
+
+1.85
+
+1.63~--~2.09
+
+\textless0.001
+
+2.25
+
+1.95~--~2.59
+
+\textless0.001
+
+rival {[}4{]}
+
+2.57
+
+2.28~--~2.90
+
+\textless0.001
+
+3.52
+
+3.06~--~4.04
+
+\textless0.001
+
+Random Effects
+
+σ2
+
+~
+
+3.29
+
+τ00
+
+~
+
+4.41 code
+
+ICC
+
+~
+
+0.57
+
+N
+
+~
+
+134 code
+
+Observations
+
+16965
+
+16965
+
+R2 Tjur
+
+0.021
+
+0.034 / 0.587
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{verbatim}
+##  rival emmean    SE  df asymp.LCL asymp.UCL
+##  1      -3.13 0.196 Inf     -3.51     -2.74
+##  2      -3.03 0.195 Inf     -3.41     -2.64
+##  3      -2.32 0.193 Inf     -2.69     -1.94
+##  4      -1.87 0.191 Inf     -2.24     -1.49
+## 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{verbatim}
+##  contrast        estimate     SE  df z.ratio p.value
+##  rival1 - rival2   -0.100 0.0786 Inf  -1.277  0.5776
+##  rival1 - rival3   -0.809 0.0727 Inf -11.127  <.0001
+##  rival1 - rival4   -1.257 0.0709 Inf -17.740  <.0001
+##  rival2 - rival3   -0.709 0.0713 Inf  -9.943  <.0001
+##  rival2 - rival4   -1.157 0.0694 Inf -16.676  <.0001
+##  rival3 - rival4   -0.448 0.0620 Inf  -7.222  <.0001
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: factor(game_type)
+##              Chisq Df Pr(>Chisq)    
+## (Intercept) 254.34  1  < 2.2e-16 ***
+## rival       445.39  3  < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## $L01
+## [1] 3573.113
+## 
+## $df
+## [1] 1
+## 
+## $`p-value`
+## [1] 0
+\end{verbatim}
+
+\begin{verbatim}
+## 'log Lik.' -7341.359 (df=4)
+\end{verbatim}
+
+\begin{verbatim}
+## 'log Lik.' -5554.803 (df=5)
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: factor(game_type)
+##        Chisq Df Pr(>Chisq)    
+## rival 445.39  3  < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+El modelo 2 es más explicativo que el modelo 1.
+
+\hypertarget{modelo-usado-en-la-tesis-de-grado}{%
+\section{MODELO USADO en la tesis de
+grado}\label{modelo-usado-en-la-tesis-de-grado}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_4 }\OtherTok{\textless{}{-}} \FunctionTok{glmer}\NormalTok{(}\FunctionTok{factor}\NormalTok{(game\_type)}\SpecialCharTok{\textasciitilde{}}\NormalTok{pay\_competitive.f}\SpecialCharTok{*}\NormalTok{rival.f}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{code),}\AttributeTok{data =}\NormalTok{ datosLimpios,}\AttributeTok{family =}\NormalTok{ binomial,}\AttributeTok{control=}\FunctionTok{glmerControl}\NormalTok{(}\AttributeTok{optCtrl=}\FunctionTok{list}\NormalTok{(}\AttributeTok{maxfun =} \DecValTok{100000}\NormalTok{),}\AttributeTok{optimizer =} \StringTok{"bobyqa"}\NormalTok{))}
+\CommentTok{\# tab\_model(modelo\_3,modelo\_4)}
+\CommentTok{\# plot\_model(modelo\_3)}
+\FunctionTok{tab\_model}\NormalTok{(modelo\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+~
+
+factor(game\_type)
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.15
+
+0.10~--~0.24
+
+\textless0.001
+
+pay competitive f {[}2{]}
+
+0.12
+
+0.09~--~0.17
+
+\textless0.001
+
+pay competitive f {[}3{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+pay competitive f {[}4{]}
+
+0.07
+
+0.05~--~0.11
+
+\textless0.001
+
+rival f {[}2{]}
+
+1.44
+
+1.14~--~1.82
+
+0.002
+
+rival f {[}3{]}
+
+2.66
+
+2.11~--~3.36
+
+\textless0.001
+
+rival f {[}4{]}
+
+3.54
+
+2.81~--~4.48
+
+\textless0.001
+
+pay competitive f {[}2{]} ×rival f {[}2{]}
+
+0.72
+
+0.45~--~1.13
+
+0.152
+
+pay competitive f {[}3{]} ×rival f {[}2{]}
+
+0.43
+
+0.24~--~0.77
+
+0.004
+
+pay competitive f {[}4{]} ×rival f {[}2{]}
+
+0.53
+
+0.31~--~0.93
+
+0.025
+
+pay competitive f {[}2{]} ×rival f {[}3{]}
+
+1.64
+
+1.09~--~2.46
+
+0.018
+
+pay competitive f {[}3{]} ×rival f {[}3{]}
+
+0.91
+
+0.56~--~1.47
+
+0.698
+
+pay competitive f {[}4{]} ×rival f {[}3{]}
+
+0.62
+
+0.38~--~1.02
+
+0.061
+
+pay competitive f {[}2{]} ×rival f {[}4{]}
+
+2.26
+
+1.51~--~3.37
+
+\textless0.001
+
+pay competitive f {[}3{]} ×rival f {[}4{]}
+
+1.61
+
+1.02~--~2.54
+
+0.043
+
+pay competitive f {[}4{]} ×rival f {[}4{]}
+
+0.93
+
+0.59~--~1.48
+
+0.763
+
+Random Effects
+
+σ2
+
+3.29
+
+τ00 code
+
+5.87
+
+ICC
+
+0.64
+
+N code
+
+134
+
+Observations
+
+16965
+
+Marginal R2 / Conditional R2
+
+0.170 / 0.702
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_model}\NormalTok{(modelo\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#calculo grilla de referencia}
+
+\NormalTok{game\_type.glmer.rg }\OtherTok{=} \FunctionTok{ref\_grid}\NormalTok{(modelo\_4)}
+
+
+\CommentTok{\#calculo medias marginales }
+\NormalTok{game\_type.glmer.emm.pay\_competitive }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.rg, pairwise}\SpecialCharTok{\textasciitilde{}}\StringTok{"pay\_competitive.f"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: Results may be misleading due to involvement in interactions
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.emm.pay\_competitive)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $emmeans
+##  pay_competitive.f emmean    SE  df asymp.LCL asymp.UCL
+##  1                  -1.23 0.218 Inf     -1.66    -0.808
+##  2                  -3.09 0.224 Inf     -3.53    -2.656
+##  3                  -4.02 0.230 Inf     -4.47    -3.564
+##  4                  -4.13 0.230 Inf     -4.58    -3.682
+## 
+## Results are averaged over the levels of: rival.f 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast                                estimate     SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2    1.860 0.0744 Inf  25.001  <.0001
+##  pay_competitive.f1 - pay_competitive.f3    2.781 0.0930 Inf  29.885  <.0001
+##  pay_competitive.f1 - pay_competitive.f4    2.898 0.0920 Inf  31.488  <.0001
+##  pay_competitive.f2 - pay_competitive.f3    0.921 0.0998 Inf   9.230  <.0001
+##  pay_competitive.f2 - pay_competitive.f4    1.039 0.0987 Inf  10.520  <.0001
+##  pay_competitive.f3 - pay_competitive.f4    0.118 0.1120 Inf   1.053  0.7182
+## 
+## Results are averaged over the levels of: rival.f 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{game\_type.glmer.emm.rival }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.rg, pairwise}\SpecialCharTok{\textasciitilde{}}\StringTok{"rival.f"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: Results may be misleading due to involvement in interactions
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.emm.rival)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $emmeans
+##  rival.f emmean    SE  df asymp.LCL asymp.UCL
+##  1        -3.73 0.228 Inf     -4.18     -3.28
+##  2        -3.82 0.231 Inf     -4.27     -3.36
+##  3        -2.77 0.222 Inf     -3.21     -2.33
+##  4        -2.16 0.220 Inf     -2.59     -1.73
+## 
+## Results are averaged over the levels of: pay_competitive.f 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast            estimate     SE  df z.ratio p.value
+##  rival.f1 - rival.f2   0.0866 0.1100 Inf   0.785  0.8611
+##  rival.f1 - rival.f3  -0.9607 0.0937 Inf -10.255  <.0001
+##  rival.f1 - rival.f4  -1.5695 0.0892 Inf -17.600  <.0001
+##  rival.f2 - rival.f3  -1.0473 0.1000 Inf -10.451  <.0001
+##  rival.f2 - rival.f4  -1.6561 0.0961 Inf -17.239  <.0001
+##  rival.f3 - rival.f4  -0.6088 0.0746 Inf  -8.157  <.0001
+## 
+## Results are averaged over the levels of: pay_competitive.f 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.emm.pay\_competitive, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                                estimate     SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2    1.860 0.0744 Inf  25.001  <.0001
+##  pay_competitive.f1 - pay_competitive.f3    2.781 0.0930 Inf  29.885  <.0001
+##  pay_competitive.f1 - pay_competitive.f4    2.898 0.0920 Inf  31.488  <.0001
+##  pay_competitive.f2 - pay_competitive.f3    0.921 0.0998 Inf   9.230  <.0001
+##  pay_competitive.f2 - pay_competitive.f4    1.039 0.0987 Inf  10.520  <.0001
+##  pay_competitive.f3 - pay_competitive.f4    0.118 0.1120 Inf   1.053  0.7182
+## 
+## Results are averaged over the levels of: rival.f 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.emm.rival, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast            estimate     SE  df z.ratio p.value
+##  rival.f1 - rival.f2   0.0866 0.1100 Inf   0.785  0.8611
+##  rival.f1 - rival.f3  -0.9607 0.0937 Inf -10.255  <.0001
+##  rival.f1 - rival.f4  -1.5695 0.0892 Inf -17.600  <.0001
+##  rival.f2 - rival.f3  -1.0473 0.1000 Inf -10.451  <.0001
+##  rival.f2 - rival.f4  -1.6561 0.0961 Inf -17.239  <.0001
+##  rival.f3 - rival.f4  -0.6088 0.0746 Inf  -8.157  <.0001
+## 
+## Results are averaged over the levels of: pay_competitive.f 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Results are given on the log odds ratio (not the response) scale. }
+\CommentTok{\# P value adjustment: tukey method for comparing a family of 5 estimates }
+ 
+
+\CommentTok{\# Likelihood ratio test}
+\CommentTok{\# lrt \textless{}{-} function (modelo\_3, modelo\_4) \{}
+\CommentTok{\#   L0 \textless{}{-} logLik(modelo\_3)}
+\CommentTok{\#   L1 \textless{}{-} logLik(modelo\_4)}
+\CommentTok{\#   L01 \textless{}{-} as.vector({-} 2 * (L0 {-} L1))}
+\CommentTok{\#   df \textless{}{-} attr(L1, "df") {-} attr(L0, "df")}
+\CommentTok{\#   list(L01 = L01, df = df,}
+\CommentTok{\#        "p{-}value" = pchisq(L01, df, lower.tail = FALSE))}
+\CommentTok{\#   \}}
+\CommentTok{\# lrt(modelo\_3, modelo\_4)}
+\CommentTok{\# }
+\CommentTok{\# logLik(modelo\_3)}
+\CommentTok{\# logLik(modelo\_4)}
+\CommentTok{\# }
+\CommentTok{\# d0 \textless{}{-} deviance(modelo\_3)}
+\CommentTok{\# d1 \textless{}{-} deviance(modelo\_4)}
+\CommentTok{\# LR \textless{}{-} d0 {-} d1}
+\CommentTok{\# pchisq(LR, 1, lower = FALSE)}
+\CommentTok{\# anova(modelo\_3,modelo\_4)}
+\FunctionTok{Anova}\NormalTok{(modelo\_4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: factor(game_type)
+##                              Chisq Df Pr(>Chisq)    
+## pay_competitive.f         1617.250  3  < 2.2e-16 ***
+## rival.f                    505.949  3  < 2.2e-16 ***
+## pay_competitive.f:rival.f   59.959  9  1.365e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\#---- MODELO CON BECK ----
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: game_type.f ~ rival * scale(Beck_web) * pay_competitive + (1 |      code)
+##    Data: datosLimpios
+## Control: glmerControl(optCtrl = list(maxfun = 1e+05), optimizer = "bobyqa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   9056.8   9312.2  -4495.4   8990.8    16932 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -21.344  -0.299  -0.134  -0.035  47.764 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 5.925    2.434   
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##                                          Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                             -1.895871   0.232139  -8.167 3.16e-16 ***
+## rival2                                   0.366747   0.119724   3.063  0.00219 ** 
+## rival3                                   0.989630   0.119393   8.289  < 2e-16 ***
+## rival4                                   1.275009   0.119435  10.675  < 2e-16 ***
+## scale(Beck_web)                          0.002587   0.231763   0.011  0.99109    
+## pay_competitive2                        -2.107978   0.167466 -12.588  < 2e-16 ***
+## pay_competitive3                        -2.668116   0.196381 -13.586  < 2e-16 ***
+## pay_competitive4                        -2.646454   0.197225 -13.418  < 2e-16 ***
+## rival2:scale(Beck_web)                  -0.136659   0.122303  -1.117  0.26383    
+## rival3:scale(Beck_web)                  -0.192485   0.120827  -1.593  0.11114    
+## rival4:scale(Beck_web)                  -0.070938   0.120189  -0.590  0.55504    
+## rival2:pay_competitive2                 -0.334116   0.233457  -1.431  0.15238    
+## rival3:pay_competitive2                  0.481484   0.208655   2.308  0.02102 *  
+## rival4:pay_competitive2                  0.802674   0.204832   3.919 8.90e-05 ***
+## rival2:pay_competitive3                 -0.854373   0.300113  -2.847  0.00442 ** 
+## rival3:pay_competitive3                 -0.105179   0.247367  -0.425  0.67070    
+## rival4:pay_competitive3                  0.457918   0.234722   1.951  0.05107 .  
+## rival2:pay_competitive4                 -0.593541   0.285038  -2.082  0.03731 *  
+## rival3:pay_competitive4                 -0.452766   0.256007  -1.769  0.07697 .  
+## rival4:pay_competitive4                 -0.050959   0.241608  -0.211  0.83295    
+## scale(Beck_web):pay_competitive2         0.083197   0.171408   0.485  0.62741    
+## scale(Beck_web):pay_competitive3         0.188643   0.199095   0.948  0.34338    
+## scale(Beck_web):pay_competitive4         0.458587   0.189816   2.416  0.01569 *  
+## rival2:scale(Beck_web):pay_competitive2  0.269752   0.236933   1.139  0.25490    
+## rival3:scale(Beck_web):pay_competitive2  0.378315   0.211866   1.786  0.07416 .  
+## rival4:scale(Beck_web):pay_competitive2  0.274450   0.207573   1.322  0.18611    
+## rival2:scale(Beck_web):pay_competitive3  0.204408   0.304555   0.671  0.50211    
+## rival3:scale(Beck_web):pay_competitive3  0.140583   0.250642   0.561  0.57487    
+## rival4:scale(Beck_web):pay_competitive3  0.220869   0.236162   0.935  0.34966    
+## rival2:scale(Beck_web):pay_competitive4 -0.140662   0.283196  -0.497  0.61940    
+## rival3:scale(Beck_web):pay_competitive4 -0.267276   0.254134  -1.052  0.29293    
+## rival4:scale(Beck_web):pay_competitive4 -0.082339   0.234613  -0.351  0.72562    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: game_type.f
+##                                          Chisq Df Pr(>Chisq)    
+## (Intercept)                            66.6995  1  3.162e-16 ***
+## rival                                 140.9538  3  < 2.2e-16 ***
+## scale(Beck_web)                         0.0001  1     0.9911    
+## pay_competitive                       362.3212  3  < 2.2e-16 ***
+## rival:scale(Beck_web)                   2.8651  3     0.4129    
+## rival:pay_competitive                  57.6249  9  3.836e-09 ***
+## scale(Beck_web):pay_competitive         6.0763  3     0.1080    
+## rival:scale(Beck_web):pay_competitive   6.5734  9     0.6814    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+~
+
+game\_type.f
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.15
+
+0.10~--~0.24
+
+\textless0.001
+
+rival {[}2{]}
+
+1.44
+
+1.14~--~1.82
+
+0.002
+
+rival {[}3{]}
+
+2.69
+
+2.13~--~3.40
+
+\textless0.001
+
+rival {[}4{]}
+
+3.58
+
+2.83~--~4.52
+
+\textless0.001
+
+Beck web
+
+1.00
+
+0.64~--~1.58
+
+0.991
+
+pay competitive {[}2{]}
+
+0.12
+
+0.09~--~0.17
+
+\textless0.001
+
+pay competitive {[}3{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+pay competitive {[}4{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+rival {[}2{]} × Beck web
+
+0.87
+
+0.69~--~1.11
+
+0.264
+
+rival {[}3{]} × Beck web
+
+0.82
+
+0.65~--~1.05
+
+0.111
+
+rival {[}4{]} × Beck web
+
+0.93
+
+0.74~--~1.18
+
+0.555
+
+rival {[}2{]} × paycompetitive {[}2{]}
+
+0.72
+
+0.45~--~1.13
+
+0.152
+
+rival {[}3{]} × paycompetitive {[}2{]}
+
+1.62
+
+1.08~--~2.44
+
+0.021
+
+rival {[}4{]} × paycompetitive {[}2{]}
+
+2.23
+
+1.49~--~3.33
+
+\textless0.001
+
+rival {[}2{]} × paycompetitive {[}3{]}
+
+0.43
+
+0.24~--~0.77
+
+0.004
+
+rival {[}3{]} × paycompetitive {[}3{]}
+
+0.90
+
+0.55~--~1.46
+
+0.671
+
+rival {[}4{]} × paycompetitive {[}3{]}
+
+1.58
+
+1.00~--~2.50
+
+0.051
+
+rival {[}2{]} × paycompetitive {[}4{]}
+
+0.55
+
+0.32~--~0.97
+
+0.037
+
+rival {[}3{]} × paycompetitive {[}4{]}
+
+0.64
+
+0.38~--~1.05
+
+0.077
+
+rival {[}4{]} × paycompetitive {[}4{]}
+
+0.95
+
+0.59~--~1.53
+
+0.833
+
+Beck web × paycompetitive {[}2{]}
+
+1.09
+
+0.78~--~1.52
+
+0.627
+
+Beck web × paycompetitive {[}3{]}
+
+1.21
+
+0.82~--~1.78
+
+0.343
+
+Beck web × paycompetitive {[}4{]}
+
+1.58
+
+1.09~--~2.29
+
+0.016
+
+(rival {[}2{]} × Beck web) ×pay competitive {[}2{]}
+
+1.31
+
+0.82~--~2.08
+
+0.255
+
+(rival {[}3{]} × Beck web) ×pay competitive {[}2{]}
+
+1.46
+
+0.96~--~2.21
+
+0.074
+
+(rival {[}4{]} × Beck web) ×pay competitive {[}2{]}
+
+1.32
+
+0.88~--~1.98
+
+0.186
+
+(rival {[}2{]} × Beck web) ×pay competitive {[}3{]}
+
+1.23
+
+0.68~--~2.23
+
+0.502
+
+(rival {[}3{]} × Beck web) ×pay competitive {[}3{]}
+
+1.15
+
+0.70~--~1.88
+
+0.575
+
+(rival {[}4{]} × Beck web) ×pay competitive {[}3{]}
+
+1.25
+
+0.79~--~1.98
+
+0.350
+
+(rival {[}2{]} × Beck web) ×pay competitive {[}4{]}
+
+0.87
+
+0.50~--~1.51
+
+0.619
+
+(rival {[}3{]} × Beck web) ×pay competitive {[}4{]}
+
+0.77
+
+0.47~--~1.26
+
+0.293
+
+(rival {[}4{]} × Beck web) ×pay competitive {[}4{]}
+
+0.92
+
+0.58~--~1.46
+
+0.726
+
+Random Effects
+
+σ2
+
+3.29
+
+τ00 code
+
+5.92
+
+ICC
+
+0.64
+
+N code
+
+134
+
+Observations
+
+16965
+
+Marginal R2 / Conditional R2
+
+0.174 / 0.705
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: game_type.f ~ rival * scale(BECK_SESION) * pay_competitive +      (1 | code)
+##    Data: datosLimpios
+## Control: glmerControl(optCtrl = list(maxfun = 1e+05), optimizer = "bobyqa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   9077.9   9333.3  -4506.0   9011.9    16932 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -24.248  -0.298  -0.131  -0.035  39.748 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 5.851    2.419   
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##                                             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                                -1.885388   0.230974  -8.163 3.27e-16 ***
+## rival2                                      0.358635   0.119455   3.002  0.00268 ** 
+## rival3                                      0.979403   0.118897   8.237  < 2e-16 ***
+## rival4                                      1.262290   0.119119  10.597  < 2e-16 ***
+## scale(BECK_SESION)                         -0.003064   0.231306  -0.013  0.98943    
+## pay_competitive2                           -2.119499   0.169454 -12.508  < 2e-16 ***
+## pay_competitive3                           -2.674110   0.198389 -13.479  < 2e-16 ***
+## pay_competitive4                           -2.605796   0.192500 -13.537  < 2e-16 ***
+## rival2:scale(BECK_SESION)                   0.127049   0.121590   1.045  0.29607    
+## rival3:scale(BECK_SESION)                   0.010914   0.120646   0.090  0.92792    
+## rival4:scale(BECK_SESION)                   0.070165   0.121394   0.578  0.56326    
+## rival2:pay_competitive2                    -0.322831   0.235617  -1.370  0.17064    
+## rival3:pay_competitive2                     0.486616   0.210505   2.312  0.02080 *  
+## rival4:pay_competitive2                     0.820634   0.206452   3.975 7.04e-05 ***
+## rival2:pay_competitive3                    -0.834754   0.300655  -2.776  0.00550 ** 
+## rival3:pay_competitive3                    -0.083778   0.248967  -0.337  0.73649    
+## rival4:pay_competitive3                     0.464017   0.236703   1.960  0.04996 *  
+## rival2:pay_competitive4                    -0.622599   0.282102  -2.207  0.02731 *  
+## rival3:pay_competitive4                    -0.478732   0.252477  -1.896  0.05794 .  
+## rival4:pay_competitive4                    -0.094457   0.238412  -0.396  0.69196    
+## scale(BECK_SESION):pay_competitive2        -0.270823   0.180346  -1.502  0.13318    
+## scale(BECK_SESION):pay_competitive3        -0.200572   0.210610  -0.952  0.34093    
+## scale(BECK_SESION):pay_competitive4        -0.048591   0.198944  -0.244  0.80704    
+## rival2:scale(BECK_SESION):pay_competitive2  0.295841   0.243577   1.215  0.22453    
+## rival3:scale(BECK_SESION):pay_competitive2  0.512066   0.219766   2.330  0.01980 *  
+## rival4:scale(BECK_SESION):pay_competitive2  0.389705   0.216715   1.798  0.07214 .  
+## rival2:scale(BECK_SESION):pay_competitive3  0.169162   0.310422   0.545  0.58579    
+## rival3:scale(BECK_SESION):pay_competitive3  0.158540   0.260843   0.608  0.54332    
+## rival4:scale(BECK_SESION):pay_competitive3  0.378319   0.247679   1.527  0.12665    
+## rival2:scale(BECK_SESION):pay_competitive4 -0.152779   0.292959  -0.522  0.60202    
+## rival3:scale(BECK_SESION):pay_competitive4 -0.177990   0.263243  -0.676  0.49895    
+## rival4:scale(BECK_SESION):pay_competitive4  0.222142   0.243294   0.913  0.36121    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: game_type.f
+##                                             Chisq Df Pr(>Chisq)    
+## (Intercept)                               66.6308  1  3.274e-16 ***
+## rival                                    139.4478  3  < 2.2e-16 ***
+## scale(BECK_SESION)                         0.0002  1     0.9894    
+## pay_competitive                          361.4379  3  < 2.2e-16 ***
+## rival:scale(BECK_SESION)                   1.4403  3     0.6961    
+## rival:pay_competitive                     58.2762  9  2.877e-09 ***
+## scale(BECK_SESION):pay_competitive         2.7158  3     0.4375    
+## rival:scale(BECK_SESION):pay_competitive  12.5390  9     0.1846    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+~
+
+game\_type.f
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.15
+
+0.10~--~0.24
+
+\textless0.001
+
+rival {[}2{]}
+
+1.43
+
+1.13~--~1.81
+
+0.003
+
+rival {[}3{]}
+
+2.66
+
+2.11~--~3.36
+
+\textless0.001
+
+rival {[}4{]}
+
+3.53
+
+2.80~--~4.46
+
+\textless0.001
+
+BECK SESION
+
+1.00
+
+0.63~--~1.57
+
+0.989
+
+pay competitive {[}2{]}
+
+0.12
+
+0.09~--~0.17
+
+\textless0.001
+
+pay competitive {[}3{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+pay competitive {[}4{]}
+
+0.07
+
+0.05~--~0.11
+
+\textless0.001
+
+rival {[}2{]} × BECK SESION
+
+1.14
+
+0.89~--~1.44
+
+0.296
+
+rival {[}3{]} × BECK SESION
+
+1.01
+
+0.80~--~1.28
+
+0.928
+
+rival {[}4{]} × BECK SESION
+
+1.07
+
+0.85~--~1.36
+
+0.563
+
+rival {[}2{]} × paycompetitive {[}2{]}
+
+0.72
+
+0.46~--~1.15
+
+0.171
+
+rival {[}3{]} × paycompetitive {[}2{]}
+
+1.63
+
+1.08~--~2.46
+
+0.021
+
+rival {[}4{]} × paycompetitive {[}2{]}
+
+2.27
+
+1.52~--~3.41
+
+\textless0.001
+
+rival {[}2{]} × paycompetitive {[}3{]}
+
+0.43
+
+0.24~--~0.78
+
+0.005
+
+rival {[}3{]} × paycompetitive {[}3{]}
+
+0.92
+
+0.56~--~1.50
+
+0.736
+
+rival {[}4{]} × paycompetitive {[}3{]}
+
+1.59
+
+1.00~--~2.53
+
+0.050
+
+rival {[}2{]} × paycompetitive {[}4{]}
+
+0.54
+
+0.31~--~0.93
+
+0.027
+
+rival {[}3{]} × paycompetitive {[}4{]}
+
+0.62
+
+0.38~--~1.02
+
+0.058
+
+rival {[}4{]} × paycompetitive {[}4{]}
+
+0.91
+
+0.57~--~1.45
+
+0.692
+
+BECK SESION × paycompetitive {[}2{]}
+
+0.76
+
+0.54~--~1.09
+
+0.133
+
+BECK SESION × paycompetitive {[}3{]}
+
+0.82
+
+0.54~--~1.24
+
+0.341
+
+BECK SESION × paycompetitive {[}4{]}
+
+0.95
+
+0.64~--~1.41
+
+0.807
+
+(rival {[}2{]} × BECK SESION)× pay competitive {[}2{]}
+
+1.34
+
+0.83~--~2.17
+
+0.225
+
+(rival {[}3{]} × BECK SESION)× pay competitive {[}2{]}
+
+1.67
+
+1.08~--~2.57
+
+0.020
+
+(rival {[}4{]} × BECK SESION)× pay competitive {[}2{]}
+
+1.48
+
+0.97~--~2.26
+
+0.072
+
+(rival {[}2{]} × BECK SESION)× pay competitive {[}3{]}
+
+1.18
+
+0.64~--~2.18
+
+0.586
+
+(rival {[}3{]} × BECK SESION)× pay competitive {[}3{]}
+
+1.17
+
+0.70~--~1.95
+
+0.543
+
+(rival {[}4{]} × BECK SESION)× pay competitive {[}3{]}
+
+1.46
+
+0.90~--~2.37
+
+0.127
+
+(rival {[}2{]} × BECK SESION)× pay competitive {[}4{]}
+
+0.86
+
+0.48~--~1.52
+
+0.602
+
+(rival {[}3{]} × BECK SESION)× pay competitive {[}4{]}
+
+0.84
+
+0.50~--~1.40
+
+0.499
+
+(rival {[}4{]} × BECK SESION)× pay competitive {[}4{]}
+
+1.25
+
+0.78~--~2.01
+
+0.361
+
+Random Effects
+
+σ2
+
+3.29
+
+τ00 code
+
+5.85
+
+ICC
+
+0.64
+
+N code
+
+134
+
+Observations
+
+16965
+
+Marginal R2 / Conditional R2
+
+0.172 / 0.702
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-20-2.pdf}
+
+\begin{verbatim}
+## Data: datosLimpios
+## Models:
+## modelo_6.1: game_type.f ~ rival * scale(Beck_web) * pay_competitive + (1 | code)
+## modelo_6.2: game_type.f ~ rival * scale(BECK_SESION) * pay_competitive + (1 | code)
+##            npar    AIC    BIC  logLik deviance Chisq Df Pr(>Chisq)
+## modelo_6.1   33 9056.8 9312.2 -4495.4   8990.8                    
+## modelo_6.2   33 9077.9 9333.3 -4506.0   9011.9     0  0
+\end{verbatim}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: game_type.f ~ rival.f * scale(BECK_SESION) * pay_competitive.f +      (1 | code)
+##    Data: datosLimpios
+## Control: glmerControl(optCtrl = list(maxfun = 1e+05), optimizer = "bobyqa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   9077.9   9333.3  -4506.0   9011.9    16932 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -24.248  -0.298  -0.131  -0.035  39.748 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 5.851    2.419   
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##                                                 Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                                    -1.885388   0.230974  -8.163 3.27e-16 ***
+## rival.f2                                        0.358635   0.119455   3.002  0.00268 ** 
+## rival.f3                                        0.979403   0.118897   8.237  < 2e-16 ***
+## rival.f4                                        1.262290   0.119119  10.597  < 2e-16 ***
+## scale(BECK_SESION)                             -0.003064   0.231306  -0.013  0.98943    
+## pay_competitive.f2                             -2.119499   0.169454 -12.508  < 2e-16 ***
+## pay_competitive.f3                             -2.674110   0.198389 -13.479  < 2e-16 ***
+## pay_competitive.f4                             -2.605796   0.192500 -13.537  < 2e-16 ***
+## rival.f2:scale(BECK_SESION)                     0.127049   0.121590   1.045  0.29607    
+## rival.f3:scale(BECK_SESION)                     0.010914   0.120646   0.090  0.92792    
+## rival.f4:scale(BECK_SESION)                     0.070165   0.121394   0.578  0.56326    
+## rival.f2:pay_competitive.f2                    -0.322831   0.235617  -1.370  0.17064    
+## rival.f3:pay_competitive.f2                     0.486616   0.210505   2.312  0.02080 *  
+## rival.f4:pay_competitive.f2                     0.820634   0.206452   3.975 7.04e-05 ***
+## rival.f2:pay_competitive.f3                    -0.834754   0.300655  -2.776  0.00550 ** 
+## rival.f3:pay_competitive.f3                    -0.083778   0.248967  -0.337  0.73649    
+## rival.f4:pay_competitive.f3                     0.464017   0.236703   1.960  0.04996 *  
+## rival.f2:pay_competitive.f4                    -0.622599   0.282102  -2.207  0.02731 *  
+## rival.f3:pay_competitive.f4                    -0.478732   0.252477  -1.896  0.05794 .  
+## rival.f4:pay_competitive.f4                    -0.094457   0.238412  -0.396  0.69196    
+## scale(BECK_SESION):pay_competitive.f2          -0.270823   0.180346  -1.502  0.13318    
+## scale(BECK_SESION):pay_competitive.f3          -0.200572   0.210610  -0.952  0.34093    
+## scale(BECK_SESION):pay_competitive.f4          -0.048591   0.198944  -0.244  0.80704    
+## rival.f2:scale(BECK_SESION):pay_competitive.f2  0.295841   0.243577   1.215  0.22453    
+## rival.f3:scale(BECK_SESION):pay_competitive.f2  0.512066   0.219766   2.330  0.01980 *  
+## rival.f4:scale(BECK_SESION):pay_competitive.f2  0.389705   0.216715   1.798  0.07214 .  
+## rival.f2:scale(BECK_SESION):pay_competitive.f3  0.169162   0.310422   0.545  0.58579    
+## rival.f3:scale(BECK_SESION):pay_competitive.f3  0.158540   0.260843   0.608  0.54332    
+## rival.f4:scale(BECK_SESION):pay_competitive.f3  0.378319   0.247679   1.527  0.12665    
+## rival.f2:scale(BECK_SESION):pay_competitive.f4 -0.152779   0.292959  -0.522  0.60202    
+## rival.f3:scale(BECK_SESION):pay_competitive.f4 -0.177990   0.263243  -0.676  0.49895    
+## rival.f4:scale(BECK_SESION):pay_competitive.f4  0.222142   0.243294   0.913  0.36121    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: game_type.f
+##                                                 Chisq Df Pr(>Chisq)    
+## (Intercept)                                   66.6308  1  3.274e-16 ***
+## rival.f                                      139.4478  3  < 2.2e-16 ***
+## scale(BECK_SESION)                             0.0002  1     0.9894    
+## pay_competitive.f                            361.4379  3  < 2.2e-16 ***
+## rival.f:scale(BECK_SESION)                     1.4403  3     0.6961    
+## rival.f:pay_competitive.f                     58.2762  9  2.877e-09 ***
+## scale(BECK_SESION):pay_competitive.f           2.7158  3     0.4375    
+## rival.f:scale(BECK_SESION):pay_competitive.f  12.5390  9     0.1846    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Data: datosLimpios
+## Models:
+## modelo_6.2: game_type.f ~ rival * scale(BECK_SESION) * pay_competitive + (1 | code)
+## modelo_6.3: game_type.f ~ rival.f * scale(BECK_SESION) * pay_competitive.f + (1 | code)
+##            npar    AIC    BIC logLik deviance Chisq Df Pr(>Chisq)
+## modelo_6.2   33 9077.9 9333.3  -4506   9011.9                    
+## modelo_6.3   33 9077.9 9333.3  -4506   9011.9     0  0
+\end{verbatim}
+
+\begin{verbatim}
+##  contrast                                                   estimate     SE  df z.ratio p.value
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f1  0.026016 0.0173 Inf   1.502  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f1  0.019268 0.0202 Inf   0.952  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f1  0.004668 0.0191 Inf   0.244  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f1 rival.f2 -0.012205 0.0117 Inf  -1.045  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f2 -0.014608 0.0160 Inf  -0.912  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f2 -0.009187 0.0223 Inf  -0.413  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f2  0.007139 0.0210 Inf   0.340  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f1 rival.f3 -0.001048 0.0116 Inf  -0.090  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f3 -0.024223 0.0124 Inf  -1.946  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f3  0.002989 0.0152 Inf   0.196  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f3  0.020718 0.0170 Inf   1.220  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f1 rival.f4 -0.006740 0.0117 Inf  -0.578  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f4 -0.018160 0.0119 Inf  -1.527  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f4 -0.023815 0.0129 Inf  -1.848  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f4 -0.023412 0.0138 Inf  -1.693  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f1 -0.006749 0.0237 Inf  -0.285  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f1 -0.021348 0.0228 Inf  -0.938  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f1 rival.f2 -0.038221 0.0172 Inf  -2.218  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f2 rival.f2 -0.040624 0.0203 Inf  -2.004  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f2 -0.035204 0.0254 Inf  -1.384  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f2 -0.018877 0.0243 Inf  -0.775  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f1 rival.f3 -0.027064 0.0172 Inf  -1.572  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f2 rival.f3 -0.050239 0.0177 Inf  -2.839  0.5424
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f3 -0.023027 0.0196 Inf  -1.172  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f3 -0.005298 0.0210 Inf  -0.252  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f1 rival.f4 -0.032756 0.0173 Inf  -1.895  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f2 rival.f4 -0.044177 0.0173 Inf  -2.547  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f4 -0.049831 0.0180 Inf  -2.772  0.6633
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f4 -0.049428 0.0186 Inf  -2.652  0.9431
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f1 -0.014600 0.0250 Inf  -0.584  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f1 rival.f2 -0.031472 0.0202 Inf  -1.561  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f2 rival.f2 -0.033876 0.0228 Inf  -1.487  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f3 rival.f2 -0.028455 0.0274 Inf  -1.037  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f2 -0.012128 0.0265 Inf  -0.458  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f1 rival.f3 -0.020316 0.0202 Inf  -1.008  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f2 rival.f3 -0.043491 0.0205 Inf  -2.117  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f3 rival.f3 -0.016278 0.0222 Inf  -0.732  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f3  0.001450 0.0234 Inf   0.062  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f1 rival.f4 -0.026008 0.0202 Inf  -1.287  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f2 rival.f4 -0.037428 0.0203 Inf  -1.848  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f3 rival.f4 -0.043083 0.0208 Inf  -2.073  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f4 -0.042680 0.0214 Inf  -1.999  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f1 rival.f2 -0.016873 0.0190 Inf  -0.887  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f2 rival.f2 -0.019276 0.0218 Inf  -0.885  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f3 rival.f2 -0.013855 0.0266 Inf  -0.520  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f4 rival.f2  0.002472 0.0256 Inf   0.097  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f1 rival.f3 -0.005716 0.0190 Inf  -0.300  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f2 rival.f3 -0.028891 0.0194 Inf  -1.487  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f3 rival.f3 -0.001678 0.0212 Inf  -0.079  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f4 rival.f3  0.016050 0.0225 Inf   0.714  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f1 rival.f4 -0.011408 0.0191 Inf  -0.597  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f2 rival.f4 -0.022828 0.0191 Inf  -1.193  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f3 rival.f4 -0.028483 0.0197 Inf  -1.447  1.0000
+##  pay_competitive.f4 rival.f1 - pay_competitive.f4 rival.f4 -0.028080 0.0203 Inf  -1.385  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f2 rival.f2 -0.002403 0.0159 Inf  -0.151  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f3 rival.f2  0.003017 0.0222 Inf   0.136  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f4 rival.f2  0.019344 0.0209 Inf   0.925  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f1 rival.f3  0.011156 0.0114 Inf   0.982  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f2 rival.f3 -0.012018 0.0123 Inf  -0.978  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f3 rival.f3  0.015194 0.0151 Inf   1.006  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f4 rival.f3  0.032922 0.0169 Inf   1.950  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f1 rival.f4  0.005464 0.0114 Inf   0.479  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f2 rival.f4 -0.005956 0.0117 Inf  -0.509  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f3 rival.f4 -0.011610 0.0127 Inf  -0.911  1.0000
+##  pay_competitive.f1 rival.f2 - pay_competitive.f4 rival.f4 -0.011207 0.0137 Inf  -0.818  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f3 rival.f2  0.005421 0.0246 Inf   0.221  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f4 rival.f2  0.021748 0.0234 Inf   0.928  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f1 rival.f3  0.013560 0.0159 Inf   0.853  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f2 rival.f3 -0.009615 0.0164 Inf  -0.586  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f3 rival.f3  0.017598 0.0185 Inf   0.951  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f4 rival.f3  0.035326 0.0200 Inf   1.769  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f1 rival.f4  0.007868 0.0160 Inf   0.492  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f2 rival.f4 -0.003552 0.0160 Inf  -0.222  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f3 rival.f4 -0.009207 0.0167 Inf  -0.551  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f4 rival.f4 -0.008804 0.0174 Inf  -0.506  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f4 rival.f2  0.016327 0.0280 Inf   0.584  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f1 rival.f3  0.008139 0.0222 Inf   0.367  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f2 rival.f3 -0.015035 0.0225 Inf  -0.667  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f3 rival.f3  0.012177 0.0241 Inf   0.506  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f4 rival.f3  0.029905 0.0252 Inf   1.186  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f1 rival.f4  0.002447 0.0223 Inf   0.110  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f2 rival.f4 -0.008973 0.0223 Inf  -0.403  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f3 rival.f4 -0.014628 0.0227 Inf  -0.643  1.0000
+##  pay_competitive.f3 rival.f2 - pay_competitive.f4 rival.f4 -0.014225 0.0232 Inf  -0.612  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f1 rival.f3 -0.008188 0.0209 Inf  -0.391  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f2 rival.f3 -0.031362 0.0213 Inf  -1.473  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f3 rival.f3 -0.004150 0.0229 Inf  -0.181  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f4 rival.f3  0.013578 0.0241 Inf   0.563  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f1 rival.f4 -0.013880 0.0210 Inf  -0.662  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f2 rival.f4 -0.025300 0.0210 Inf  -1.204  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f3 rival.f4 -0.030955 0.0215 Inf  -1.439  1.0000
+##  pay_competitive.f4 rival.f2 - pay_competitive.f4 rival.f4 -0.030552 0.0221 Inf  -1.385  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f2 rival.f3 -0.023175 0.0122 Inf  -1.895  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f3 rival.f3  0.004038 0.0151 Inf   0.268  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f4 rival.f3  0.021766 0.0169 Inf   1.290  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f1 rival.f4 -0.005692 0.0112 Inf  -0.507  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f2 rival.f4 -0.017112 0.0116 Inf  -1.473  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f3 rival.f4 -0.022767 0.0127 Inf  -1.793  1.0000
+##  pay_competitive.f1 rival.f3 - pay_competitive.f4 rival.f4 -0.022364 0.0137 Inf  -1.635  1.0000
+##  pay_competitive.f2 rival.f3 - pay_competitive.f3 rival.f3  0.027212 0.0156 Inf   1.741  1.0000
+##  pay_competitive.f2 rival.f3 - pay_competitive.f4 rival.f3  0.044941 0.0174 Inf   2.590  1.0000
+##  pay_competitive.f2 rival.f3 - pay_competitive.f1 rival.f4  0.017483 0.0123 Inf   1.420  1.0000
+##  pay_competitive.f2 rival.f3 - pay_competitive.f2 rival.f4  0.006063 0.0125 Inf   0.486  1.0000
+##  pay_competitive.f2 rival.f3 - pay_competitive.f3 rival.f4  0.000408 0.0134 Inf   0.030  1.0000
+##  pay_competitive.f2 rival.f3 - pay_competitive.f4 rival.f4  0.000811 0.0143 Inf   0.057  1.0000
+##  pay_competitive.f3 rival.f3 - pay_competitive.f4 rival.f3  0.017728 0.0193 Inf   0.917  1.0000
+##  pay_competitive.f3 rival.f3 - pay_competitive.f1 rival.f4 -0.009730 0.0152 Inf  -0.641  1.0000
+##  pay_competitive.f3 rival.f3 - pay_competitive.f2 rival.f4 -0.021150 0.0152 Inf  -1.388  1.0000
+##  pay_competitive.f3 rival.f3 - pay_competitive.f3 rival.f4 -0.026805 0.0160 Inf  -1.680  1.0000
+##  pay_competitive.f3 rival.f3 - pay_competitive.f4 rival.f4 -0.026402 0.0167 Inf  -1.582  1.0000
+##  pay_competitive.f4 rival.f3 - pay_competitive.f1 rival.f4 -0.027458 0.0169 Inf  -1.621  1.0000
+##  pay_competitive.f4 rival.f3 - pay_competitive.f2 rival.f4 -0.038878 0.0170 Inf  -2.287  1.0000
+##  pay_competitive.f4 rival.f3 - pay_competitive.f3 rival.f4 -0.044533 0.0176 Inf  -2.524  1.0000
+##  pay_competitive.f4 rival.f3 - pay_competitive.f4 rival.f4 -0.044130 0.0183 Inf  -2.410  1.0000
+##  pay_competitive.f1 rival.f4 - pay_competitive.f2 rival.f4 -0.011420 0.0117 Inf  -0.977  1.0000
+##  pay_competitive.f1 rival.f4 - pay_competitive.f3 rival.f4 -0.017075 0.0128 Inf  -1.336  1.0000
+##  pay_competitive.f1 rival.f4 - pay_competitive.f4 rival.f4 -0.016672 0.0138 Inf  -1.211  1.0000
+##  pay_competitive.f2 rival.f4 - pay_competitive.f3 rival.f4 -0.005655 0.0129 Inf  -0.438  1.0000
+##  pay_competitive.f2 rival.f4 - pay_competitive.f4 rival.f4 -0.005252 0.0139 Inf  -0.379  1.0000
+##  pay_competitive.f3 rival.f4 - pay_competitive.f4 rival.f4  0.000403 0.0146 Inf   0.028  1.0000
+## 
+## P value adjustment: holm method for 120 tests
+\end{verbatim}
+
+\begin{verbatim}
+## $L01
+## [1] -21.15532
+## 
+## $df
+## [1] 0
+## 
+## $`p-value`
+## [1] 1
+\end{verbatim}
+
+\begin{verbatim}
+## 'log Lik.' -4495.386 (df=33)
+\end{verbatim}
+
+\begin{verbatim}
+## 'log Lik.' -4505.964 (df=33)
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{verbatim}
+## Data: datosLimpios
+## Models:
+## modelo_6.1: game_type.f ~ rival * scale(Beck_web) * pay_competitive + (1 | code)
+## modelo_6.2: game_type.f ~ rival * scale(BECK_SESION) * pay_competitive + (1 | code)
+##            npar    AIC    BIC  logLik deviance Chisq Df Pr(>Chisq)
+## modelo_6.1   33 9056.8 9312.2 -4495.4   8990.8                    
+## modelo_6.2   33 9077.9 9333.3 -4506.0   9011.9     0  0
+\end{verbatim}
+
+\begin{verbatim}
+##  rival.f emmean    SE  df asymp.LCL asymp.UCL
+##  1        -3.74 0.228 Inf     -4.18     -3.29
+##  2        -3.82 0.231 Inf     -4.27     -3.37
+##  3        -2.77 0.222 Inf     -3.21     -2.34
+##  4        -2.18 0.220 Inf     -2.61     -1.74
+## 
+## Results are averaged over the levels of: pay_competitive.f 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{verbatim}
+##  pay_competitive.f emmean    SE  df asymp.LCL asymp.UCL
+##  1                  -1.24 0.217 Inf     -1.66    -0.809
+##  2                  -3.11 0.224 Inf     -3.55    -2.670
+##  3                  -4.02 0.230 Inf     -4.47    -3.571
+##  4                  -4.14 0.230 Inf     -4.59    -3.689
+## 
+## Results are averaged over the levels of: rival.f 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{verbatim}
+##  contrast            estimate     SE  df z.ratio p.value
+##  rival.f1 - rival.f2   0.0864 0.1110 Inf   0.778  0.8643
+##  rival.f1 - rival.f3  -0.9604 0.0944 Inf -10.169  <.0001
+##  rival.f1 - rival.f4  -1.5598 0.0900 Inf -17.328  <.0001
+##  rival.f2 - rival.f3  -1.0468 0.1010 Inf -10.396  <.0001
+##  rival.f2 - rival.f4  -1.6463 0.0966 Inf -17.042  <.0001
+##  rival.f3 - rival.f4  -0.5994 0.0753 Inf  -7.965  <.0001
+## 
+## Results are averaged over the levels of: pay_competitive.f 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{verbatim}
+##  contrast                                                  estimate    SE  df z.ratio p.value
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f1   2.1195 0.169 Inf  12.508  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f1   2.6741 0.198 Inf  13.479  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f1   2.6058 0.192 Inf  13.537  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f1 rival.f2  -0.3586 0.119 Inf  -3.002  0.1677
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f2   2.0837 0.167 Inf  12.493  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f2   3.1502 0.230 Inf  13.702  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f2   2.8698 0.210 Inf  13.666  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f1 rival.f3  -0.9794 0.119 Inf  -8.237  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f3   0.6535 0.129 Inf   5.082  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f3   1.7785 0.154 Inf  11.514  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f3   2.1051 0.167 Inf  12.575  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f1 rival.f4  -1.2623 0.119 Inf -10.597  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f2 rival.f4   0.0366 0.122 Inf   0.300  1.0000
+##  pay_competitive.f1 rival.f1 - pay_competitive.f3 rival.f4   0.9478 0.133 Inf   7.116  <.0001
+##  pay_competitive.f1 rival.f1 - pay_competitive.f4 rival.f4   1.4380 0.145 Inf   9.934  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f1   0.5546 0.230 Inf   2.416  0.5351
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f1   0.4863 0.224 Inf   2.166  0.7210
+##  pay_competitive.f2 rival.f1 - pay_competitive.f1 rival.f2  -2.4781 0.169 Inf -14.701  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f2 rival.f2  -0.0358 0.203 Inf  -0.176  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f2   1.0307 0.257 Inf   4.014  0.0060
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f2   0.7503 0.239 Inf   3.134  0.1187
+##  pay_competitive.f2 rival.f1 - pay_competitive.f1 rival.f3  -3.0989 0.169 Inf -18.364  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f2 rival.f3  -1.4660 0.174 Inf  -8.413  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f3  -0.3410 0.193 Inf  -1.764  0.9290
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f3  -0.0144 0.204 Inf  -0.071  1.0000
+##  pay_competitive.f2 rival.f1 - pay_competitive.f1 rival.f4  -3.3818 0.169 Inf -19.984  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f2 rival.f4  -2.0829 0.170 Inf -12.262  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f3 rival.f4  -1.1717 0.177 Inf  -6.605  <.0001
+##  pay_competitive.f2 rival.f1 - pay_competitive.f4 rival.f4  -0.6815 0.186 Inf  -3.667  0.0222
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f1  -0.0683 0.247 Inf  -0.277  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f1 rival.f2  -3.0327 0.198 Inf -15.344  <.0001
+##  pay_competitive.f3 rival.f1 - pay_competitive.f2 rival.f2  -0.5904 0.227 Inf  -2.595  0.4016
+##  pay_competitive.f3 rival.f1 - pay_competitive.f3 rival.f2   0.4761 0.276 Inf   1.726  0.9405
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f2   0.1956 0.260 Inf   0.752  1.0000
+##  pay_competitive.f3 rival.f1 - pay_competitive.f1 rival.f3  -3.6535 0.198 Inf -18.466  <.0001
+##  pay_competitive.f3 rival.f1 - pay_competitive.f2 rival.f3  -2.0206 0.202 Inf  -9.984  <.0001
+##  pay_competitive.f3 rival.f1 - pay_competitive.f3 rival.f3  -0.8956 0.219 Inf  -4.092  0.0044
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f3  -0.5690 0.228 Inf  -2.496  0.4744
+##  pay_competitive.f3 rival.f1 - pay_competitive.f1 rival.f4  -3.9364 0.198 Inf -19.856  <.0001
+##  pay_competitive.f3 rival.f1 - pay_competitive.f2 rival.f4  -2.6375 0.199 Inf -13.272  <.0001
+##  pay_competitive.f3 rival.f1 - pay_competitive.f3 rival.f4  -1.7263 0.205 Inf  -8.419  <.0001
+##  pay_competitive.f3 rival.f1 - pay_competitive.f4 rival.f4  -1.2361 0.212 Inf  -5.822  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f1 rival.f2  -2.9644 0.192 Inf -15.459  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f2 rival.f2  -0.5221 0.222 Inf  -2.348  0.5876
+##  pay_competitive.f4 rival.f1 - pay_competitive.f3 rival.f2   0.5444 0.272 Inf   2.003  0.8238
+##  pay_competitive.f4 rival.f1 - pay_competitive.f4 rival.f2   0.2640 0.256 Inf   1.033  0.9997
+##  pay_competitive.f4 rival.f1 - pay_competitive.f1 rival.f3  -3.5852 0.192 Inf -18.674  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f2 rival.f3  -1.9523 0.197 Inf  -9.928  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f3 rival.f3  -0.8273 0.214 Inf  -3.874  0.0104
+##  pay_competitive.f4 rival.f1 - pay_competitive.f4 rival.f3  -0.5007 0.223 Inf  -2.247  0.6636
+##  pay_competitive.f4 rival.f1 - pay_competitive.f1 rival.f4  -3.8681 0.192 Inf -20.105  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f2 rival.f4  -2.5692 0.193 Inf -13.320  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f3 rival.f4  -1.6580 0.199 Inf  -8.315  <.0001
+##  pay_competitive.f4 rival.f1 - pay_competitive.f4 rival.f4  -1.1678 0.207 Inf  -5.645  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f2 rival.f2   2.4423 0.166 Inf  14.729  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f3 rival.f2   3.5089 0.229 Inf  15.305  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f4 rival.f2   3.2284 0.209 Inf  15.429  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f1 rival.f3  -0.6208 0.117 Inf  -5.320  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f2 rival.f3   1.0121 0.127 Inf   7.965  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f3 rival.f3   2.1371 0.153 Inf  13.931  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f4 rival.f3   2.4638 0.166 Inf  14.801  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f1 rival.f4  -0.9037 0.117 Inf  -7.737  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f2 rival.f4   0.3952 0.120 Inf   3.291  0.0759
+##  pay_competitive.f1 rival.f2 - pay_competitive.f3 rival.f4   1.3064 0.132 Inf   9.913  <.0001
+##  pay_competitive.f1 rival.f2 - pay_competitive.f4 rival.f4   1.7966 0.144 Inf  12.516  <.0001
+##  pay_competitive.f2 rival.f2 - pay_competitive.f3 rival.f2   1.0665 0.255 Inf   4.183  0.0030
+##  pay_competitive.f2 rival.f2 - pay_competitive.f4 rival.f2   0.7861 0.237 Inf   3.310  0.0717
+##  pay_competitive.f2 rival.f2 - pay_competitive.f1 rival.f3  -3.0631 0.166 Inf -18.450  <.0001
+##  pay_competitive.f2 rival.f2 - pay_competitive.f2 rival.f3  -1.4302 0.172 Inf  -8.335  <.0001
+##  pay_competitive.f2 rival.f2 - pay_competitive.f3 rival.f3  -0.3052 0.191 Inf  -1.598  0.9690
+##  pay_competitive.f2 rival.f2 - pay_competitive.f4 rival.f3   0.0214 0.201 Inf   0.106  1.0000
+##  pay_competitive.f2 rival.f2 - pay_competitive.f1 rival.f4  -3.3460 0.166 Inf -20.101  <.0001
+##  pay_competitive.f2 rival.f2 - pay_competitive.f2 rival.f4  -2.0471 0.167 Inf -12.245  <.0001
+##  pay_competitive.f2 rival.f2 - pay_competitive.f3 rival.f4  -1.1359 0.175 Inf  -6.499  <.0001
+##  pay_competitive.f2 rival.f2 - pay_competitive.f4 rival.f4  -0.6457 0.183 Inf  -3.522  0.0366
+##  pay_competitive.f3 rival.f2 - pay_competitive.f4 rival.f2  -0.2805 0.284 Inf  -0.988  0.9998
+##  pay_competitive.f3 rival.f2 - pay_competitive.f1 rival.f3  -4.1296 0.230 Inf -17.994  <.0001
+##  pay_competitive.f3 rival.f2 - pay_competitive.f2 rival.f3  -2.4967 0.233 Inf -10.703  <.0001
+##  pay_competitive.f3 rival.f2 - pay_competitive.f3 rival.f3  -1.3717 0.248 Inf  -5.542  <.0001
+##  pay_competitive.f3 rival.f2 - pay_competitive.f4 rival.f3  -1.0451 0.255 Inf  -4.091  0.0044
+##  pay_competitive.f3 rival.f2 - pay_competitive.f1 rival.f4  -4.4125 0.230 Inf -19.196  <.0001
+##  pay_competitive.f3 rival.f2 - pay_competitive.f2 rival.f4  -3.1137 0.230 Inf -13.527  <.0001
+##  pay_competitive.f3 rival.f2 - pay_competitive.f3 rival.f4  -2.2024 0.236 Inf  -9.350  <.0001
+##  pay_competitive.f3 rival.f2 - pay_competitive.f4 rival.f4  -1.7123 0.242 Inf  -7.081  <.0001
+##  pay_competitive.f4 rival.f2 - pay_competitive.f1 rival.f3  -3.8492 0.209 Inf -18.376  <.0001
+##  pay_competitive.f4 rival.f2 - pay_competitive.f2 rival.f3  -2.2163 0.214 Inf -10.371  <.0001
+##  pay_competitive.f4 rival.f2 - pay_competitive.f3 rival.f3  -1.0913 0.229 Inf  -4.759  0.0002
+##  pay_competitive.f4 rival.f2 - pay_competitive.f4 rival.f3  -0.7646 0.238 Inf  -3.214  0.0950
+##  pay_competitive.f4 rival.f2 - pay_competitive.f1 rival.f4  -4.1321 0.210 Inf -19.689  <.0001
+##  pay_competitive.f4 rival.f2 - pay_competitive.f2 rival.f4  -2.8332 0.210 Inf -13.474  <.0001
+##  pay_competitive.f4 rival.f2 - pay_competitive.f3 rival.f4  -1.9220 0.216 Inf  -8.889  <.0001
+##  pay_competitive.f4 rival.f2 - pay_competitive.f4 rival.f4  -1.4318 0.223 Inf  -6.418  <.0001
+##  pay_competitive.f1 rival.f3 - pay_competitive.f2 rival.f3   1.6329 0.127 Inf  12.866  <.0001
+##  pay_competitive.f1 rival.f3 - pay_competitive.f3 rival.f3   2.7579 0.154 Inf  17.957  <.0001
+##  pay_competitive.f1 rival.f3 - pay_competitive.f4 rival.f3   3.0845 0.167 Inf  18.509  <.0001
+##  pay_competitive.f1 rival.f3 - pay_competitive.f1 rival.f4  -0.2829 0.115 Inf  -2.461  0.5012
+##  pay_competitive.f1 rival.f3 - pay_competitive.f2 rival.f4   1.0160 0.120 Inf   8.497  <.0001
+##  pay_competitive.f1 rival.f3 - pay_competitive.f3 rival.f4   1.9272 0.132 Inf  14.626  <.0001
+##  pay_competitive.f1 rival.f3 - pay_competitive.f4 rival.f4   2.4174 0.144 Inf  16.827  <.0001
+##  pay_competitive.f2 rival.f3 - pay_competitive.f3 rival.f3   1.1250 0.160 Inf   7.043  <.0001
+##  pay_competitive.f2 rival.f3 - pay_competitive.f4 rival.f3   1.4516 0.172 Inf   8.429  <.0001
+##  pay_competitive.f2 rival.f3 - pay_competitive.f1 rival.f4  -1.9158 0.127 Inf -15.049  <.0001
+##  pay_competitive.f2 rival.f3 - pay_competitive.f2 rival.f4  -0.6169 0.129 Inf  -4.777  0.0002
+##  pay_competitive.f2 rival.f3 - pay_competitive.f3 rival.f4   0.2943 0.139 Inf   2.110  0.7588
+##  pay_competitive.f2 rival.f3 - pay_competitive.f4 rival.f4   0.7845 0.150 Inf   5.216  <.0001
+##  pay_competitive.f3 rival.f3 - pay_competitive.f4 rival.f3   0.3266 0.191 Inf   1.706  0.9458
+##  pay_competitive.f3 rival.f3 - pay_competitive.f1 rival.f4  -3.0408 0.154 Inf -19.740  <.0001
+##  pay_competitive.f3 rival.f3 - pay_competitive.f2 rival.f4  -1.7419 0.155 Inf -11.244  <.0001
+##  pay_competitive.f3 rival.f3 - pay_competitive.f3 rival.f4  -0.8307 0.163 Inf  -5.091  <.0001
+##  pay_competitive.f3 rival.f3 - pay_competitive.f4 rival.f4  -0.3405 0.172 Inf  -1.975  0.8392
+##  pay_competitive.f4 rival.f3 - pay_competitive.f1 rival.f4  -3.3674 0.167 Inf -20.153  <.0001
+##  pay_competitive.f4 rival.f3 - pay_competitive.f2 rival.f4  -2.0686 0.168 Inf -12.326  <.0001
+##  pay_competitive.f4 rival.f3 - pay_competitive.f3 rival.f4  -1.1573 0.175 Inf  -6.598  <.0001
+##  pay_competitive.f4 rival.f3 - pay_competitive.f4 rival.f4  -0.6672 0.184 Inf  -3.627  0.0256
+##  pay_competitive.f1 rival.f4 - pay_competitive.f2 rival.f4   1.2989 0.120 Inf  10.840  <.0001
+##  pay_competitive.f1 rival.f4 - pay_competitive.f3 rival.f4   2.2101 0.132 Inf  16.719  <.0001
+##  pay_competitive.f1 rival.f4 - pay_competitive.f4 rival.f4   2.7003 0.144 Inf  18.737  <.0001
+##  pay_competitive.f2 rival.f4 - pay_competitive.f3 rival.f4   0.9112 0.134 Inf   6.816  <.0001
+##  pay_competitive.f2 rival.f4 - pay_competitive.f4 rival.f4   1.4014 0.145 Inf   9.652  <.0001
+##  pay_competitive.f3 rival.f4 - pay_competitive.f4 rival.f4   0.4902 0.154 Inf   3.181  0.1043
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 16 estimates
+\end{verbatim}
+
+\begin{verbatim}
+## rival.f = 1:
+##  contrast                                estimate    SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2   2.1195 0.169 Inf  12.508  <.0001
+##  pay_competitive.f1 - pay_competitive.f3   2.6741 0.198 Inf  13.479  <.0001
+##  pay_competitive.f1 - pay_competitive.f4   2.6058 0.192 Inf  13.537  <.0001
+##  pay_competitive.f2 - pay_competitive.f3   0.5546 0.230 Inf   2.416  0.0740
+##  pay_competitive.f2 - pay_competitive.f4   0.4863 0.224 Inf   2.166  0.1327
+##  pay_competitive.f3 - pay_competitive.f4  -0.0683 0.247 Inf  -0.277  0.9926
+## 
+## rival.f = 2:
+##  contrast                                estimate    SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2   2.4423 0.166 Inf  14.729  <.0001
+##  pay_competitive.f1 - pay_competitive.f3   3.5089 0.229 Inf  15.305  <.0001
+##  pay_competitive.f1 - pay_competitive.f4   3.2284 0.209 Inf  15.429  <.0001
+##  pay_competitive.f2 - pay_competitive.f3   1.0665 0.255 Inf   4.183  0.0002
+##  pay_competitive.f2 - pay_competitive.f4   0.7861 0.237 Inf   3.310  0.0052
+##  pay_competitive.f3 - pay_competitive.f4  -0.2805 0.284 Inf  -0.988  0.7562
+## 
+## rival.f = 3:
+##  contrast                                estimate    SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2   1.6329 0.127 Inf  12.866  <.0001
+##  pay_competitive.f1 - pay_competitive.f3   2.7579 0.154 Inf  17.957  <.0001
+##  pay_competitive.f1 - pay_competitive.f4   3.0845 0.167 Inf  18.509  <.0001
+##  pay_competitive.f2 - pay_competitive.f3   1.1250 0.160 Inf   7.043  <.0001
+##  pay_competitive.f2 - pay_competitive.f4   1.4516 0.172 Inf   8.429  <.0001
+##  pay_competitive.f3 - pay_competitive.f4   0.3266 0.191 Inf   1.706  0.3206
+## 
+## rival.f = 4:
+##  contrast                                estimate    SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2   1.2989 0.120 Inf  10.840  <.0001
+##  pay_competitive.f1 - pay_competitive.f3   2.2101 0.132 Inf  16.719  <.0001
+##  pay_competitive.f1 - pay_competitive.f4   2.7003 0.144 Inf  18.737  <.0001
+##  pay_competitive.f2 - pay_competitive.f3   0.9112 0.134 Inf   6.816  <.0001
+##  pay_competitive.f2 - pay_competitive.f4   1.4014 0.145 Inf   9.652  <.0001
+##  pay_competitive.f3 - pay_competitive.f4   0.4902 0.154 Inf   3.181  0.0080
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{verbatim}
+## pay_competitive.f = 1:
+##  contrast            estimate    SE  df z.ratio p.value
+##  rival.f1 - rival.f2  -0.3586 0.119 Inf  -3.002  0.0143
+##  rival.f1 - rival.f3  -0.9794 0.119 Inf  -8.237  <.0001
+##  rival.f1 - rival.f4  -1.2623 0.119 Inf -10.597  <.0001
+##  rival.f2 - rival.f3  -0.6208 0.117 Inf  -5.320  <.0001
+##  rival.f2 - rival.f4  -0.9037 0.117 Inf  -7.737  <.0001
+##  rival.f3 - rival.f4  -0.2829 0.115 Inf  -2.461  0.0662
+## 
+## pay_competitive.f = 2:
+##  contrast            estimate    SE  df z.ratio p.value
+##  rival.f1 - rival.f2  -0.0358 0.203 Inf  -0.176  0.9981
+##  rival.f1 - rival.f3  -1.4660 0.174 Inf  -8.413  <.0001
+##  rival.f1 - rival.f4  -2.0829 0.170 Inf -12.262  <.0001
+##  rival.f2 - rival.f3  -1.4302 0.172 Inf  -8.335  <.0001
+##  rival.f2 - rival.f4  -2.0471 0.167 Inf -12.245  <.0001
+##  rival.f3 - rival.f4  -0.6169 0.129 Inf  -4.777  <.0001
+## 
+## pay_competitive.f = 3:
+##  contrast            estimate    SE  df z.ratio p.value
+##  rival.f1 - rival.f2   0.4761 0.276 Inf   1.726  0.3103
+##  rival.f1 - rival.f3  -0.8956 0.219 Inf  -4.092  0.0003
+##  rival.f1 - rival.f4  -1.7263 0.205 Inf  -8.419  <.0001
+##  rival.f2 - rival.f3  -1.3717 0.248 Inf  -5.542  <.0001
+##  rival.f2 - rival.f4  -2.2024 0.236 Inf  -9.350  <.0001
+##  rival.f3 - rival.f4  -0.8307 0.163 Inf  -5.091  <.0001
+## 
+## pay_competitive.f = 4:
+##  contrast            estimate    SE  df z.ratio p.value
+##  rival.f1 - rival.f2   0.2640 0.256 Inf   1.033  0.7303
+##  rival.f1 - rival.f3  -0.5007 0.223 Inf  -2.247  0.1109
+##  rival.f1 - rival.f4  -1.1678 0.207 Inf  -5.645  <.0001
+##  rival.f2 - rival.f3  -0.7646 0.238 Inf  -3.214  0.0072
+##  rival.f2 - rival.f4  -1.4318 0.223 Inf  -6.418  <.0001
+##  rival.f3 - rival.f4  -0.6672 0.184 Inf  -3.627  0.0016
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{verbatim}
+##  contrast                                estimate     SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2    1.873 0.0751 Inf  24.959  <.0001
+##  pay_competitive.f1 - pay_competitive.f3    2.788 0.0935 Inf  29.809  <.0001
+##  pay_competitive.f1 - pay_competitive.f4    2.905 0.0925 Inf  31.414  <.0001
+##  pay_competitive.f2 - pay_competitive.f3    0.914 0.1010 Inf   9.089  <.0001
+##  pay_competitive.f2 - pay_competitive.f4    1.031 0.0995 Inf  10.364  <.0001
+##  pay_competitive.f3 - pay_competitive.f4    0.117 0.1120 Inf   1.042  0.7247
+## 
+## Results are averaged over the levels of: rival.f 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{verbatim}
+##  contrast                                estimate      SE  df z.ratio p.value
+##  pay_competitive.f1 - pay_competitive.f2 -0.00275 0.00737 Inf  -0.373  1.0000
+##  pay_competitive.f1 - pay_competitive.f3  0.00231 0.00920 Inf   0.251  1.0000
+##  pay_competitive.f1 - pay_competitive.f4  0.00728 0.00917 Inf   0.794  1.0000
+##  pay_competitive.f2 - pay_competitive.f3  0.00506 0.00995 Inf   0.508  1.0000
+##  pay_competitive.f2 - pay_competitive.f4  0.01002 0.00990 Inf   1.012  1.0000
+##  pay_competitive.f3 - pay_competitive.f4  0.00496 0.01120 Inf   0.444  1.0000
+## 
+## Results are averaged over the levels of: rival.f 
+## P value adjustment: holm method for 6 tests
+\end{verbatim}
+
+\#---MODELOS CON LSAS ----
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#modelo 15}
+\FunctionTok{library}\NormalTok{(lme4)}
+\FunctionTok{library}\NormalTok{(sjPlot)}
+\FunctionTok{library}\NormalTok{(sjmisc)}
+\FunctionTok{library}\NormalTok{(car)}
+\FunctionTok{library}\NormalTok{(carData)}
+
+
+\CommentTok{\#modelo\_15 \textless{}{-} glm(factor(game\_type)\textasciitilde{}rival.f*pay\_competitive.f,data*LSAS\_Total = datosLimpios,family = binomial)}
+
+
+\NormalTok{modelo\_15 }\OtherTok{\textless{}{-}} \FunctionTok{glmer}\NormalTok{(game\_type.f}\SpecialCharTok{\textasciitilde{}}\NormalTok{rival}\SpecialCharTok{*}\FunctionTok{scale}\NormalTok{(LSAS\_Total)}\SpecialCharTok{*}\NormalTok{pay\_competitive}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{code),}\AttributeTok{data =}\NormalTok{ datosLimpios,}\AttributeTok{family =}\NormalTok{ binomial,}\AttributeTok{control=}\FunctionTok{glmerControl}\NormalTok{(}\AttributeTok{optCtrl=}\FunctionTok{list}\NormalTok{(}\AttributeTok{maxfun =} \DecValTok{100000}\NormalTok{),}\AttributeTok{optimizer =} \StringTok{"bobyqa"}\NormalTok{)) }\CommentTok{\#las variables son factores}
+\FunctionTok{summary}\NormalTok{(modelo\_15)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: game_type.f ~ rival * scale(LSAS_Total) * pay_competitive + (1 |      code)
+##    Data: datosLimpios
+## Control: glmerControl(optCtrl = list(maxfun = 1e+05), optimizer = "bobyqa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   9070.3   9325.6  -4502.1   9004.3    16932 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -20.872  -0.299  -0.130  -0.035  52.156 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 5.771    2.402   
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##                                            Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                               -1.889214   0.229707  -8.224  < 2e-16 ***
+## rival2                                     0.362013   0.119398   3.032  0.00243 ** 
+## rival3                                     0.984237   0.119034   8.269  < 2e-16 ***
+## rival4                                     1.269799   0.119305  10.643  < 2e-16 ***
+## scale(LSAS_Total)                          0.277661   0.231536   1.199  0.23045    
+## pay_competitive2                          -2.145095   0.171249 -12.526  < 2e-16 ***
+## pay_competitive3                          -2.673931   0.197636 -13.530  < 2e-16 ***
+## pay_competitive4                          -2.612247   0.192056 -13.602  < 2e-16 ***
+## rival2:scale(LSAS_Total)                   0.106719   0.127937   0.834  0.40419    
+## rival3:scale(LSAS_Total)                  -0.017442   0.126616  -0.138  0.89043    
+## rival4:scale(LSAS_Total)                   0.003642   0.126618   0.029  0.97705    
+## rival2:pay_competitive2                   -0.331163   0.238812  -1.387  0.16553    
+## rival3:pay_competitive2                    0.512955   0.211698   2.423  0.01539 *  
+## rival4:pay_competitive2                    0.835131   0.207988   4.015 5.94e-05 ***
+## rival2:pay_competitive3                   -0.897321   0.309092  -2.903  0.00370 ** 
+## rival3:pay_competitive3                   -0.122976   0.249813  -0.492  0.62253    
+## rival4:pay_competitive3                    0.456646   0.235974   1.935  0.05297 .  
+## rival2:pay_competitive4                   -0.619847   0.281230  -2.204  0.02752 *  
+## rival3:pay_competitive4                   -0.472694   0.250994  -1.883  0.05966 .  
+## rival4:pay_competitive4                   -0.079305   0.237359  -0.334  0.73829    
+## scale(LSAS_Total):pay_competitive2         0.377085   0.174517   2.161  0.03072 *  
+## scale(LSAS_Total):pay_competitive3         0.176454   0.203350   0.868  0.38554    
+## scale(LSAS_Total):pay_competitive4        -0.152969   0.199353  -0.767  0.44289    
+## rival2:scale(LSAS_Total):pay_competitive2 -0.084359   0.243198  -0.347  0.72869    
+## rival3:scale(LSAS_Total):pay_competitive2 -0.082646   0.218414  -0.378  0.70514    
+## rival4:scale(LSAS_Total):pay_competitive2 -0.093921   0.214099  -0.439  0.66089    
+## rival2:scale(LSAS_Total):pay_competitive3  0.105770   0.306675   0.345  0.73017    
+## rival3:scale(LSAS_Total):pay_competitive3  0.191543   0.256224   0.748  0.45472    
+## rival4:scale(LSAS_Total):pay_competitive3  0.152430   0.243562   0.626  0.53142    
+## rival2:scale(LSAS_Total):pay_competitive4  0.122176   0.286840   0.426  0.67015    
+## rival3:scale(LSAS_Total):pay_competitive4  0.113848   0.260118   0.438  0.66162    
+## rival4:scale(LSAS_Total):pay_competitive4  0.341900   0.246512   1.387  0.16546    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{Anova}\NormalTok{(modelo\_15, }\AttributeTok{type =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: game_type.f
+##                                            Chisq Df Pr(>Chisq)    
+## (Intercept)                              67.6416  1  < 2.2e-16 ***
+## rival                                   140.4518  3  < 2.2e-16 ***
+## scale(LSAS_Total)                         1.4381  1    0.23045    
+## pay_competitive                         364.5012  3  < 2.2e-16 ***
+## rival:scale(LSAS_Total)                   1.2233  3    0.74743    
+## rival:pay_competitive                    60.2626  9  1.193e-09 ***
+## scale(LSAS_Total):pay_competitive         6.8921  3    0.07542 .  
+## rival:scale(LSAS_Total):pay_competitive   3.7424  9    0.92753    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tab\_model(modelo\_15)}
+\FunctionTok{tab\_model}\NormalTok{(modelo\_15)}
+\end{Highlighting}
+\end{Shaded}
+
+~
+
+game\_type.f
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.15
+
+0.10~--~0.24
+
+\textless0.001
+
+rival {[}2{]}
+
+1.44
+
+1.14~--~1.81
+
+0.002
+
+rival {[}3{]}
+
+2.68
+
+2.12~--~3.38
+
+\textless0.001
+
+rival {[}4{]}
+
+3.56
+
+2.82~--~4.50
+
+\textless0.001
+
+LSAS Total
+
+1.32
+
+0.84~--~2.08
+
+0.230
+
+pay competitive {[}2{]}
+
+0.12
+
+0.08~--~0.16
+
+\textless0.001
+
+pay competitive {[}3{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+pay competitive {[}4{]}
+
+0.07
+
+0.05~--~0.11
+
+\textless0.001
+
+rival {[}2{]} × LSAS Total
+
+1.11
+
+0.87~--~1.43
+
+0.404
+
+rival {[}3{]} × LSAS Total
+
+0.98
+
+0.77~--~1.26
+
+0.890
+
+rival {[}4{]} × LSAS Total
+
+1.00
+
+0.78~--~1.29
+
+0.977
+
+rival {[}2{]} × paycompetitive {[}2{]}
+
+0.72
+
+0.45~--~1.15
+
+0.166
+
+rival {[}3{]} × paycompetitive {[}2{]}
+
+1.67
+
+1.10~--~2.53
+
+0.015
+
+rival {[}4{]} × paycompetitive {[}2{]}
+
+2.31
+
+1.53~--~3.47
+
+\textless0.001
+
+rival {[}2{]} × paycompetitive {[}3{]}
+
+0.41
+
+0.22~--~0.75
+
+0.004
+
+rival {[}3{]} × paycompetitive {[}3{]}
+
+0.88
+
+0.54~--~1.44
+
+0.623
+
+rival {[}4{]} × paycompetitive {[}3{]}
+
+1.58
+
+0.99~--~2.51
+
+0.053
+
+rival {[}2{]} × paycompetitive {[}4{]}
+
+0.54
+
+0.31~--~0.93
+
+0.028
+
+rival {[}3{]} × paycompetitive {[}4{]}
+
+0.62
+
+0.38~--~1.02
+
+0.060
+
+rival {[}4{]} × paycompetitive {[}4{]}
+
+0.92
+
+0.58~--~1.47
+
+0.738
+
+LSAS Total × paycompetitive {[}2{]}
+
+1.46
+
+1.04~--~2.05
+
+0.031
+
+LSAS Total × paycompetitive {[}3{]}
+
+1.19
+
+0.80~--~1.78
+
+0.386
+
+LSAS Total × paycompetitive {[}4{]}
+
+0.86
+
+0.58~--~1.27
+
+0.443
+
+(rival {[}2{]} × LSAS Total)× pay competitive {[}2{]}
+
+0.92
+
+0.57~--~1.48
+
+0.729
+
+(rival {[}3{]} × LSAS Total)× pay competitive {[}2{]}
+
+0.92
+
+0.60~--~1.41
+
+0.705
+
+(rival {[}4{]} × LSAS Total)× pay competitive {[}2{]}
+
+0.91
+
+0.60~--~1.39
+
+0.661
+
+(rival {[}2{]} × LSAS Total)× pay competitive {[}3{]}
+
+1.11
+
+0.61~--~2.03
+
+0.730
+
+(rival {[}3{]} × LSAS Total)× pay competitive {[}3{]}
+
+1.21
+
+0.73~--~2.00
+
+0.455
+
+(rival {[}4{]} × LSAS Total)× pay competitive {[}3{]}
+
+1.16
+
+0.72~--~1.88
+
+0.531
+
+(rival {[}2{]} × LSAS Total)× pay competitive {[}4{]}
+
+1.13
+
+0.64~--~1.98
+
+0.670
+
+(rival {[}3{]} × LSAS Total)× pay competitive {[}4{]}
+
+1.12
+
+0.67~--~1.87
+
+0.662
+
+(rival {[}4{]} × LSAS Total)× pay competitive {[}4{]}
+
+1.41
+
+0.87~--~2.28
+
+0.165
+
+Random Effects
+
+σ2
+
+3.29
+
+τ00 code
+
+5.77
+
+ICC
+
+0.64
+
+N code
+
+134
+
+Observations
+
+16965
+
+Marginal R2 / Conditional R2
+
+0.191 / 0.706
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_model}\NormalTok{(modelo\_15)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Con LSAS\_Fear modelo 15.1}
+\NormalTok{modelo\_15}\FloatTok{.1} \OtherTok{\textless{}{-}} \FunctionTok{glmer}\NormalTok{(game\_type.f}\SpecialCharTok{\textasciitilde{}}\NormalTok{rival}\SpecialCharTok{*}\FunctionTok{scale}\NormalTok{(LSAS\_Fear)}\SpecialCharTok{*}\NormalTok{pay\_competitive}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{code),}\AttributeTok{data =}\NormalTok{ datosLimpios,}\AttributeTok{family =}\NormalTok{ binomial,}\AttributeTok{control=}\FunctionTok{glmerControl}\NormalTok{(}\AttributeTok{optCtrl=}\FunctionTok{list}\NormalTok{(}\AttributeTok{maxfun =} \DecValTok{100000}\NormalTok{),}\AttributeTok{optimizer =} \StringTok{"bobyqa"}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: game_type.f ~ rival * scale(LSAS_Fear) * pay_competitive + (1 |      code)
+##    Data: datosLimpios
+## Control: glmerControl(optCtrl = list(maxfun = 1e+05), optimizer = "bobyqa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   9075.7   9331.1  -4504.8   9009.7    16932 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -19.861  -0.299  -0.130  -0.034  48.194 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 5.773    2.403   
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##                                          Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                              -1.89628    0.22989  -8.248  < 2e-16 ***
+## rival2                                    0.36717    0.11961   3.070  0.00214 ** 
+## rival3                                    0.99151    0.11927   8.314  < 2e-16 ***
+## rival4                                    1.28047    0.11962  10.704  < 2e-16 ***
+## scale(LSAS_Fear)                          0.41920    0.23066   1.817  0.06915 .  
+## pay_competitive2                         -2.14621    0.17194 -12.482  < 2e-16 ***
+## pay_competitive3                         -2.67658    0.19898 -13.451  < 2e-16 ***
+## pay_competitive4                         -2.60071    0.19212 -13.537  < 2e-16 ***
+## rival2:scale(LSAS_Fear)                  -0.01041    0.12554  -0.083  0.93392    
+## rival3:scale(LSAS_Fear)                  -0.13387    0.12457  -1.075  0.28252    
+## rival4:scale(LSAS_Fear)                  -0.16237    0.12479  -1.301  0.19320    
+## rival2:pay_competitive2                  -0.35273    0.24074  -1.465  0.14286    
+## rival3:pay_competitive2                   0.51416    0.21233   2.422  0.01546 *  
+## rival4:pay_competitive2                   0.83574    0.20868   4.005 6.21e-05 ***
+## rival2:pay_competitive3                  -0.87299    0.30681  -2.845  0.00444 ** 
+## rival3:pay_competitive3                  -0.13006    0.25136  -0.517  0.60486    
+## rival4:pay_competitive3                   0.46301    0.23703   1.953  0.05078 .  
+## rival2:pay_competitive4                  -0.62774    0.28102  -2.234  0.02550 *  
+## rival3:pay_competitive4                  -0.48294    0.25132  -1.922  0.05466 .  
+## rival4:pay_competitive4                  -0.10254    0.23789  -0.431  0.66644    
+## scale(LSAS_Fear):pay_competitive2         0.26135    0.17279   1.513  0.13041    
+## scale(LSAS_Fear):pay_competitive3         0.10124    0.19962   0.507  0.61203    
+## scale(LSAS_Fear):pay_competitive4        -0.20976    0.19360  -1.083  0.27860    
+## rival2:scale(LSAS_Fear):pay_competitive2  0.09102    0.24154   0.377  0.70628    
+## rival3:scale(LSAS_Fear):pay_competitive2 -0.02245    0.21622  -0.104  0.91731    
+## rival4:scale(LSAS_Fear):pay_competitive2 -0.02023    0.21203  -0.095  0.92398    
+## rival2:scale(LSAS_Fear):pay_competitive3  0.09753    0.29979   0.325  0.74492    
+## rival3:scale(LSAS_Fear):pay_competitive3  0.27497    0.25262   1.088  0.27639    
+## rival4:scale(LSAS_Fear):pay_competitive3  0.16266    0.23985   0.678  0.49767    
+## rival2:scale(LSAS_Fear):pay_competitive4  0.08976    0.27926   0.321  0.74788    
+## rival3:scale(LSAS_Fear):pay_competitive4  0.24029    0.25370   0.947  0.34357    
+## rival4:scale(LSAS_Fear):pay_competitive4  0.48650    0.24107   2.018  0.04358 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{Anova}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{, }\AttributeTok{type =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: game_type.f
+##                                           Chisq Df Pr(>Chisq)    
+## (Intercept)                             68.0372  1  < 2.2e-16 ***
+## rival                                  141.7703  3  < 2.2e-16 ***
+## scale(LSAS_Fear)                         3.3030  1    0.06915 .  
+## pay_competitive                        361.1611  3  < 2.2e-16 ***
+## rival:scale(LSAS_Fear)                   2.7047  3    0.43943    
+## rival:pay_competitive                   61.1382  9  8.086e-10 ***
+## scale(LSAS_Fear):pay_competitive         4.7735  3    0.18915    
+## rival:scale(LSAS_Fear):pay_competitive   7.5619  9    0.57883    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tab\_model(modelo\_15.1)}
+\NormalTok{sjPlot}\SpecialCharTok{::}\FunctionTok{tab\_model}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+~
+
+game\_type.f
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.15
+
+0.10~--~0.24
+
+\textless0.001
+
+rival {[}2{]}
+
+1.44
+
+1.14~--~1.83
+
+0.002
+
+rival {[}3{]}
+
+2.70
+
+2.13~--~3.41
+
+\textless0.001
+
+rival {[}4{]}
+
+3.60
+
+2.85~--~4.55
+
+\textless0.001
+
+LSAS Fear
+
+1.52
+
+0.97~--~2.39
+
+0.069
+
+pay competitive {[}2{]}
+
+0.12
+
+0.08~--~0.16
+
+\textless0.001
+
+pay competitive {[}3{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+pay competitive {[}4{]}
+
+0.07
+
+0.05~--~0.11
+
+\textless0.001
+
+rival {[}2{]} × LSAS Fear
+
+0.99
+
+0.77~--~1.27
+
+0.934
+
+rival {[}3{]} × LSAS Fear
+
+0.87
+
+0.69~--~1.12
+
+0.283
+
+rival {[}4{]} × LSAS Fear
+
+0.85
+
+0.67~--~1.09
+
+0.193
+
+rival {[}2{]} × paycompetitive {[}2{]}
+
+0.70
+
+0.44~--~1.13
+
+0.143
+
+rival {[}3{]} × paycompetitive {[}2{]}
+
+1.67
+
+1.10~--~2.54
+
+0.015
+
+rival {[}4{]} × paycompetitive {[}2{]}
+
+2.31
+
+1.53~--~3.47
+
+\textless0.001
+
+rival {[}2{]} × paycompetitive {[}3{]}
+
+0.42
+
+0.23~--~0.76
+
+0.004
+
+rival {[}3{]} × paycompetitive {[}3{]}
+
+0.88
+
+0.54~--~1.44
+
+0.605
+
+rival {[}4{]} × paycompetitive {[}3{]}
+
+1.59
+
+1.00~--~2.53
+
+0.051
+
+rival {[}2{]} × paycompetitive {[}4{]}
+
+0.53
+
+0.31~--~0.93
+
+0.025
+
+rival {[}3{]} × paycompetitive {[}4{]}
+
+0.62
+
+0.38~--~1.01
+
+0.055
+
+rival {[}4{]} × paycompetitive {[}4{]}
+
+0.90
+
+0.57~--~1.44
+
+0.666
+
+LSAS Fear × paycompetitive {[}2{]}
+
+1.30
+
+0.93~--~1.82
+
+0.130
+
+LSAS Fear × paycompetitive {[}3{]}
+
+1.11
+
+0.75~--~1.64
+
+0.612
+
+LSAS Fear × paycompetitive {[}4{]}
+
+0.81
+
+0.55~--~1.18
+
+0.279
+
+(rival {[}2{]} × LSAS Fear) ×pay competitive {[}2{]}
+
+1.10
+
+0.68~--~1.76
+
+0.706
+
+(rival {[}3{]} × LSAS Fear) ×pay competitive {[}2{]}
+
+0.98
+
+0.64~--~1.49
+
+0.917
+
+(rival {[}4{]} × LSAS Fear) ×pay competitive {[}2{]}
+
+0.98
+
+0.65~--~1.48
+
+0.924
+
+(rival {[}2{]} × LSAS Fear) ×pay competitive {[}3{]}
+
+1.10
+
+0.61~--~1.98
+
+0.745
+
+(rival {[}3{]} × LSAS Fear) ×pay competitive {[}3{]}
+
+1.32
+
+0.80~--~2.16
+
+0.276
+
+(rival {[}4{]} × LSAS Fear) ×pay competitive {[}3{]}
+
+1.18
+
+0.74~--~1.88
+
+0.498
+
+(rival {[}2{]} × LSAS Fear) ×pay competitive {[}4{]}
+
+1.09
+
+0.63~--~1.89
+
+0.748
+
+(rival {[}3{]} × LSAS Fear) ×pay competitive {[}4{]}
+
+1.27
+
+0.77~--~2.09
+
+0.344
+
+(rival {[}4{]} × LSAS Fear) ×pay competitive {[}4{]}
+
+1.63
+
+1.01~--~2.61
+
+0.044
+
+Random Effects
+
+σ2
+
+3.29
+
+τ00 code
+
+5.77
+
+ICC
+
+0.64
+
+N code
+
+134
+
+Observations
+
+16965
+
+Marginal R2 / Conditional R2
+
+0.191 / 0.707
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_model}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-21-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Con LSAS\_Anxiety modelo 15.2}
+\NormalTok{modelo\_15}\FloatTok{.2} \OtherTok{\textless{}{-}} \FunctionTok{glmer}\NormalTok{(game\_type.f}\SpecialCharTok{\textasciitilde{}}\NormalTok{rival}\SpecialCharTok{*}\FunctionTok{scale}\NormalTok{(LSAS\_Anxiety)}\SpecialCharTok{*}\NormalTok{pay\_competitive}\SpecialCharTok{+}\NormalTok{(}\DecValTok{1}\SpecialCharTok{|}\NormalTok{code),}\AttributeTok{data =}\NormalTok{ datosLimpios,}\AttributeTok{family =}\NormalTok{ binomial,}\AttributeTok{control=}\FunctionTok{glmerControl}\NormalTok{(}\AttributeTok{optCtrl=}\FunctionTok{list}\NormalTok{(}\AttributeTok{maxfun =} \DecValTok{100000}\NormalTok{),}\AttributeTok{optimizer =} \StringTok{"bobyqa"}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+##  Family: binomial  ( logit )
+## Formula: game_type.f ~ rival * scale(LSAS_Anxiety) * pay_competitive +      (1 | code)
+##    Data: datosLimpios
+## Control: glmerControl(optCtrl = list(maxfun = 1e+05), optimizer = "bobyqa")
+## 
+##      AIC      BIC   logLik deviance df.resid 
+##   9062.6   9317.9  -4498.3   8996.6    16932 
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -22.548  -0.298  -0.133  -0.035  53.466 
+## 
+## Random effects:
+##  Groups Name        Variance Std.Dev.
+##  code   (Intercept) 5.798    2.408   
+## Number of obs: 16965, groups:  code, 134
+## 
+## Fixed effects:
+##                                             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                                 -1.89145    0.23015  -8.218  < 2e-16 ***
+## rival2                                       0.36569    0.11954   3.059  0.00222 ** 
+## rival3                                       0.98483    0.11915   8.265  < 2e-16 ***
+## rival4                                       1.26916    0.11941  10.629  < 2e-16 ***
+## scale(LSAS_Anxiety)                          0.11526    0.23259   0.496  0.62021    
+## pay_competitive2                            -2.12930    0.17021 -12.510  < 2e-16 ***
+## pay_competitive3                            -2.66520    0.19685 -13.539  < 2e-16 ***
+## pay_competitive4                            -2.61906    0.19275 -13.588  < 2e-16 ***
+## rival2:scale(LSAS_Anxiety)                   0.21167    0.12861   1.646  0.09980 .  
+## rival3:scale(LSAS_Anxiety)                   0.10096    0.12739   0.793  0.42806    
+## rival4:scale(LSAS_Anxiety)                   0.16720    0.12756   1.311  0.18993    
+## rival2:pay_competitive2                     -0.32495    0.23650  -1.374  0.16944    
+## rival3:pay_competitive2                      0.50196    0.21083   2.381  0.01727 *  
+## rival4:pay_competitive2                      0.82436    0.20712   3.980 6.89e-05 ***
+## rival2:pay_competitive3                     -0.91972    0.31101  -2.957  0.00310 ** 
+## rival3:pay_competitive3                     -0.11755    0.24861  -0.473  0.63633    
+## rival4:pay_competitive3                      0.44865    0.23547   1.905  0.05673 .  
+## rival2:pay_competitive4                     -0.62169    0.28275  -2.199  0.02790 *  
+## rival3:pay_competitive4                     -0.47212    0.25166  -1.876  0.06065 .  
+## rival4:pay_competitive4                     -0.06446    0.23769  -0.271  0.78625    
+## scale(LSAS_Anxiety):pay_competitive2         0.44489    0.17306   2.571  0.01015 *  
+## scale(LSAS_Anxiety):pay_competitive3         0.22895    0.20466   1.119  0.26327    
+## scale(LSAS_Anxiety):pay_competitive4        -0.08275    0.20283  -0.408  0.68328    
+## rival2:scale(LSAS_Anxiety):pay_competitive2 -0.24643    0.24083  -1.023  0.30619    
+## rival3:scale(LSAS_Anxiety):pay_competitive2 -0.13457    0.21646  -0.622  0.53414    
+## rival4:scale(LSAS_Anxiety):pay_competitive2 -0.15536    0.21260  -0.731  0.46494    
+## rival2:scale(LSAS_Anxiety):pay_competitive3  0.09985    0.30705   0.325  0.74504    
+## rival3:scale(LSAS_Anxiety):pay_competitive3  0.08485    0.25623   0.331  0.74053    
+## rival4:scale(LSAS_Anxiety):pay_competitive3  0.11901    0.24397   0.488  0.62570    
+## rival2:scale(LSAS_Anxiety):pay_competitive4  0.14610    0.29074   0.503  0.61531    
+## rival3:scale(LSAS_Anxiety):pay_competitive4 -0.02397    0.26399  -0.091  0.92765    
+## rival4:scale(LSAS_Anxiety):pay_competitive4  0.16262    0.24915   0.653  0.51397    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{Anova}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{, }\AttributeTok{type =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table (Type III Wald chisquare tests)
+## 
+## Response: game_type.f
+##                                              Chisq Df Pr(>Chisq)    
+## (Intercept)                                67.5387  1  < 2.2e-16 ***
+## rival                                     139.9944  3  < 2.2e-16 ***
+## scale(LSAS_Anxiety)                         0.2456  1    0.62021    
+## pay_competitive                           362.6108  3  < 2.2e-16 ***
+## rival:scale(LSAS_Anxiety)                   3.0650  3    0.38171    
+## rival:pay_competitive                      59.5523  9  1.635e-09 ***
+## scale(LSAS_Anxiety):pay_competitive         8.3213  3    0.03982 *  
+## rival:scale(LSAS_Anxiety):pay_competitive   2.9037  9    0.96799    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tab\_model(modelo\_15.2)}
+\NormalTok{sjPlot}\SpecialCharTok{::}\FunctionTok{tab\_model}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+~
+
+game\_type.f
+
+Predictors
+
+Odds Ratios
+
+CI
+
+p
+
+(Intercept)
+
+0.15
+
+0.10~--~0.24
+
+\textless0.001
+
+rival {[}2{]}
+
+1.44
+
+1.14~--~1.82
+
+0.002
+
+rival {[}3{]}
+
+2.68
+
+2.12~--~3.38
+
+\textless0.001
+
+rival {[}4{]}
+
+3.56
+
+2.82~--~4.50
+
+\textless0.001
+
+LSAS Anxiety
+
+1.12
+
+0.71~--~1.77
+
+0.620
+
+pay competitive {[}2{]}
+
+0.12
+
+0.09~--~0.17
+
+\textless0.001
+
+pay competitive {[}3{]}
+
+0.07
+
+0.05~--~0.10
+
+\textless0.001
+
+pay competitive {[}4{]}
+
+0.07
+
+0.05~--~0.11
+
+\textless0.001
+
+rival {[}2{]} × LSAS Anxiety
+
+1.24
+
+0.96~--~1.59
+
+0.100
+
+rival {[}3{]} × LSAS Anxiety
+
+1.11
+
+0.86~--~1.42
+
+0.428
+
+rival {[}4{]} × LSAS Anxiety
+
+1.18
+
+0.92~--~1.52
+
+0.190
+
+rival {[}2{]} × paycompetitive {[}2{]}
+
+0.72
+
+0.45~--~1.15
+
+0.169
+
+rival {[}3{]} × paycompetitive {[}2{]}
+
+1.65
+
+1.09~--~2.50
+
+0.017
+
+rival {[}4{]} × paycompetitive {[}2{]}
+
+2.28
+
+1.52~--~3.42
+
+\textless0.001
+
+rival {[}2{]} × paycompetitive {[}3{]}
+
+0.40
+
+0.22~--~0.73
+
+0.003
+
+rival {[}3{]} × paycompetitive {[}3{]}
+
+0.89
+
+0.55~--~1.45
+
+0.636
+
+rival {[}4{]} × paycompetitive {[}3{]}
+
+1.57
+
+0.99~--~2.48
+
+0.057
+
+rival {[}2{]} × paycompetitive {[}4{]}
+
+0.54
+
+0.31~--~0.93
+
+0.028
+
+rival {[}3{]} × paycompetitive {[}4{]}
+
+0.62
+
+0.38~--~1.02
+
+0.061
+
+rival {[}4{]} × paycompetitive {[}4{]}
+
+0.94
+
+0.59~--~1.49
+
+0.786
+
+LSAS Anxiety × paycompetitive {[}2{]}
+
+1.56
+
+1.11~--~2.19
+
+0.010
+
+LSAS Anxiety × paycompetitive {[}3{]}
+
+1.26
+
+0.84~--~1.88
+
+0.263
+
+LSAS Anxiety × paycompetitive {[}4{]}
+
+0.92
+
+0.62~--~1.37
+
+0.683
+
+(rival {[}2{]} × LSASAnxiety) × paycompetitive {[}2{]}
+
+0.78
+
+0.49~--~1.25
+
+0.306
+
+(rival {[}3{]} × LSASAnxiety) × paycompetitive {[}2{]}
+
+0.87
+
+0.57~--~1.34
+
+0.534
+
+(rival {[}4{]} × LSASAnxiety) × paycompetitive {[}2{]}
+
+0.86
+
+0.56~--~1.30
+
+0.465
+
+(rival {[}2{]} × LSASAnxiety) × paycompetitive {[}3{]}
+
+1.11
+
+0.61~--~2.02
+
+0.745
+
+(rival {[}3{]} × LSASAnxiety) × paycompetitive {[}3{]}
+
+1.09
+
+0.66~--~1.80
+
+0.741
+
+(rival {[}4{]} × LSASAnxiety) × paycompetitive {[}3{]}
+
+1.13
+
+0.70~--~1.82
+
+0.626
+
+(rival {[}2{]} × LSASAnxiety) × paycompetitive {[}4{]}
+
+1.16
+
+0.65~--~2.05
+
+0.615
+
+(rival {[}3{]} × LSASAnxiety) × paycompetitive {[}4{]}
+
+0.98
+
+0.58~--~1.64
+
+0.928
+
+(rival {[}4{]} × LSASAnxiety) × paycompetitive {[}4{]}
+
+1.18
+
+0.72~--~1.92
+
+0.514
+
+Random Effects
+
+σ2
+
+3.29
+
+τ00 code
+
+5.80
+
+ICC
+
+0.64
+
+N code
+
+134
+
+Observations
+
+16965
+
+Marginal R2 / Conditional R2
+
+0.187 / 0.706
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot\_model}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-21-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Likelihood ratio test}
+\NormalTok{lrt }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{ (modelo\_15}\FloatTok{.1}\NormalTok{, modelo\_15}\FloatTok{.2}\NormalTok{) \{}
+\NormalTok{  L0 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\NormalTok{  L1 }\OtherTok{\textless{}{-}} \FunctionTok{logLik}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\NormalTok{  L01 }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(}\SpecialCharTok{{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ (L0 }\SpecialCharTok{{-}}\NormalTok{ L1))}
+\NormalTok{  df }\OtherTok{\textless{}{-}} \FunctionTok{attr}\NormalTok{(L1, }\StringTok{"df"}\NormalTok{) }\SpecialCharTok{{-}} \FunctionTok{attr}\NormalTok{(L0, }\StringTok{"df"}\NormalTok{)}
+  \FunctionTok{list}\NormalTok{(}\AttributeTok{L01 =}\NormalTok{ L01, }\AttributeTok{df =}\NormalTok{ df,}
+       \StringTok{"p{-}value"} \OtherTok{=} \FunctionTok{pchisq}\NormalTok{(L01, df, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{))}
+\NormalTok{  \}}
+\FunctionTok{lrt}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{, modelo\_15}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $L01
+## [1] 13.10374
+## 
+## $df
+## [1] 0
+## 
+## $`p-value`
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{logLik}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'log Lik.' -4504.833 (df=33)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{logLik}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'log Lik.' -4498.282 (df=33)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d0 }\OtherTok{\textless{}{-}} \FunctionTok{deviance}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\NormalTok{d1 }\OtherTok{\textless{}{-}} \FunctionTok{deviance}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\NormalTok{LR }\OtherTok{\textless{}{-}}\NormalTok{ d0 }\SpecialCharTok{{-}}\NormalTok{ d1}
+\FunctionTok{pchisq}\NormalTok{(LR, }\DecValTok{1}\NormalTok{, }\AttributeTok{lower =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0002190751
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{,modelo\_15}\FloatTok{.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data: datosLimpios
+## Models:
+## modelo_15.1: game_type.f ~ rival * scale(LSAS_Fear) * pay_competitive + (1 | code)
+## modelo_15.2: game_type.f ~ rival * scale(LSAS_Anxiety) * pay_competitive + (1 | code)
+##             npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)
+## modelo_15.1   33 9075.7 9331.1 -4504.8   9009.7                     
+## modelo_15.2   33 9062.6 9317.9 -4498.3   8996.6 13.104  0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#calculo grilla de referencia}
+\NormalTok{game\_type.glmer.lsas\_total.rg }\OtherTok{=} \FunctionTok{ref\_grid}\NormalTok{(modelo\_15)}
+\NormalTok{game\_type.glmer.lsas\_fear.rg }\OtherTok{=} \FunctionTok{ref\_grid}\NormalTok{(modelo\_15}\FloatTok{.1}\NormalTok{)}
+\NormalTok{game\_type.glmer.lsas\_anxiety.rg }\OtherTok{=} \FunctionTok{ref\_grid}\NormalTok{(modelo\_15}\FloatTok{.2}\NormalTok{)}
+\CommentTok{\#calculo medias marginales para variable}
+\NormalTok{game\_type.glmer.lsas\_total.emm.rival }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_total.rg, }\StringTok{"rival"}\NormalTok{)}
+\NormalTok{game\_type.glmer.lsas\_fear.emm.rival }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_fear.rg, }\StringTok{"rival"}\NormalTok{)}
+\NormalTok{game\_type.glmer.lsas\_anxiety.emm.rival }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_anxiety.rg, }\StringTok{"rival"}\NormalTok{)}
+
+\NormalTok{game\_type.glmer.lsas\_total.emm.pay }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_total.rg, }\StringTok{"pay\_competitive"}\NormalTok{)}
+\NormalTok{game\_type.glmer.lsas\_total.emm.payrival }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_total.rg,}\FunctionTok{c}\NormalTok{(}\StringTok{"pay\_competitive"}\NormalTok{, }\StringTok{"rival"}\NormalTok{))}
+\NormalTok{game\_type.glmer.lsas\_total.emm.pay\_rival }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_total.rg,}\StringTok{"pay\_competitive"}\NormalTok{, }\AttributeTok{by=}\StringTok{"rival"}\NormalTok{)}
+\NormalTok{game\_type.glmer.lsas\_total.emm.rival\_pay }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_total.rg,}\AttributeTok{by=}\StringTok{"pay\_competitive"}\NormalTok{, }\StringTok{"rival"}\NormalTok{)}
+
+\NormalTok{game\_type.glmer.lsas\_fear.emm.pay }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_fear.rg, }\StringTok{"pay\_competitive"}\NormalTok{)}
+\NormalTok{game\_type.glmer.lsas\_anxiety.emm.pay }\OtherTok{=} \FunctionTok{emmeans}\NormalTok{(game\_type.glmer.lsas\_anxiety.rg, }\StringTok{"pay\_competitive"}\NormalTok{)}
+
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.lsas\_total.emm.rival)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  rival emmean    SE  df asymp.LCL asymp.UCL
+##  1      -3.75 0.227 Inf     -4.19     -3.30
+##  2      -3.85 0.230 Inf     -4.30     -3.40
+##  3      -2.78 0.221 Inf     -3.22     -2.35
+##  4      -2.17 0.218 Inf     -2.60     -1.75
+## 
+## Results are averaged over the levels of: pay_competitive 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.lsas\_fear.emm.rival)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  rival emmean    SE  df asymp.LCL asymp.UCL
+##  1      -3.75 0.227 Inf     -4.20     -3.31
+##  2      -3.85 0.230 Inf     -4.30     -3.40
+##  3      -2.79 0.221 Inf     -3.22     -2.35
+##  4      -2.17 0.218 Inf     -2.60     -1.74
+## 
+## Results are averaged over the levels of: pay_competitive 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.lsas\_anxiety.emm.rival)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  rival emmean    SE  df asymp.LCL asymp.UCL
+##  1      -3.74 0.227 Inf     -4.19     -3.30
+##  2      -3.85 0.231 Inf     -4.30     -3.39
+##  3      -2.78 0.221 Inf     -3.22     -2.35
+##  4      -2.17 0.219 Inf     -2.60     -1.74
+## 
+## Results are averaged over the levels of: pay_competitive 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.lsas\_total.emm.pay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  pay_competitive emmean    SE  df asymp.LCL asymp.UCL
+##  1                -1.24 0.216 Inf     -1.66    -0.812
+##  2                -3.13 0.223 Inf     -3.56    -2.690
+##  3                -4.05 0.230 Inf     -4.50    -3.599
+##  4                -4.14 0.229 Inf     -4.59    -3.692
+## 
+## Results are averaged over the levels of: rival 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.lsas\_fear.emm.pay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  pay_competitive emmean    SE  df asymp.LCL asymp.UCL
+##  1                -1.24 0.216 Inf     -1.66    -0.813
+##  2                -3.13 0.223 Inf     -3.57    -2.697
+##  3                -4.05 0.230 Inf     -4.50    -3.597
+##  4                -4.14 0.229 Inf     -4.59    -3.692
+## 
+## Results are averaged over the levels of: rival 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(game\_type.glmer.lsas\_anxiety.emm.pay)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  pay_competitive emmean    SE  df asymp.LCL asymp.UCL
+##  1                -1.24 0.217 Inf     -1.66    -0.812
+##  2                -3.12 0.223 Inf     -3.55    -2.679
+##  3                -4.05 0.230 Inf     -4.50    -3.597
+##  4                -4.15 0.229 Inf     -4.59    -3.696
+## 
+## Results are averaged over the levels of: rival 
+## Results are given on the logit (not the response) scale. 
+## Confidence level used: 0.95
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#contraste }
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_total.emm.rival, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast        estimate     SE  df z.ratio p.value
+##  rival1 - rival2    0.100 0.1130 Inf   0.887  0.8115
+##  rival1 - rival3   -0.964 0.0946 Inf -10.189  <.0001
+##  rival1 - rival4   -1.573 0.0900 Inf -17.477  <.0001
+##  rival2 - rival3   -1.064 0.1030 Inf -10.369  <.0001
+##  rival2 - rival4   -1.673 0.0984 Inf -17.005  <.0001
+##  rival3 - rival4   -0.609 0.0752 Inf  -8.104  <.0001
+## 
+## Results are averaged over the levels of: pay_competitive 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_total.emm.payrival, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                                          estimate    SE  df z.ratio p.value
+##  pay_competitive1 rival1 - pay_competitive2 rival1   2.1451 0.171 Inf  12.526  <.0001
+##  pay_competitive1 rival1 - pay_competitive3 rival1   2.6739 0.198 Inf  13.530  <.0001
+##  pay_competitive1 rival1 - pay_competitive4 rival1   2.6122 0.192 Inf  13.602  <.0001
+##  pay_competitive1 rival1 - pay_competitive1 rival2  -0.3620 0.119 Inf  -3.032  0.1555
+##  pay_competitive1 rival1 - pay_competitive2 rival2   2.1142 0.170 Inf  12.467  <.0001
+##  pay_competitive1 rival1 - pay_competitive3 rival2   3.2092 0.241 Inf  13.296  <.0001
+##  pay_competitive1 rival1 - pay_competitive4 rival2   2.8701 0.210 Inf  13.689  <.0001
+##  pay_competitive1 rival1 - pay_competitive1 rival3  -0.9842 0.119 Inf  -8.269  <.0001
+##  pay_competitive1 rival1 - pay_competitive2 rival3   0.6479 0.128 Inf   5.053  0.0001
+##  pay_competitive1 rival1 - pay_competitive3 rival3   1.8127 0.157 Inf  11.558  <.0001
+##  pay_competitive1 rival1 - pay_competitive4 rival3   2.1007 0.166 Inf  12.643  <.0001
+##  pay_competitive1 rival1 - pay_competitive1 rival4  -1.2698 0.119 Inf -10.643  <.0001
+##  pay_competitive1 rival1 - pay_competitive2 rival4   0.0402 0.122 Inf   0.330  1.0000
+##  pay_competitive1 rival1 - pay_competitive3 rival4   0.9475 0.133 Inf   7.123  <.0001
+##  pay_competitive1 rival1 - pay_competitive4 rival4   1.4218 0.144 Inf   9.904  <.0001
+##  pay_competitive2 rival1 - pay_competitive3 rival1   0.5288 0.230 Inf   2.296  0.6266
+##  pay_competitive2 rival1 - pay_competitive4 rival1   0.4672 0.226 Inf   2.071  0.7839
+##  pay_competitive2 rival1 - pay_competitive1 rival2  -2.5071 0.170 Inf -14.717  <.0001
+##  pay_competitive2 rival1 - pay_competitive2 rival2  -0.0309 0.207 Inf  -0.149  1.0000
+##  pay_competitive2 rival1 - pay_competitive3 rival2   1.0641 0.268 Inf   3.965  0.0073
+##  pay_competitive2 rival1 - pay_competitive4 rival2   0.7250 0.240 Inf   3.015  0.1624
+##  pay_competitive2 rival1 - pay_competitive1 rival3  -3.1293 0.171 Inf -18.329  <.0001
+##  pay_competitive2 rival1 - pay_competitive2 rival3  -1.4972 0.176 Inf  -8.522  <.0001
+##  pay_competitive2 rival1 - pay_competitive3 rival3  -0.3324 0.197 Inf  -1.690  0.9499
+##  pay_competitive2 rival1 - pay_competitive4 rival3  -0.0444 0.204 Inf  -0.218  1.0000
+##  pay_competitive2 rival1 - pay_competitive1 rival4  -3.4149 0.171 Inf -19.947  <.0001
+##  pay_competitive2 rival1 - pay_competitive2 rival4  -2.1049 0.172 Inf -12.265  <.0001
+##  pay_competitive2 rival1 - pay_competitive3 rival4  -1.1976 0.179 Inf  -6.692  <.0001
+##  pay_competitive2 rival1 - pay_competitive4 rival4  -0.7233 0.187 Inf  -3.877  0.0103
+##  pay_competitive3 rival1 - pay_competitive4 rival1  -0.0617 0.246 Inf  -0.251  1.0000
+##  pay_competitive3 rival1 - pay_competitive1 rival2  -3.0359 0.197 Inf -15.415  <.0001
+##  pay_competitive3 rival1 - pay_competitive2 rival2  -0.5597 0.229 Inf  -2.444  0.5141
+##  pay_competitive3 rival1 - pay_competitive3 rival2   0.5353 0.285 Inf   1.877  0.8868
+##  pay_competitive3 rival1 - pay_competitive4 rival2   0.1961 0.259 Inf   0.756  1.0000
+##  pay_competitive3 rival1 - pay_competitive1 rival3  -3.6582 0.197 Inf -18.540  <.0001
+##  pay_competitive3 rival1 - pay_competitive2 rival3  -2.0260 0.201 Inf -10.055  <.0001
+##  pay_competitive3 rival1 - pay_competitive3 rival3  -0.8613 0.220 Inf  -3.917  0.0088
+##  pay_competitive3 rival1 - pay_competitive4 rival3  -0.5732 0.226 Inf  -2.532  0.4475
+##  pay_competitive3 rival1 - pay_competitive1 rival4  -3.9437 0.198 Inf -19.942  <.0001
+##  pay_competitive3 rival1 - pay_competitive2 rival4  -2.6338 0.198 Inf -13.301  <.0001
+##  pay_competitive3 rival1 - pay_competitive3 rival4  -1.7264 0.204 Inf  -8.453  <.0001
+##  pay_competitive3 rival1 - pay_competitive4 rival4  -1.2522 0.211 Inf  -5.937  <.0001
+##  pay_competitive4 rival1 - pay_competitive1 rival2  -2.9743 0.191 Inf -15.544  <.0001
+##  pay_competitive4 rival1 - pay_competitive2 rival2  -0.4980 0.224 Inf  -2.221  0.6824
+##  pay_competitive4 rival1 - pay_competitive3 rival2   0.5970 0.281 Inf   2.121  0.7517
+##  pay_competitive4 rival1 - pay_competitive4 rival2   0.2578 0.255 Inf   1.012  0.9998
+##  pay_competitive4 rival1 - pay_competitive1 rival3  -3.5965 0.192 Inf -18.758  <.0001
+##  pay_competitive4 rival1 - pay_competitive2 rival3  -1.9643 0.196 Inf -10.021  <.0001
+##  pay_competitive4 rival1 - pay_competitive3 rival3  -0.7996 0.215 Inf  -3.720  0.0184
+##  pay_competitive4 rival1 - pay_competitive4 rival3  -0.5115 0.221 Inf  -2.313  0.6142
+##  pay_competitive4 rival1 - pay_competitive1 rival4  -3.8820 0.192 Inf -20.199  <.0001
+##  pay_competitive4 rival1 - pay_competitive2 rival4  -2.5721 0.192 Inf -13.365  <.0001
+##  pay_competitive4 rival1 - pay_competitive3 rival4  -1.6648 0.199 Inf  -8.370  <.0001
+##  pay_competitive4 rival1 - pay_competitive4 rival4  -1.1905 0.206 Inf  -5.789  <.0001
+##  pay_competitive1 rival2 - pay_competitive2 rival2   2.4763 0.169 Inf  14.690  <.0001
+##  pay_competitive1 rival2 - pay_competitive3 rival2   3.5713 0.241 Inf  14.839  <.0001
+##  pay_competitive1 rival2 - pay_competitive4 rival2   3.2321 0.209 Inf  15.474  <.0001
+##  pay_competitive1 rival2 - pay_competitive1 rival3  -0.6222 0.117 Inf  -5.329  <.0001
+##  pay_competitive1 rival2 - pay_competitive2 rival3   1.0099 0.127 Inf   7.976  <.0001
+##  pay_competitive1 rival2 - pay_competitive3 rival3   2.1747 0.156 Inf  13.967  <.0001
+##  pay_competitive1 rival2 - pay_competitive4 rival3   2.4627 0.165 Inf  14.913  <.0001
+##  pay_competitive1 rival2 - pay_competitive1 rival4  -0.9078 0.117 Inf  -7.764  <.0001
+##  pay_competitive1 rival2 - pay_competitive2 rival4   0.4022 0.120 Inf   3.351  0.0632
+##  pay_competitive1 rival2 - pay_competitive3 rival4   1.3095 0.132 Inf   9.955  <.0001
+##  pay_competitive1 rival2 - pay_competitive4 rival4   1.7838 0.142 Inf  12.537  <.0001
+##  pay_competitive2 rival2 - pay_competitive3 rival2   1.0950 0.267 Inf   4.097  0.0043
+##  pay_competitive2 rival2 - pay_competitive4 rival2   0.7558 0.239 Inf   3.159  0.1109
+##  pay_competitive2 rival2 - pay_competitive1 rival3  -3.0985 0.169 Inf -18.339  <.0001
+##  pay_competitive2 rival2 - pay_competitive2 rival3  -1.4663 0.174 Inf  -8.427  <.0001
+##  pay_competitive2 rival2 - pay_competitive3 rival3  -0.3016 0.195 Inf  -1.545  0.9773
+##  pay_competitive2 rival2 - pay_competitive4 rival3  -0.0135 0.203 Inf  -0.067  1.0000
+##  pay_competitive2 rival2 - pay_competitive1 rival4  -3.3840 0.169 Inf -19.975  <.0001
+##  pay_competitive2 rival2 - pay_competitive2 rival4  -2.0741 0.170 Inf -12.208  <.0001
+##  pay_competitive2 rival2 - pay_competitive3 rival4  -1.1668 0.177 Inf  -6.581  <.0001
+##  pay_competitive2 rival2 - pay_competitive4 rival4  -0.6925 0.185 Inf  -3.743  0.0169
+##  pay_competitive3 rival2 - pay_competitive4 rival2  -0.3392 0.293 Inf  -1.156  0.9989
+##  pay_competitive3 rival2 - pay_competitive1 rival3  -4.1935 0.241 Inf -17.397  <.0001
+##  pay_competitive3 rival2 - pay_competitive2 rival3  -2.5613 0.244 Inf -10.481  <.0001
+##  pay_competitive3 rival2 - pay_competitive3 rival3  -1.3966 0.260 Inf  -5.379  <.0001
+##  pay_competitive3 rival2 - pay_competitive4 rival3  -1.1085 0.265 Inf  -4.182  0.0030
+##  pay_competitive3 rival2 - pay_competitive1 rival4  -4.4790 0.241 Inf -18.554  <.0001
+##  pay_competitive3 rival2 - pay_competitive2 rival4  -3.1691 0.242 Inf -13.119  <.0001
+##  pay_competitive3 rival2 - pay_competitive3 rival4  -2.2618 0.247 Inf  -9.169  <.0001
+##  pay_competitive3 rival2 - pay_competitive4 rival4  -1.7875 0.252 Inf  -7.089  <.0001
+##  pay_competitive4 rival2 - pay_competitive1 rival3  -3.8543 0.209 Inf -18.418  <.0001
+##  pay_competitive4 rival2 - pay_competitive2 rival3  -2.2222 0.213 Inf -10.425  <.0001
+##  pay_competitive4 rival2 - pay_competitive3 rival3  -1.0574 0.231 Inf  -4.586  0.0005
+##  pay_competitive4 rival2 - pay_competitive4 rival3  -0.7694 0.237 Inf  -3.252  0.0851
+##  pay_competitive4 rival2 - pay_competitive1 rival4  -4.1399 0.210 Inf -19.744  <.0001
+##  pay_competitive4 rival2 - pay_competitive2 rival4  -2.8299 0.210 Inf -13.482  <.0001
+##  pay_competitive4 rival2 - pay_competitive3 rival4  -1.9226 0.216 Inf  -8.910  <.0001
+##  pay_competitive4 rival2 - pay_competitive4 rival4  -1.4483 0.222 Inf  -6.523  <.0001
+##  pay_competitive1 rival3 - pay_competitive2 rival3   1.6321 0.127 Inf  12.884  <.0001
+##  pay_competitive1 rival3 - pay_competitive3 rival3   2.7969 0.156 Inf  17.922  <.0001
+##  pay_competitive1 rival3 - pay_competitive4 rival3   3.0849 0.166 Inf  18.640  <.0001
+##  pay_competitive1 rival3 - pay_competitive1 rival4  -0.2856 0.115 Inf  -2.479  0.4877
+##  pay_competitive1 rival3 - pay_competitive2 rival4   1.0244 0.120 Inf   8.556  <.0001
+##  pay_competitive1 rival3 - pay_competitive3 rival4   1.9317 0.132 Inf  14.664  <.0001
+##  pay_competitive1 rival3 - pay_competitive4 rival4   2.4060 0.143 Inf  16.873  <.0001
+##  pay_competitive2 rival3 - pay_competitive3 rival3   1.1648 0.162 Inf   7.206  <.0001
+##  pay_competitive2 rival3 - pay_competitive4 rival3   1.4528 0.171 Inf   8.512  <.0001
+##  pay_competitive2 rival3 - pay_competitive1 rival4  -1.9177 0.127 Inf -15.085  <.0001
+##  pay_competitive2 rival3 - pay_competitive2 rival4  -0.6077 0.129 Inf  -4.723  0.0003
+##  pay_competitive2 rival3 - pay_competitive3 rival4   0.2996 0.139 Inf   2.157  0.7277
+##  pay_competitive2 rival3 - pay_competitive4 rival4   0.7739 0.149 Inf   5.197  <.0001
+##  pay_competitive3 rival3 - pay_competitive4 rival3   0.2880 0.192 Inf   1.498  0.9830
+##  pay_competitive3 rival3 - pay_competitive1 rival4  -3.0825 0.157 Inf -19.689  <.0001
+##  pay_competitive3 rival3 - pay_competitive2 rival4  -1.7725 0.157 Inf -11.278  <.0001
+##  pay_competitive3 rival3 - pay_competitive3 rival4  -0.8652 0.165 Inf  -5.237  <.0001
+##  pay_competitive3 rival3 - pay_competitive4 rival4  -0.3909 0.173 Inf  -2.254  0.6584
+##  pay_competitive4 rival3 - pay_competitive1 rival4  -3.3705 0.166 Inf -20.305  <.0001
+##  pay_competitive4 rival3 - pay_competitive2 rival4  -2.0605 0.166 Inf -12.376  <.0001
+##  pay_competitive4 rival3 - pay_competitive3 rival4  -1.1532 0.174 Inf  -6.627  <.0001
+##  pay_competitive4 rival3 - pay_competitive4 rival4  -0.6790 0.182 Inf  -3.734  0.0175
+##  pay_competitive1 rival4 - pay_competitive2 rival4   1.3100 0.120 Inf  10.914  <.0001
+##  pay_competitive1 rival4 - pay_competitive3 rival4   2.2173 0.132 Inf  16.774  <.0001
+##  pay_competitive1 rival4 - pay_competitive4 rival4   2.6916 0.143 Inf  18.812  <.0001
+##  pay_competitive2 rival4 - pay_competitive3 rival4   0.9073 0.133 Inf   6.800  <.0001
+##  pay_competitive2 rival4 - pay_competitive4 rival4   1.3816 0.144 Inf   9.599  <.0001
+##  pay_competitive3 rival4 - pay_competitive4 rival4   0.4743 0.153 Inf   3.104  0.1288
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 16 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_total.emm.pay\_rival, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## rival = 1:
+##  contrast                            estimate    SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   2.1451 0.171 Inf  12.526  <.0001
+##  pay_competitive1 - pay_competitive3   2.6739 0.198 Inf  13.530  <.0001
+##  pay_competitive1 - pay_competitive4   2.6122 0.192 Inf  13.602  <.0001
+##  pay_competitive2 - pay_competitive3   0.5288 0.230 Inf   2.296  0.0989
+##  pay_competitive2 - pay_competitive4   0.4672 0.226 Inf   2.071  0.1626
+##  pay_competitive3 - pay_competitive4  -0.0617 0.246 Inf  -0.251  0.9944
+## 
+## rival = 2:
+##  contrast                            estimate    SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   2.4763 0.169 Inf  14.690  <.0001
+##  pay_competitive1 - pay_competitive3   3.5713 0.241 Inf  14.839  <.0001
+##  pay_competitive1 - pay_competitive4   3.2321 0.209 Inf  15.474  <.0001
+##  pay_competitive2 - pay_competitive3   1.0950 0.267 Inf   4.097  0.0002
+##  pay_competitive2 - pay_competitive4   0.7558 0.239 Inf   3.159  0.0086
+##  pay_competitive3 - pay_competitive4  -0.3392 0.293 Inf  -1.156  0.6545
+## 
+## rival = 3:
+##  contrast                            estimate    SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   1.6321 0.127 Inf  12.884  <.0001
+##  pay_competitive1 - pay_competitive3   2.7969 0.156 Inf  17.922  <.0001
+##  pay_competitive1 - pay_competitive4   3.0849 0.166 Inf  18.640  <.0001
+##  pay_competitive2 - pay_competitive3   1.1648 0.162 Inf   7.206  <.0001
+##  pay_competitive2 - pay_competitive4   1.4528 0.171 Inf   8.512  <.0001
+##  pay_competitive3 - pay_competitive4   0.2880 0.192 Inf   1.498  0.4386
+## 
+## rival = 4:
+##  contrast                            estimate    SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   1.3100 0.120 Inf  10.914  <.0001
+##  pay_competitive1 - pay_competitive3   2.2173 0.132 Inf  16.774  <.0001
+##  pay_competitive1 - pay_competitive4   2.6916 0.143 Inf  18.812  <.0001
+##  pay_competitive2 - pay_competitive3   0.9073 0.133 Inf   6.800  <.0001
+##  pay_competitive2 - pay_competitive4   1.3816 0.144 Inf   9.599  <.0001
+##  pay_competitive3 - pay_competitive4   0.4743 0.153 Inf   3.104  0.0103
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_total.emm.rival\_pay, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pay_competitive = 1:
+##  contrast        estimate    SE  df z.ratio p.value
+##  rival1 - rival2  -0.3620 0.119 Inf  -3.032  0.0130
+##  rival1 - rival3  -0.9842 0.119 Inf  -8.269  <.0001
+##  rival1 - rival4  -1.2698 0.119 Inf -10.643  <.0001
+##  rival2 - rival3  -0.6222 0.117 Inf  -5.329  <.0001
+##  rival2 - rival4  -0.9078 0.117 Inf  -7.764  <.0001
+##  rival3 - rival4  -0.2856 0.115 Inf  -2.479  0.0633
+## 
+## pay_competitive = 2:
+##  contrast        estimate    SE  df z.ratio p.value
+##  rival1 - rival2  -0.0309 0.207 Inf  -0.149  0.9988
+##  rival1 - rival3  -1.4972 0.176 Inf  -8.522  <.0001
+##  rival1 - rival4  -2.1049 0.172 Inf -12.265  <.0001
+##  rival2 - rival3  -1.4663 0.174 Inf  -8.427  <.0001
+##  rival2 - rival4  -2.0741 0.170 Inf -12.208  <.0001
+##  rival3 - rival4  -0.6077 0.129 Inf  -4.723  <.0001
+## 
+## pay_competitive = 3:
+##  contrast        estimate    SE  df z.ratio p.value
+##  rival1 - rival2   0.5353 0.285 Inf   1.877  0.2380
+##  rival1 - rival3  -0.8613 0.220 Inf  -3.917  0.0005
+##  rival1 - rival4  -1.7264 0.204 Inf  -8.453  <.0001
+##  rival2 - rival3  -1.3966 0.260 Inf  -5.379  <.0001
+##  rival2 - rival4  -2.2618 0.247 Inf  -9.169  <.0001
+##  rival3 - rival4  -0.8652 0.165 Inf  -5.237  <.0001
+## 
+## pay_competitive = 4:
+##  contrast        estimate    SE  df z.ratio p.value
+##  rival1 - rival2   0.2578 0.255 Inf   1.012  0.7423
+##  rival1 - rival3  -0.5115 0.221 Inf  -2.313  0.0951
+##  rival1 - rival4  -1.1905 0.206 Inf  -5.789  <.0001
+##  rival2 - rival3  -0.7694 0.237 Inf  -3.252  0.0063
+##  rival2 - rival4  -1.4483 0.222 Inf  -6.523  <.0001
+##  rival3 - rival4  -0.6790 0.182 Inf  -3.734  0.0011
+## 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_fear.emm.rival, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast        estimate     SE  df z.ratio p.value
+##  rival1 - rival2   0.0962 0.1130 Inf   0.855  0.8282
+##  rival1 - rival3  -0.9668 0.0949 Inf -10.189  <.0001
+##  rival1 - rival4  -1.5795 0.0903 Inf -17.500  <.0001
+##  rival2 - rival3  -1.0630 0.1020 Inf -10.397  <.0001
+##  rival2 - rival4  -1.6757 0.0980 Inf -17.100  <.0001
+##  rival3 - rival4  -0.6127 0.0753 Inf  -8.137  <.0001
+## 
+## Results are averaged over the levels of: pay_competitive 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_anxiety.emm.rival, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast        estimate     SE  df z.ratio p.value
+##  rival1 - rival2    0.101 0.1130 Inf   0.893  0.8085
+##  rival1 - rival3   -0.963 0.0943 Inf -10.207  <.0001
+##  rival1 - rival4   -1.571 0.0899 Inf -17.486  <.0001
+##  rival2 - rival3   -1.064 0.1030 Inf -10.344  <.0001
+##  rival2 - rival4   -1.672 0.0987 Inf -16.942  <.0001
+##  rival3 - rival4   -0.608 0.0751 Inf  -8.099  <.0001
+## 
+## Results are averaged over the levels of: pay_competitive 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_total.emm.pay, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                            estimate     SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   1.8909 0.0758 Inf  24.958  <.0001
+##  pay_competitive1 - pay_competitive3   2.8148 0.0955 Inf  29.490  <.0001
+##  pay_competitive1 - pay_competitive4   2.9052 0.0923 Inf  31.474  <.0001
+##  pay_competitive2 - pay_competitive3   0.9240 0.1030 Inf   8.983  <.0001
+##  pay_competitive2 - pay_competitive4   1.0143 0.0998 Inf  10.162  <.0001
+##  pay_competitive3 - pay_competitive4   0.0904 0.1140 Inf   0.794  0.8571
+## 
+## Results are averaged over the levels of: rival 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_fear.emm.pay, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                            estimate     SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   1.8969 0.0762 Inf  24.897  <.0001
+##  pay_competitive1 - pay_competitive3   2.8116 0.0951 Inf  29.573  <.0001
+##  pay_competitive1 - pay_competitive4   2.9040 0.0923 Inf  31.472  <.0001
+##  pay_competitive2 - pay_competitive3   0.9147 0.1030 Inf   8.909  <.0001
+##  pay_competitive2 - pay_competitive4   1.0071 0.1000 Inf  10.069  <.0001
+##  pay_competitive3 - pay_competitive4   0.0924 0.1130 Inf   0.815  0.8472
+## 
+## Results are averaged over the levels of: rival 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contrast}\NormalTok{(game\_type.glmer.lsas\_anxiety.emm.pay, }\StringTok{"pairwise"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                            estimate     SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2   1.8790 0.0752 Inf  24.974  <.0001
+##  pay_competitive1 - pay_competitive3   2.8124 0.0956 Inf  29.411  <.0001
+##  pay_competitive1 - pay_competitive4   2.9086 0.0926 Inf  31.414  <.0001
+##  pay_competitive2 - pay_competitive3   0.9334 0.1030 Inf   9.086  <.0001
+##  pay_competitive2 - pay_competitive4   1.0297 0.0997 Inf  10.325  <.0001
+##  pay_competitive3 - pay_competitive4   0.0963 0.1140 Inf   0.843  0.8339
+## 
+## Results are averaged over the levels of: rival 
+## Results are given on the log odds ratio (not the response) scale. 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#comparar pendientes}
+\NormalTok{pends\_lsas }\OtherTok{=} \FunctionTok{emtrends}\NormalTok{(modelo\_15,}\SpecialCharTok{\textasciitilde{}}\NormalTok{pay\_competitive,}\AttributeTok{var=}\StringTok{"LSAS\_Total"}\NormalTok{)}
+\FunctionTok{contrast}\NormalTok{(pends\_lsas,}\AttributeTok{method=}\StringTok{"pairwise"}\NormalTok{,}\AttributeTok{adjust =} \StringTok{"holm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  contrast                             estimate      SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2 -0.013098 0.00328 Inf  -3.988  0.0004
+##  pay_competitive1 - pay_competitive3 -0.012134 0.00405 Inf  -2.995  0.0110
+##  pay_competitive1 - pay_competitive4  0.000356 0.00407 Inf   0.088  1.0000
+##  pay_competitive2 - pay_competitive3  0.000965 0.00433 Inf   0.223  1.0000
+##  pay_competitive2 - pay_competitive4  0.013455 0.00433 Inf   3.109  0.0094
+##  pay_competitive3 - pay_competitive4  0.012490 0.00481 Inf   2.595  0.0284
+## 
+## Results are averaged over the levels of: rival 
+## P value adjustment: holm method for 6 tests
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(emmeans)}
+
+\CommentTok{\# Calcular tendencias de LSAS\_Total por niveles de pay\_competitive}
+\NormalTok{tendencias }\OtherTok{\textless{}{-}} \FunctionTok{emtrends}\NormalTok{(modelo\_15, }
+\NormalTok{                       pairwise }\SpecialCharTok{\textasciitilde{}}\NormalTok{ pay\_competitive, }\CommentTok{\# Interacción con pay\_competitive}
+                       \AttributeTok{var =} \StringTok{"LSAS\_Total"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NOTE: Results may be misleading due to involvement in interactions
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Mostrar resultados}
+\FunctionTok{print}\NormalTok{(tendencias)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $emtrends
+##  pay_competitive LSAS_Total.trend      SE  df asymp.LCL asymp.UCL
+##  1                         0.0126 0.00907 Inf  -0.00514    0.0304
+##  2                         0.0257 0.00933 Inf   0.00745    0.0440
+##  3                         0.0248 0.00961 Inf   0.00593    0.0436
+##  4                         0.0123 0.00960 Inf  -0.00654    0.0311
+## 
+## Results are averaged over the levels of: rival 
+## Confidence level used: 0.95 
+## 
+## $contrasts
+##  contrast                             estimate      SE  df z.ratio p.value
+##  pay_competitive1 - pay_competitive2 -0.013098 0.00328 Inf  -3.988  0.0004
+##  pay_competitive1 - pay_competitive3 -0.012134 0.00405 Inf  -2.995  0.0146
+##  pay_competitive1 - pay_competitive4  0.000356 0.00407 Inf   0.088  0.9998
+##  pay_competitive2 - pay_competitive3  0.000965 0.00433 Inf   0.223  0.9961
+##  pay_competitive2 - pay_competitive4  0.013455 0.00433 Inf   3.109  0.0101
+##  pay_competitive3 - pay_competitive4  0.012490 0.00481 Inf   2.595  0.0466
+## 
+## Results are averaged over the levels of: rival 
+## P value adjustment: tukey method for comparing a family of 4 estimates
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Extraer las tendencias estimadas}
+\NormalTok{tendencias\_summary }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(tendencias}\SpecialCharTok{$}\NormalTok{emtrends)}
+
+\CommentTok{\# Graficar con ggplot2}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\FunctionTok{ggplot}\NormalTok{(tendencias\_summary, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ pay\_competitive, }\AttributeTok{y =}\NormalTok{ LSAS\_Total.trend)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ asymp.LCL, }\AttributeTok{ymax =}\NormalTok{ asymp.UCL), }\AttributeTok{width =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Tendencias de LSAS\_Total por niveles de pay\_competitive"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Pay Competitive"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Pendiente de LSAS\_Total"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{modelo_GLM_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{save.image}\NormalTok{(}\StringTok{"./GLM.RData"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

@@ -1,0 +1,62 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShlbW1lYW5zKVxuXG4jIENhbGN1bGFyIHRlbmRlbmNpYXMgZGUgTFNBU19Ub3RhbCBwb3Igbml2ZWxlcyBkZSByaXZhbFxudGVuZGVuY2lhcyA8LSBlbXRyZW5kcyhtb2RlbG9fMTUsIFxuICAgICAgICAgICAgICAgICAgICAgICBwYWlyd2lzZSB+IHJpdmFsLCAjIEludGVyYWNjacOzbiBjb24gcml2YWxcbiAgICAgICAgICAgICAgICAgICAgICAgdmFyID0gXCJMU0FTX1RvdGFsXCIpXG5jb250cmFzdCh0ZW5kZW5jaWFzLG1ldGhvZD1cInBhaXJ3aXNlXCIsYWRqdXN0ID0gXCJob2xtXCIpXG4jIE1vc3RyYXIgcmVzdWx0YWRvc1xucHJpbnQodGVuZGVuY2lhcylcblxuIyBFeHRyYWVyIGxhcyB0ZW5kZW5jaWFzIGVzdGltYWRhc1xudGVuZGVuY2lhc19zdW1tYXJ5IDwtIHN1bW1hcnkodGVuZGVuY2lhcyRlbXRyZW5kcylcblxuIyBHcmFmaWNhciBjb24gZ2dwbG90MlxubGlicmFyeShnZ3Bsb3QyKVxuXG5nZ3Bsb3QodGVuZGVuY2lhc19zdW1tYXJ5LCBhZXMoeCA9IHJpdmFsLCB5ID0gTFNBU19Ub3RhbC50cmVuZCkpICtcbiAgZ2VvbV9wb2ludChzaXplID0gMywgY29sb3IgPSBcImJsdWVcIikgK1xuICBnZW9tX2Vycm9yYmFyKGFlcyh5bWluID0gYXN5bXAuTENMLCB5bWF4ID0gYXN5bXAuVUNMKSwgd2lkdGggPSAwLjIpICtcbiAgbGFicyh0aXRsZSA9IFwiVGVuZGVuY2lhcyBkZSBMU0FTIFRvdGFsIHBvciBuaXZlbGVzIGRlIHJpdmFsXCIsXG4gICAgICAgeCA9IFwiUml2YWxcIixcbiAgICAgICB5ID0gXCJQZW5kaWVudGUgZGUgTFNBU19Ub3RhbFwiKSArXG4gIHRoZW1lX21pbmltYWwoKVxuXG5zYXZlLmltYWdlKFwiLi9HTE0uUkRhdGFcIilcblxuYGBgIn0= -->
+
+```r
+library(emmeans)
+
+# Calcular tendencias de LSAS_Total por niveles de rival
+tendencias <- emtrends(modelo_15, 
+                       pairwise ~ rival, # Interacción con rival
+                       var = \"LSAS_Total\")
+contrast(tendencias,method=\"pairwise\",adjust = \"holm\")
+# Mostrar resultados
+print(tendencias)
+
+# Extraer las tendencias estimadas
+tendencias_summary <- summary(tendencias$emtrends)
+
+# Graficar con ggplot2
+library(ggplot2)
+
+ggplot(tendencias_summary, aes(x = rival, y = LSAS_Total.trend)) +
+  geom_point(size = 3, color = \"blue\") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  labs(title = \"Tendencias de LSAS Total por niveles de rival\",
+       x = \"Rival\",
+       y = \"Pendiente de LSAS_Total\") +
+  theme_minimal()
+
+save.image(\"./GLM.RData\")
+
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+library(emmeans)
+
+# Calcular tendencias de LSAS_Total por niveles de rival
+tendencias <- emtrends(modelo_15, 
+                       pairwise ~ rival, # Interacción con rival
+                       var = \"LSAS_Total\")
+contrast(tendencias,method=\"pairwise\",adjust = \"holm\")
+# Mostrar resultados
+print(tendencias)
+
+# Extraer las tendencias estimadas
+tendencias_summary <- summary(tendencias$emtrends)
+
+# Graficar con ggplot2
+library(ggplot2)
+
+ggplot(tendencias_summary, aes(x = rival, y = LSAS_Total.trend)) +
+  geom_point(size = 3, color = \"blue\") +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  labs(title = \"Tendencias de LSAS Total por niveles de rival\",
+       x = \"Rival\",
+       y = \"Pendiente de LSAS_Total\") +
+  theme_minimal()
+
+save.image(\"./GLM.RData\")
+
+```"

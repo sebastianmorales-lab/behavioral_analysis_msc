@@ -1,0 +1,134 @@
+# Visualizar betas de SPM vs PCA
+# Lee cada archivo input/intensities_*.csv, une con PCA y grafica
+# NO re-analiza, solo visualiza lo que SPM ya encontró
+
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(stringr)
+
+# Cargar datos psicológicos
+df_psico <- read_csv("psicologicos/psicologicos.csv",
+                     show_col_types = FALSE)
+
+# Archivos y salida
+input_dir <- "input"
+files <- list.files(input_dir, pattern = "^intensities_.*\\.csv$",
+                    full.names = TRUE)
+out_dir <- "figuras/beta_pca"
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+# Paleta para gráficos
+paleta_named <- c(BB = "#1b9e77", BM = "#d95f02", 
+                  MB = "#7570b3", MM = "#e7298a")
+
+# Procesar cada archivo
+for (f in files) {
+  # Extraer nombre de ROI
+  roi_name <- basename(f) %>%
+    str_remove("^intensities_") %>%
+    str_remove("\\.csv$")
+  
+  message(paste0("\n=== Procesando ROI: ", roi_name, " ==="))
+  
+  # Leer archivo
+  df_int <- read_csv(f, show_col_types = FALSE)
+  
+  # Normalizar IDs
+  df_int <- df_int %>%
+    mutate(
+      codigo = tolower(as.character(participant)) %>%
+        str_replace_all("\\s+", "")
+    )
+  
+  # Unir con PCA
+  df_plot <- df_int %>%
+    left_join(df_psico %>% select(codigo, PCA), by = "codigo") %>%
+    filter(!is.na(mean_intensity) & !is.na(PCA)) %>%
+    mutate(contrast = as.factor(contrast))
+  
+  # Validar datos
+  if (nrow(df_plot) < 3) {
+    message("  ⚠ Pocas observaciones, saltando...")
+    next
+  }
+  
+  # Identificar contrastes disponibles
+  available_contrasts <- unique(df_plot$contrast)
+  message(paste0("  Contrastes disponibles: ", 
+                 paste(available_contrasts, collapse = ", ")))
+  
+  # Agrupar por pares para facetas
+  df_plot <- df_plot %>%
+    mutate(
+      pair = case_when(
+        contrast %in% c("BB", "BM") ~ "BB vs BM",
+        contrast %in% c("MB", "MM") ~ "MB vs MM",
+        TRUE ~ "Otros"
+      )
+    ) %>%
+    filter(pair != "Otros")  # Solo mostrar pares relevantes
+  
+  if (nrow(df_plot) == 0) {
+    message("  ⚠ Sin pares de contrastes relevantes")
+    next
+  }
+  
+  # Crear gráfico simple
+  p <- ggplot(df_plot, aes(x = PCA, y = mean_intensity, color = contrast)) +
+    geom_point(size = 2.5, alpha = 0.7) +
+    geom_smooth(method = "lm", se = TRUE, linewidth = 1.2, alpha = 0.2) +
+    scale_color_manual(
+      values = paleta_named,
+      labels = c(BB = "Bajo-Bajo", BM = "Bajo-Medio",
+                 MB = "Muerte-Bajo", MM = "Muerte-Medio")
+    ) +
+    labs(
+      title = paste0("ROI: ", roi_name),
+      subtitle = "Relación entre síntomas A-D y activación cerebral",
+      x = "Puntuación síntomas A-D (PCA)",
+      y = "Beta (activación BOLD)",
+      color = "Contraste"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0.5, size = 16),
+      plot.subtitle = element_text(hjust = 0.5, color = "gray40", size = 12),
+      panel.background = element_rect(fill = "white", colour = NA),
+      plot.background = element_rect(fill = "white", colour = NA),
+      panel.grid.major = element_line(color = "grey90"),
+      panel.grid.minor = element_line(color = "grey95"),
+      legend.position = "bottom",
+      legend.background = element_rect(fill = "white", colour = NA),
+      strip.background = element_rect(fill = "grey95", colour = NA),
+      strip.text = element_text(face = "bold", size = 12)
+    )
+  
+  # Agregar facetas si hay múltiples pares
+  if (length(unique(df_plot$pair)) > 1) {
+    p <- p + facet_wrap(~ pair, ncol = 2, scales = "free_y")
+  }
+  
+  # Guardar gráfico
+  plot_file <- file.path(out_dir, paste0("beta_pca_", roi_name, ".png"))
+  ggsave(filename = plot_file, plot = p, width = 10, height = 6, dpi = 300)
+  message(paste0("  ✓ Gráfico guardado: ", basename(plot_file)))
+  
+  # Guardar estadísticas descriptivas simples
+  stats <- df_plot %>%
+    group_by(contrast) %>%
+    summarise(
+      N = n(),
+      Media_Beta = mean(mean_intensity, na.rm = TRUE),
+      SD_Beta = sd(mean_intensity, na.rm = TRUE),
+      Correlacion_PCA = cor(PCA, mean_intensity, use = "complete.obs"),
+      .groups = "drop"
+    )
+  
+  stats_file <- file.path(out_dir, paste0("stats_", roi_name, ".csv"))
+  write_csv(stats, stats_file)
+  message(paste0("  ✓ Estadísticas guardadas: ", basename(stats_file)))
+}
+
+message("\n=== Proceso completado ===")
+message(paste0("Gráficos guardados en: ", out_dir))

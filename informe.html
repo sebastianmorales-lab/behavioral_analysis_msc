@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.246">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sebastian Morales">
+
+<title>proyecto_final_maestria</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="informe_files/libs/clipboard/clipboard.min.js"></script>
+<script src="informe_files/libs/quarto-html/quarto.js"></script>
+<script src="informe_files/libs/quarto-html/popper.min.js"></script>
+<script src="informe_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="informe_files/libs/quarto-html/anchor.min.js"></script>
+<link href="informe_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="informe_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="informe_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="informe_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="informe_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">proyecto_final_maestria</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sebastian Morales </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="reporte-de-resultados" class="level1">
+<h1>Reporte de Resultados</h1>
+<section id="introducción" class="level2">
+<h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>La depresión es un transtorno de la salud mental muy prevalente que afecta significativamente a la interacciones sociales de los individuos y se ha clasificado como la principal causa de discapacidad en todo el mundo <span class="citation" data-cites="nice2019">NICE (<a href="#ref-nice2019" role="doc-biblioref">2019</a>)</span>. Se ha postulado que las teorías de aproximación-evitación pueden contribuir significativamente a la comprensión de la salud mental <span class="citation" data-cites="corr2013">Corr (<a href="#ref-corr2013" role="doc-biblioref">2013</a>)</span>, y en particular a trastornos como la depresión.</p>
+<p>Las conductas de aproximación son aquellas que permiten ir hacia recompensas y las conductas de evitación implican la defensa/autoprotección del individuo y suelen ser activadas por estímulos aversivos. En este marco, el conflicto de aproximación-evitación se refiere a situaciones que implican tanto recompensa como estímulos aversivos <span class="citation" data-cites="aupperle2011">Aupperle et al. (<a href="#ref-aupperle2011" role="doc-biblioref">2011</a>)</span></p>
+<p>En el caso de la depresión, la misma se ha caracterizado por un sistema de aproximación disminuido (relacionado con sentimientos de anhedonia) y un sistema de evitación hiperactivado, lo que lleva a las personas a evitar estímulos amenazantes o que puedan ser persividos como aversivos <span class="citation" data-cites="ironside2020">Ironside et al. (<a href="#ref-ironside2020" role="doc-biblioref">2020</a>)</span></p>
+<p>En los ultimos años se ha destacado la necesidad de generar tareas interactivas que permitan estudiar los comportamientos de acercamiento y evitación en las personas <span class="citation" data-cites="kirlic2017">Kirlic, Young, and Aupperle (<a href="#ref-kirlic2017" role="doc-biblioref">2017</a>)</span>. Pese a esta necesidad, aun son escasos los estudios en humanos que utilizan tareas interactivas y casi no se cuenta con tareas interacctivas sociales que permitan estudiar estos comportamientos.</p>
+<p>Esto es importante ya que la depresión, así como otros trastornos mentales, afectan significativamente al el funcionamiento social <span class="citation" data-cites="ferster1973">Ferster (<a href="#ref-ferster1973" role="doc-biblioref">1973</a>)</span></p>
+</section>
+<section id="metodos" class="level2">
+<h2 class="anchored" data-anchor-id="metodos">Metodos</h2>
+<p>Tarea social interactiva del conflicto de acercamiento -</p>
+<p>evitación en contexto de competencia</p>
+<p><strong>Etapas de la tarea</strong></p>
+<p>Se implementó una tarea del conflicto de acercamiento - evitación basada en la competencia</p>
+<p>(tarea de competencia)(Figura 1). Para el diseño de la misma se tomaron cómo insumos la</p>
+<p>tarea TEAM2 (Acuña, 2018) diseñada por el equipo de investigacion donde se llevó adelante</p>
+<p>este proyecto de grado, así cómo elementos de otras tareas de acercamiento - evitación</p>
+<p>presentes en la literatura (Aupperle et al., 2015; Ironside et al., 2020; McDermott et al., 2021;</p>
+<p>Schlund et al., 2016; Schultz et al., 2019; Smith et al., 2021). Con base en estos insumos se</p>
+<p>diseñó la tarea de competencia que se utiliza en este estudio. Esta tarea consta de dos</p>
+<p>etapas:</p>
+<p><strong>Etapa 1: establecimiento de una jerarquía social</strong></p>
+<p>En una primera etapa se comenzaba categorizando al participante ( Figura 1A). Para esto se</p>
+<p>le pedía al/a la participante que respondiera un total de diez preguntas de cultura general</p>
+<p>(estilo trivia) con dos posibles opciones de respuestas (se eligieron preguntas de alto nivel de</p>
+<p>dificultad de forma que es muy poco probable que el/la participante conozca la respuesta), y</p>
+<p>se le decía que se le asignaría una categoría de acuerdo a cuantas preguntas lograra</p>
+<p>contestar correctamente; si hubieran pocas respuestas correctas serían categorizados como</p>
+<p>un participante de una estrella; si respondía bien a todas las preguntas o a la mayoría serían</p>
+<p>categorizados cómo 4 estrellas, y si contestaran algo intermedio se les asignaría las</p>
+<p>categorías 2 o 3 estrellas. Sin embargo, tal cómo ocurre en otros estudios y a efectos de</p>
+<p>estandarizar el experimento y que todos los participantes se enfrentarán a la misma tarea</p>
+<p>(Fernández-Theoduloz et al., 2019; Uriarte-Gaspari et al., 2022), la categoría en la que</p>
+<p>acababa asignado el participante estaba preestablecida. Todos los participantes fueron</p>
+<p>asignados cómo jugadores de una estrella, indistintamente de cómo hubieran jugado, a</p>
+<p>efectos de favorecer las comparaciones sociales hacia arriba durante la tarea y el que los</p>
+<p>participantes seleccionaran (al menos algunas veces) la opción individual.</p>
+<p><strong>Etapa 2: toma de decisiones</strong></p>
+<p>Luego de que él/la participante viera en qué categoría quedó asignado/a se procedía a la</p>
+<p>segunda parte de la tarea, en la cual se volvía a contestar preguntas de cultura general</p>
+<p>(también de muy alta dificultad), pero esta vez pudiendo competir con supuestos rivales</p>
+<p>conectados a través de internet. (Figura 1B). Acerca de esta parte se le decía a él/la</p>
+<p>participante que en cada ronda debía optar entre dos opciones de juego. Una de las opciones</p>
+<p>(opción social) implicaba recibir una recompensa, la cual estaba indicada por una barra gris (1</p>
+<p>a 4 puntos), pero también implicaba tener que competir respondiendo a una pregunta estilo</p>
+<p>trivia con un/a rival de cierta categoría (1 a 4 estrellas dependiendo de la ronda). La otra</p>
+<p>opción (opción individual) implicaba recibir una recompensa mínima (únicamente 1 punto)</p>
+<p>pero permitía evitar la competencia.</p>
+<p>En caso de elegir la opción social, el participante automáticamente recibía los puntos</p>
+<p>correspondientes a esa ronda (por ej., si en la ronda la opción social ofrece 3 puntos el</p>
+<p>participante se llevaria esos puntos) y pasaba a contestar la pregunta compitiendo con un/a</p>
+<p>supuesto rival. Se le decía al participante que el sistema le asignaria un co-jugador de la</p>
+<p>categoría correspondiente a la ronda (por ejemplo si el participante aceptaba competir con</p>
+<p>alguien de 4 estrellas, se suponía que el sistema le asignaba un rival de 4 estrellas), que</p>
+<p>también hubiera elegido competir con alguien de la categoría del participante (1 estrella).</p>
+<p>Luego se pasaba a contestar la pregunta de cultura general. Finalmente el participante recibía feedback de cómo había respondido él/ella a la pregunta y cómo la había respondido él/la rival. Habían 4 posibles feedback: que el participante hubiera contestado bien la pregunta y él/la rival bien (“Tú bien, Rival bien”), él/la participante bien y él/la rival mal (“Tú bien, Rival mal”), él/la participante hubiera respondido mal y él/la rival bien (“Tú mal, Rival bien”) o que ambos, participante y rival contestaran mal la pregunta (“Tú mal, Rival mal”) (ver Figura 1C).</p>
+<p>En caso de elegir la opción individual, él/la participante recibía automáticamente un punto en esa ronda y pasaba a contestar a la pregunta de manera individual. El participante recibía dos posibles feedback: participante bien (“Tú bien”) o participante mal (“Tú mal”) (ver Figura 1C).</p>
+<pre><code></code></pre>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"><img src="images/dibujo_tarea_completo-02.png" class="img-fluid"></h3>
+<p><sub><span class="smallcaps">Figura&nbsp;1.&nbsp;A)&nbsp;Etapa&nbsp;1&nbsp;establecimiento&nbsp;de&nbsp;la&nbsp;jerarquía&nbsp;social.&nbsp;El&nbsp;participante&nbsp;contesta&nbsp;10&nbsp;preguntas&nbsp;de&nbsp;cultura</span></sub></p>
+<p><sub><span class="smallcaps">general&nbsp;y&nbsp;se&nbsp;le&nbsp;asigna&nbsp;la&nbsp;categoría.&nbsp;Si&nbsp;bien&nbsp;se&nbsp;le&nbsp;dice&nbsp;al&nbsp;participante&nbsp;que&nbsp;se&nbsp;le&nbsp;asignará&nbsp;una&nbsp;categoría&nbsp;(&nbsp;de&nbsp;1&nbsp;a&nbsp;4</span></sub></p>
+<p><sub><span class="smallcaps">estrellas)&nbsp;según&nbsp;conteste&nbsp;las&nbsp;preguntas,&nbsp;los&nbsp;feedbacks&nbsp;fueron&nbsp;manipulados&nbsp;para&nbsp;que&nbsp;el&nbsp;participante&nbsp;quede</span></sub></p>
+<p><sub><span class="smallcaps">categorizado&nbsp;cómo&nbsp;jugador/a&nbsp;de&nbsp;una&nbsp;estrella.&nbsp;B)&nbsp;Etapa&nbsp;2&nbsp;toma&nbsp;de&nbsp;decisiones.&nbsp;En&nbsp;cada&nbsp;ronda&nbsp;al&nbsp;participante&nbsp;se&nbsp;le</span></sub></p>
+<p><sub><span class="smallcaps">presenta&nbsp;una&nbsp;determinada&nbsp;categoría&nbsp;de&nbsp;rival,&nbsp;y&nbsp;un&nbsp;determinado&nbsp;nivel&nbsp;de&nbsp;recompensa&nbsp;en&nbsp;caso&nbsp;de&nbsp;que&nbsp;elija&nbsp;competir.</span></sub></p>
+<p><sub><span class="smallcaps">El&nbsp;participante&nbsp;decide&nbsp;si&nbsp;quiere&nbsp;competir&nbsp;contestando&nbsp;la&nbsp;pregunta&nbsp;en&nbsp;esa&nbsp;ronda&nbsp;(respondiendo&nbsp;si)&nbsp;o&nbsp;si&nbsp;quiere&nbsp;jugar</span></sub></p>
+<p><sub><span class="smallcaps">de&nbsp;manera&nbsp;individual&nbsp;(respondiendo&nbsp;no).&nbsp;Una&nbsp;vez&nbsp;elegida&nbsp;la&nbsp;opción&nbsp;de&nbsp;juego,&nbsp;el&nbsp;participante&nbsp;pasa&nbsp;a&nbsp;responder&nbsp;la</span></sub></p>
+<p><sub><span class="smallcaps">pregunta&nbsp;de&nbsp;cultura&nbsp;general&nbsp;(trivia)&nbsp;y&nbsp;recibe&nbsp;el&nbsp;feedback&nbsp;de&nbsp;acuerdo&nbsp;con&nbsp;la&nbsp;opción&nbsp;elegida&nbsp;y&nbsp;la&nbsp;categoría&nbsp;que&nbsp;tenga</span></sub></p>
+<p><sub><span class="smallcaps">el&nbsp;rival.&nbsp;Los&nbsp;feedback&nbsp;fueron&nbsp;manipulados&nbsp;para&nbsp;que&nbsp;el&nbsp;participante&nbsp;solamente&nbsp;responda&nbsp;correctamente&nbsp;en&nbsp;el&nbsp;40%</span></sub></p>
+<p><sub><span class="smallcaps">de&nbsp;las&nbsp;rondas.&nbsp;C)&nbsp;Posibles&nbsp;feedbacks&nbsp;El&nbsp;participante&nbsp;recibe&nbsp;en&nbsp;cada&nbsp;ronda&nbsp;uno&nbsp;de&nbsp;estos&nbsp;posibles&nbsp;6&nbsp;feedbacks</span></sub></p>
+<p><sub><span class="smallcaps">dependiendo&nbsp;de&nbsp;la&nbsp;opción&nbsp;de&nbsp;juego&nbsp;elegida.&nbsp;Los&nbsp;dos&nbsp;primeros&nbsp;corresponden&nbsp;a&nbsp;la&nbsp;opción&nbsp;individual,&nbsp;y&nbsp;los&nbsp;cuatro</span></sub></p>
+<p><sub><span class="smallcaps">restantes&nbsp;a&nbsp;la&nbsp;opción&nbsp;competitiva.&nbsp;Los&nbsp;números&nbsp;en&nbsp;encima&nbsp;de&nbsp;los&nbsp;cuadros&nbsp;indican&nbsp;por&nbsp;cuanto&nbsp;tiempo&nbsp;se&nbsp;mostraba</span></sub></p>
+<p><sub><span class="smallcaps">esa&nbsp;pantalla.&nbsp;T.R:&nbsp;tiempo&nbsp;de&nbsp;reacción.</span></sub></p>
+<p>Parámetros de la tarea de competencia</p>
+<p>La tarea esta programada en PsychoPy2 (versión 1.84.2) (Peirce, 2007).</p>
+<p>Para evitar que el participante sospeche sobre el desempeño en la prueba (preguntas trivia)</p>
+<p>y poder manipular los resultados (de manera que todos/as los/as participantes tengan un</p>
+<p>mismo nivel de acierto), se utilizan en la tarea preguntas de alto nivel de dificultad, veriificado mediante un estudio anterior.</p>
+<p>La Etapa 1 de la tarea consta de 10 rondas,donde se le mostra al participante que</p>
+<p>ha contestado correctamente en 4 de las preguntas lo cual se indica con un tick verde,</p>
+<p>las restantes rondas se les muestra una respuesta incorrecta, con una cruz roja en la</p>
+<p>pantalla (ver Figura 1A).</p>
+<p>En la Etapa 2 para evitar el cansancio del participante dentro del escáner,</p>
+<p>la tarea fue dividida en sesiones y se añadió un tiempo de descanso al finalizar cada sesión.</p>
+<p>La segunda etapa consiste en 128 rondas, divididas en 4 sesiones de 32 rondas presentadas</p>
+<p>de manera aleatoria. En cada una de las sesiones, se le presenta 2 veces cada condición</p>
+<p>(entendida cómo combinación de categoría del rival y puntos de recompensa). Por ejemplo:</p>
+<p>en cada sesión se le presenta 2 veces la posibilidad de competir contra un rival de 4</p>
+<p>estrellas y ganar 2 puntos de recompensa, 2 veces la posibilidad de competir con un rival de 3</p>
+<p>estrellas y ganar 1 punto.</p>
+</section>
+<section id="registro-de-resonancia-magnética-funcional-fmri-durante-la" class="level3">
+<h3 class="anchored" data-anchor-id="registro-de-resonancia-magnética-funcional-fmri-durante-la">Registro de resonancia magnética funcional (fMRI) durante la</h3>
+</section>
+<section id="realización-de-la-tarea-de-competencia" class="level3">
+<h3 class="anchored" data-anchor-id="realización-de-la-tarea-de-competencia">realización de la tarea de competencia</h3>
+<p>Para la señal dependiente del nivel de oxígeno en sangre (BOLD) se obtuvieron imágenes</p>
+<p>eco-planares ponderadas T2* en el resonador de 3T, GE Signa Architect de 48 canales,</p>
+<p>que se encuentra en el CUDIM. Para cada volumen, se adquirieron un total de 37 cortes</p>
+<p>secuenciales de espesor 3,5 mm y un interespacio de 0, mm. Los volúmenes se adquirieron</p>
+<p>con un tiempo de repetición (TR) de 2,5 segundos, tiempo de eco (TE) de 30 milisegundos,</p>
+<p>ángulo de báscula de 90º, campo de visión (CdV) de 224 mm y matriz de 64*64. Para cada</p>
+<p>una de las cuatro sesiones de la tarea se obtuvieron 295 imágenes, para evitar efectos transtorios del escaner se establecieron 4 muestras ficticias..</p>
+</section>
+<section id="análisis-estadístico-de-los-datos" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-estadístico-de-los-datos">Análisis estadístico de los datos</h3>
+<p>Los análisis de los reportes emocionales se realizaron utilizando R (R Core Team, 2020). Los</p>
+<p>reportes emocionales respecto a las emociones que sentían cuando elegían competir con</p>
+<p>cada una de las categorías de rival, fueron analizados utilizando modelos lineales con efectos</p>
+<p>mixtos (LMM). Para cada emoción (felicidad, alivio, vergüenza, nerviosismo), se ajustó un</p>
+<p>LMM con la categoría del rival cómo efecto fijo y la variable sujeto como efecto aleatorio. En</p>
+<p>base a este modelo se realizaron pruebas F de Wald. En caso de evaluarse las pruebas</p>
+<p>pareadas se aplicó la corrección de Tukey, para corregir por comparaciones múltiples.</p>
+<p>El mismo procedimiento descripto anteriormente se siguio para analizar los reportes emocionales al momento de recibir cada uno de los feedbacks (“Tu Bien, Rival Bien”, “Tu Bien, Rival Mal”, “Tu Mal, Rival Bien”, “Tu Mal, Rival Bien”)</p>
+<pre class="{r}'''}"><code>fig|fig_2
+Emociones frente a la categoria del rival</code></pre>
+<p>Para la emoción felicidad no se observaron efectos significativos (F(3,53) = 0.1548, p = 0.9264)</p>
+<p>Para la emoción alivio, se observó un efecto principal de la categoría del rival (F(3,53) =</p>
+<p>18.347, p&lt;0.001 )</p>
+<p>1 estrella mayor alvio que tres estrellas (p&lt; .001), 1 mayor que cuatro( p &lt;.0001), dos estrellas mayor alivio que cuatro estrellas (p&lt;.0001), tres mayor alivio que cuatro estrellas (p&lt;.05)</p>
+<p>Para la emoción vergüenza, se observó un efecto principal de la categoría del rival (F(3,53) = 28.192, p&lt;.0001)</p>
+<p>Las pruebas pareadas mostraron que los participantes reportaron mayores niveles de Vergüenza frente a la posibilidad de competir con rivales de:</p>
+<p>3 frente a 1 (p&lt;.0001) , 4 frente a 1 (p&lt; .0001), 3 frente a 2 (p&lt; .001), 4 frente a 3 p(&lt;0.05)</p>
+<p>Para la emoción nerviosismo, se observó un efecto principal de la categoría del rival (F(3,53) = 44.829, p&lt;.0001)</p>
+<p>Las pruebas pareadas mostraron que los participantes reportaron mayores niveles de Nerviosismo frente a la posibilidad de competir con rivales de:</p>
+<p>3 frente a 1 (p&lt;.0001) , 4 frente a 1 (p&lt; .0001), 3 frente a 2 (p&lt; .001), 4 frente a 3 p(&lt;0.05)</p>
+<div class="cell">
+
+</div>
+<p><img src="images/paste-577295E3.png" class="img-fluid"></p>
+<p><img src="images/paste-E600CCEB.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"><img src="images/paste-3D3C04C1.png" class="img-fluid"></h2>
+<p><img src="images/paste-B8802BAB.png" class="img-fluid"></p>
+<pre><code></code></pre>
+<p>se les pidió a las participantes que calificaran sus emociones (felicidad, culpa, decepción, enojo, tristeza, alivio, vergüenza y nerviosismo) frente a los cuatro tipos de feedback que se obtenían en la tarea a partir de la opción competitiva.</p>
+<p>Se encontró un efecto principal del resultado del participante, con los resultados positivos</p>
+<p>(cuando el participante se desempeñaba bien) dando lugar a mayores niveles de <strong>felicidad</strong> (F(1,53) = 66.5655 , p&lt; 0.0001) y <strong>alivio</strong> (F(1,53) = 58.9267, p&lt; 0.0001 ) y menores niveles de <strong>culpa</strong> (F(1,53) = 58.9267, p&lt; 0.0001), <strong>decepción</strong> (F(1,53) = 156.2671, p&lt; 0.0001), <strong>enojó</strong> (F(1,53) = 58.2143, p&lt; 0.0001), <strong>tristeza</strong> (F(1,53) = 55.3968 , p&lt; 0.0001 ), <strong>vergüenza</strong> (F(1,53) = 113.4231, p&lt; 0.0001) y <strong>nerviosismo</strong> (F(1,53) = 74.1915, p&lt; 0.0001) que los resultados negativos (cuando el participante se desempeñaba mal) (ver Figura 3)</p>
+<p>Además, se encontró una interacción entre el resultado del participante y el resultado del rival para <strong>culpa</strong> (F(1,53) = 17.6141, p =4.529e-05), <strong>decepcion</strong> (F(1,53) = 14.4986, p=0.0002012),</p>
+<p><strong>vergüenza</strong> (F(1,53) =25.2051, p = 1.393e-06), <strong>tristeza</strong> (F(1,53) =5.7483, p = 0.01769 ) y <strong>nerviosismo</strong> (F(1,53) = 22.3100, p = 5.135e-06</p>
+<p>0.023047). En comparaciones pareadas se observó que cuando el/la participante se desempeñaba bien no existía diferencia en los niveles de estas emociones independientemente de cómo se desempeñara el/la rival (por ejemplo, no hubieron</p>
+<p>diferencias significativas en los reportes emociones para la comparación entre las situaciones “Tú bien, Rival bien” y “Tú bien, Rival mal”. Sin embargo, cuando el/la participante se desempeñaba mal se observaron mayores niveles de culpa, decepción, vergüenza y nerviosismo para el caso en que el/la rival se desempeñaba bien vs.&nbsp;cuando se desempeñaba mal (mayores niveles de estas emociones para la situación “Tú mal, Rival bien” vs “Tú mal,Rival mal) (p&lt; 0.0005)</p>
+<p><img src="images/paste-54F376AE.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paste-D6FB8795.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><img src="images/paste-DB0E45B4.png" class="img-fluid figure-img"></figcaption><p></p>
+</figure>
+</div>
+<p><img src="images/paste-79B247A9.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/paste-FDB7E1BD.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><img src="images/paste-A730D094.png" class="img-fluid figure-img"></figcaption><p></p>
+</figure>
+</div>
+<p><img src="images/paste-9C784FB4.png" class="img-fluid"></p>
+<p><img src="images/paste-C90B7BC9.png" class="img-fluid"></p>
+<section id="análisis-de-las-respuestas-comportamentales" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-de-las-respuestas-comportamentales">Análisis de las respuestas comportamentales</h3>
+<p>Los analisis de la toma de decisiones y tiempos de reacción se realizaron utilizando R (R Core Team, 2020). Para ello se utlzaron Modelos lineales generalizados con efectos mixtos (GLMM,generalized linear mixed model de familia Binomial) para analizar la decisión de los</p>
+<p>participantes durante la tarea. El Modelo GLMM fue ajustado para evaluar la relación entre la toma de decisiones, la categoría del rival presentada y el nivel de recompensa ofrecido. La decisión del participante (competir o jugar de forma individual) se introdujo como variable de respuesta.</p>
+<p>La variable sujeto fue incluida como efecto aleatorio, mientras que la categoría del rival y el</p>
+<p>nivel de recompensa fueron incluidos como efectos fijos. La interacción entre la categoría del rival y la recompensa ofertada fue también incluida. El modelo fue sujeto a un análisis de devianza (similar a ANOVA), realizándose pruebas Chi cuadrado de Wald tipo II. Para realizar las pruebas pareadas se aplicó la corrección de Tukey para comparaciones múltiples.</p>
+<p>Para estudiar los tiempos de reacción del/la participante al elegir entre las diferentes opciones de juego (competir o individual) se utilizo un Modelo Lineal con efectos mixtos (LMM). Se ajustó un modelo en el cual el tipo de decisión fue incluido cómo un efecto fijo mientras que el sujeto fue ingresado como efecto aleatorio. El modelo fue sometido a un analisis del tipo ANOVA utlizando la aproximacion de Kenward-Roger a los grados de libertad.</p>
+<p>Se encontró un efecto principal del <strong>nivel de recompensa</strong> sobre el tipo de juego elegido (opción competitiva u opción individual) (𝜒2 (3,53) = 592.413, p &lt; 2.0 x10-16) (ver Figura 4).</p>
+<pre class="{r}'''}"><code>                             Chisq Df Pr(&gt;Chisq)    
+pay_competitive.f         592.4132  3     &lt;2e-16 ***
+rival.f                    89.1157  3     &lt;2e-16 ***
+pay_competitive.f:rival.f   8.6712  9     0.4682    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+'''</code></pre>
+<p>Las pruebas pareadas mostraron que el nivel de recompensa influian en la toma de decisiones competitivas, cuanto mayor era el nivel de recompens los participantes mas se inclinaban por el juego competitivo. En general se observa, que para el nivel de recompensa de 1 era cuando se optó menos por el juego competitivo (p &lt;.0001), seguido por el nivel de recompensa de 2 (p &lt;.0001) y de tres (p &lt;.0001). Los niveles de recompensa de 3 y 4 no se diferenciaron entre si (p = 0.9996)</p>
+<p><img src="images/paste-02CA931F.png" class="img-fluid"> ’‘’fig|fig_4 Porcentaje de veces que los participantes eligieron el juego competitivo segun el nivel de recompensa ofrecido. Las barras de error representan el error estandar de la muestra.’’’</p>
+<p>Tambien se encontro un efecto principal de la categoria del rival frente a la elección del tipo de juego (𝜒2 (3,53) = 89.1157 p &lt; 2.0 x10-16)</p>
+<p><img src="images/paste-2AA99376.png" class="img-fluid"></p>
+<div class="cell">
+
+</div>
+<p>Las pruebas pareadas mostraron que la categoria del rival influia en la toma de decisiones competitivas, cuanto mayor era la categora del rival masevitaban el juego competitivo. En general se observa, que para el rival de 4 era cuando se optó menos por el juego competitivo (p &lt;.0001), seguido por el nivel de recompensa de3 (p &lt;.0001) y dedos (p &lt;.0001). Los rivales de categoria 1 y 2 no se diferenciaron entre si (p = 0.9999)</p>
+</section>
+<section id="análisis-de-las-imágenes-obtenidas-por-fmri" class="level3">
+<h3 class="anchored" data-anchor-id="análisis-de-las-imágenes-obtenidas-por-fmri">Análisis de las imágenes obtenidas por fMRI</h3>
+<p>Para el análisis imagenológico se utilizó el paquete SPM12 . Primeramente las imágenes fueron pre-procesadas en donde se realizaron diferentes transformaciones sobre las mismas. Las imágenes obtenidas del escáner fueronrealineadas espacialmente, para así corregir posibles artefactos de movimiento. Todas lasimágenes fueron realineadas a la primera imagen de la primera sesión del experimento.</p>
+<p>Posterior a este paso todas las imágenes fueron co-registradas a la imagen anatómica del participante correspondiente, para posteriormente ser normalizadas a un espacio común</p>
+<p>utilizando para ello el molde del Instituto Neurológico de Montreal (MNI) que se encuentra</p>
+<p>incorporado en el paquete SPM12. Finalmente las imágenes fueron suavizadas utilizando una</p>
+<p>curva Gaussiana de anchura media 8 mm centrada en el maximo (“Full-Width-Half-Maximum</p>
+<p>Gaussian Kernel”)</p>
+<p>Para el análisis de primer nivel se realizó un análisis relacionado a eventos (event related</p>
+<p>design) a partir del cual se buscó estudiar las activaciones al momento de la toma de decisone y del feedback.</p>
+<p>En este análisis la activación al momento de la decisión se modeló con un regresor con los tiempos en los que se presentaban las opciones de juego, modulado paramétricamente por dos regresores ortogonalizados, siendo el primero el nivel de recompensa y el segundo la</p>
+<p>categoría del rival. Se incluyeron 6 regresores de interés correspondientes a los 4 posibles</p>
+<p>feedback de la opción competitiva (“Tú bien , Rival bien”, “Tú bien , Rival mal”, “Tú mal , Rival bien” y “Tú mal , Rival mal”) y los dos posibles para la opción individual ( “Tú Bien” o “Tú Mal”)</p>
+<p>Además, se agregaron como variables de no interés seis regresores que consistían en estimaciones de parámetros relacionados al movimiento de la cabeza y obtenidos durante la etapa de realineamiento.</p>
+<p>Las imágenes de los contrastes de interés obtenidas en el analsis de primer nivel fueron llevadas al segundo nivel de análisis y las activaciones fueron obtenidas utilizando pruebas t para muestras independientes.</p>
+<p>En primera instancia se estudiaron las activaciones cerebrales al momento del feedback.</p>
+<p>En primer lugar, se indagó qué regiones cerebrales mostraban una activación diferencial</p>
+<p>según el resultado del rival, siempre que el jugador contestaba correctamente la pregunta.</p>
+<p>Específicamente, se analizó el contraste (Tú bien , Rival mal) &gt; (Tú bien , Rival bien). Esto se</p>
+<p>hizo con el fin de detectar las regiones que se activan frente a las comparaciones sociales</p>
+<p>hacia abajo; es decir, regiones que presentan una mayor activación cuando nos va mejor que</p>
+<p>a un otro, comparado con los momentos en que no nos diferenciamos de un otro. Para este</p>
+<p>contraste, se observó una mayor activación en las siguientes regiones: ínsula anterior izquierda y corteza dorsolateral, estriado ventral y precuneo.</p>
+<p><img src="images/paste-6F18F3C1.png" class="img-fluid"></p>
+<p><img src="images/paste-3EF4155D.png" class="img-fluid"></p>
+<p>En segundo lugar, se examinó la activación para el contraste (Tú mal, Rival bien) &gt; (Tú mal,Rival mal), este contraste permite detectar las regiones cerebrales que se activan frente a una comparación social hacia arriba, esto quiere decir cuando el participante se compara con un otro/a que presenta un mejor desempeño. Para este contraste los participantes activaron la corteza cngulada anterior (ACC) y la Insula anterior izquierda.</p>
+<p>Esta activacion no es signficativa para un p&lt; 0.005 y un humbral de 105 voxels</p>
+<p><img src="images/paste-57D9DD80.png" class="img-fluid"></p>
+<p>En tercer lugar se examino la activación al momento de tomar la desicion sobre la forma de juego (competivo o individual) segun varia la categoria del rival.</p>
+<p>Para el contraste en que aumenta el rival se activan regiones relaconadas con la deteccion del conflicto y la toma de decisiones como la corteza profrontal dorsolateral (DLPFC)</p>
+<p><img src="images/paste-817F8DAA.png" class="img-fluid"></p>
+<p>Mientras que el contraste opuesto ( a medida que baja la categoria del rival) los participantes activan regiones como la Insula anterior izquerda y el Nucleo caudado.</p>
+<p>No son significativas para el nivel de umbral</p>
+<p><img src="images/paste-A40F9B91.png" class="img-fluid"></p>
+<p>Se estableció un umbral de p &lt; 0.05 de cluster a nivel de todo el cerebro, para esto se estableció la exigencia conjunta de un p &lt;0.005 a nivel de vóxel y un tamaño de cluster de 105 voxels contiguos. Y las activaciones para este contraste son significativas</p>
+<p><img src="images/paste-14ACE52E.png" class="img-fluid"></p>
+<p>Para finalzar se estudio la influencia del nivel de recompensa sobre las activaciones. Para esto se observo el contraste generado por el regresor parametrico del nivel de recompensa al momento de tomar la decision del tipo de juego (competitivo o indvidual)</p>
+<p><img src="images/paste-7AA9DF6F.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#estas regiones no pasan el estadistico de Slotnik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Para el contraste opuesto a medida que baja el nivel de recompensa se observo que los participantes activaron las siguientes regiones: corteza cingulada anterior, corteza prefrontal. Estas regiones son significativas para el umbral defindo.</p>
+<p>Se estableció un umbral de p &lt; 0.05 de cluster a nivel de todo el cerebro, para esto se estableció laexigencia conjunta de un p &lt;0.005 a nivel de vóxel y un tamaño de cluster de 105 voxels contiguos.</p>
+<p><img src="images/paste-FFA8598F.png" class="img-fluid"></p>
+<section id="referencias" class="level4 unnumbered">
+
+
+</section>
+</section>
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-aupperle2011" class="csl-entry" role="doc-biblioentry">
+Aupperle, Robin L., Sarah Sullivan, Andrew J. Melrose, Martin P. Paulus, and Murray B. Stein. 2011. <span>“A Reverse Translational Approach to Quantify Approach-Avoidance Conflict in Humans.”</span> <em>Behavioural Brain Research</em> 225 (2): 455–63. <a href="https://doi.org/10.1016/j.bbr.2011.08.003">https://doi.org/10.1016/j.bbr.2011.08.003</a>.
+</div>
+<div id="ref-corr2013" class="csl-entry" role="doc-biblioentry">
+Corr, Philip J. 2013. <span>“Approach and Avoidance Behaviour: Multiple Systems and Their Interactions.”</span> <em>Emotion Review</em> 5 (3): 285–90. <a href="https://doi.org/10.1177/1754073913477507">https://doi.org/10.1177/1754073913477507</a>.
+</div>
+<div id="ref-ferster1973" class="csl-entry" role="doc-biblioentry">
+Ferster. 1973. <span>“A Functional Analysis Depression.”</span> <em>American Psychologist</em> 6 (4): 857–70. <a href="https://doi.org/10.1007/BF00636289">https://doi.org/10.1007/BF00636289</a>.
+</div>
+<div id="ref-ironside2020" class="csl-entry" role="doc-biblioentry">
+Ironside, Maria, Ken ichi Amemori, Callie L. McGrath, Mads Lund Pedersen, Min Su Kang, Satoko Amemori, Michael J. Frank, Ann M. Graybiel, and Diego A. Pizzagalli. 2020. <span>“Approach-Avoidance Conflict in Major Depressive Disorder: Congruent Neural Findings in Humans and Nonhuman Primates.”</span> <em>Biological Psychiatry</em> 87 (5): 399–408. <a href="https://doi.org/10.1016/j.biopsych.2019.08.022">https://doi.org/10.1016/j.biopsych.2019.08.022</a>.
+</div>
+<div id="ref-kirlic2017" class="csl-entry" role="doc-biblioentry">
+Kirlic, Namik, Jared Young, and Robin Aupperle. 2017. <span>“Animal to Human Translational Paradigms Relevant for Approach Avoidance Conflict Decision Making.”</span> <em>Physiology &amp; Behavior</em> 176 (5): 139–48. <a href="https://doi.org/10.1016/j.physbeh.2017.03.040">https://doi.org/10.1016/j.physbeh.2017.03.040</a>.
+</div>
+<div id="ref-nice2019" class="csl-entry" role="doc-biblioentry">
+NICE. 2019. <em>The NICE Guideline on the Treatment and Management of Depression in Adults-Updeted Edition</em>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

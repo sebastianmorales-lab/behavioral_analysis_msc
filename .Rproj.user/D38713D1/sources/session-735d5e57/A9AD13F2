@@ -1,0 +1,26 @@
+{
+    "id": "A9AD13F2",
+    "path": "/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_final_MAESTRIA_R/scripts/plot_spm_betas.r",
+    "project_path": "scripts/plot_spm_betas.r",
+    "type": "r_source",
+    "hash": "2882044204",
+    "contents": "",
+    "dirty": false,
+    "created": 1764694762313.0,
+    "source_on_save": false,
+    "relative_order": 7,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "23,26",
+        "scrollLine": "18"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1765486313,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1765486313832,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,132 @@
+library(ggplot2)
+library(tidyr)
+library(tidyverse)
+#Grafico probabilidades de decisiones individuales por rival facetado por pago con BECK 
+
+data %>%  group_by(code,rival.f,pay_competitive.f,BECK_SESION) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(game_type.f %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = BECK_SESION, y = p_ind, color = rival.f)) +
+  geom_point() +
+  facet_wrap(~pay_competitive)+
+  geom_smooth(method = "lm", se = F) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Probabilidad de elecciones individuales",
+    title = "Líneas de tendencia por nivel de recompensa"
+  )
+#Grafico probabilidades de decisiones individuales por rival con LSAS
+data %>%  group_by(code,rival.f,pay_competitive.f,LSAS_Total) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(game_type.f %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = LSAS_Total, y = p_ind, color = rival.f)) +
+  geom_point() +
+  #facet_wrap(~pay_competitive)+
+  geom_smooth(method = "lm", se = F) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de LSAS",
+    y = "Probabilidad de elecciones individuales",
+    title = "Elecciones individuales vs puntaje STAI RASGO"
+  )
+
+#Relacion entre Beck y LSAS
+
+
+ggplot(data, aes(x = BECK_SESION, y = LSAS_Total)) +
+  geom_point(color = "steelblue", alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, color = "darkred") +
+  labs(title = "Relación entre Cuestionario Beck y LSAS",
+       x = "Cuestionario Beck",
+       y = "Cuestionario LSAS") +
+  theme_minimal()
+
+cor(data$BECK_SESION, data$LSAS_Total, method = "pearson")
+
+
+
+#Grafico probabilidades de decisiones individuales por rival con STAI RASGO
+data %>%  group_by(code,rival.f,pay_competitive.f,STAI_RASGO) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(game_type.f %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = STAI_RASGO, y = p_ind, color = rival.f)) +
+  geom_point() +
+  #facet_wrap(~pay_competitive)+
+  geom_smooth(method = "lm", se = F) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de STAI rasgo",
+    y = "Probabilidad de elecciones individuales",
+    title = "Elecciones individuales vs puntaje STAI RASGO"
+  )
+
+#Grafico probabilidades de decisiones individuales por rival con STAI ESTADO
+data %>%  group_by(code,rival.f,pay_competitive.f,STAI_ESTADO) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(game_type.f %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = STAI_ESTADO, y = p_ind, color = rival.f)) +
+  geom_point() +
+  #facet_wrap(~pay_competitive)+
+  geom_smooth(method = "lm", se = F) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de STAI estado",
+    y = "Probabilidad de elecciones individuales",
+    title = "Elecciones individuales vs puntaje STAI ESTADO"
+  )
+
+#Grafico probabilidades de decisiones individuales por rival con primer componente PCA
+data %>%  group_by(code,rival.f,pay_competitive.f,PCA) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(game_type.f %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = PCA, y = p_ind, color = rival.f)) +
+  geom_point() +
+  #facet_wrap(~pay_competitive)+
+  geom_smooth(method = "lm", se = F) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de STAI estado",
+    y = "Probabilidad de elecciones individuales",
+    title = "Elecciones individuales vs puntaje STAI ESTADO"
+  )
+
+
+
+# ---- SIMULAMOS DATOS ----
+# Datos simulados con el modelo
+df_plot = tibble(BECK_SESION = rep(0:39,each=16),
+  pay_competitive.n = rep(1:4,times=160),
+  rival.n = rep(rep(1:4,each=4),40) 
+)
+
+df_plot$code = ""
+
+df_plot$logodds = predict(modelo_beck,df_plot,re.form=NA)
+df_plot$p_ind = plogis(df_plot$logodds)
+
+df_plot$pay_competitive.f = as.factor(df_plot$pay_competitive.n)
+df_plot$rival.f = as.factor(df_plot$rival.n)
+
+
+#Plot con los datos predichos por el modelo
+data %>%  group_by(code,rival.f,pay_competitive.f,BECK_SESION) %>% 
+  mutate(n_trials = n(),
+         n_ind = sum(game_type.f %in% "individual"),
+         p_ind = n_ind / n_trials,) %>% 
+  ggplot(aes(x = BECK_SESION, y = p_ind, color = rival.f)) +
+  geom_point(alpha=.1) +
+  facet_wrap(~pay_competitive)+
+  #ggplot(aes(x = BECK_SESION, y = pI, color = rival.n),data=) +
+  geom_line(data=df_plot,size=2) +
+  facet_wrap(~pay_competitive.n)+
+  #geom_smooth(method = "lm", se = F) +  # Añadir color a las líneas de tendencia
+  labs(
+    x = "Puntaje de Beck",
+    y = "Cantidad de elecciones individuales",
+    title = "Líneas de tendencia por nivel de recompensa"
+  )+
+  theme_classic()
+
+
+

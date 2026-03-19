@@ -1,0 +1,292 @@
+#Con este script analizo las respuestas emocionales frente a jugar con cada una de las categorias.
+library(reshape2)
+library(stringr)
+library(ez)
+library(lme4)
+library(lmerTest)
+library(carData)
+library(car)
+library(emmeans)
+library(ggplot2)
+library(lmerTest)
+library(cowplot)
+library(ggpubr)
+library(plotrix)
+library(dplyr)
+library(plyr)
+library(knitr)
+library(rmarkdown)
+
+
+#----LEVANTO DATOS----
+emocionales = read.csv("./emocionales/emocionales.csv")
+emocionales$codigo=as.factor(emocionales$codigo)
+psicologicos = read.csv("./psicologicos/psicologicos.csv")
+cuestionarios = right_join(x=emocionales, y= psicologicos, by= "codigo")
+
+#----FUNCION ANALISIS EMOCION bar plot----
+analyse_emotion_estrellas <- function(name, col_ref) {
+  col_emocion_desde = which(colnames(cuestionarios)==col_ref);
+  col_emocion_hasta = col_emocion_desde + 3;
+  col_beck_web = which(colnames(cuestionarios) == "Beck_web")
+
+  emocion_wide = cuestionarios[,c(
+    which(colnames(cuestionarios)=="codigo"),
+    col_emocion_desde:col_emocion_hasta)];
+  #Asegúrate de que la columna Beck_web existe en cuestionarios
+  col_beck_web <- which(colnames(cuestionarios) == "Beck_web")
+  if (length(col_beck_web) > 0) {
+    emocion_wide <- cbind(emocion_wide, cuestionarios[, col_beck_web])
+  } else {
+    stop("La columna Beck_web no existe en el conjunto de datos cuestionarios.")
+  }
+
+  #If there is a N/A in one cell, remove participant in this analysis
+  emocion_wide <- emocion_wide[complete.cases(emocion_wide),];
+
+  colnames(emocion_wide) <- c("codigo", "una_estrella", "dos_estrellas", "tres_estrellas", "cuatro_estrellas", "Beck_web")
+  emocion=melt(emocion_wide,id=c("codigo"))
+  emocion$value = as.numeric(emocion$value)
+  print(head(emocion))
+
+  datosGrafico = ddply(emocion,c("variable"),summarize,media=mean(value,na.rm=T),sd = std.error(value,na.rm=T))
+  graficoOutcome = ggplot(data = datosGrafico, mapping = aes(x = variable, y = media))
+  graficoOutcome=graficoOutcome + geom_bar(stat = "identity", position = "dodge") + geom_errorbar(mapping = aes(x=variable,ymin=pmax(media-sd,0),ymax=media+sd),position = "dodge") +
+ scale_x_discrete(labels=c("1 Estrella","2 Estrellas","3 Estrellas","4 Estrellas")) + ylab("Media Emocion Reportada") +   theme(axis.title.x=element_blank()) + scale_y_continuous(limits = c(-1,8)) + xlab("Number of stars of the rival")+ggtitle(name)
+
+
+  plot(graficoOutcome)
+
+  #anovaOutcome = ezANOVA(data=emocion, dv = value, wid = codigo,within = c("resultadoParticipante","resultadoCojugador"),between = clinico, type = 3, return_aov=TRUE)
+  modelo <- lmer(data = emocion, value ~ variable + Beck_web + (1|codigo))
+  #print("###### SUMMARY DE MODELO ######")
+  #print(summary(modelo))
+  anovaOutcome=Anova(modelo,type=3,test.statistic = "F")
+  modelo.ref.grid = ref_grid(modelo)
+  print("###### RESULTADO DE ANOVA ######")
+  print(name)
+  print(anovaOutcome)
+  print("###### EMMEAN ESTRELLAS ######")
+  pairwise.t.test(emocion$value,emocion$variable,p.adjust.method = "bonf",paired = TRUE)
+  print(emmeans(modelo.ref.grid,pairwise~variable))
+  return(list(modelo.ref.grid, plot(graficoOutcome)))
+}
+
+#----FUNCION ANALISIS EMOCION scater plot y barplot----
+### Probando efecto del Beck web ###
+colores_lineas <- c("green", "yellow", "orange", "red")  # Colores para 1,2,3,4 respectivamente
+etiquetas_lineas <- c("1 estrella","2 estrellas","3 estrellas","4 estrellas")
+
+analyse_emotion_estrellas <- function(name, col_ref) {
+  col_emocion_desde <- which(colnames(cuestionarios) == col_ref)
+  col_emocion_hasta <- col_emocion_desde + 3
+  
+  emocion_wide <- cuestionarios[, c(
+    which(colnames(cuestionarios) == "codigo"),
+    col_emocion_desde:col_emocion_hasta
+  )]
+  
+  # If there is a N/A in one cell, remove participant in this analysis
+  emocion_wide <- emocion_wide[complete.cases(emocion_wide),]
+  
+  colnames(emocion_wide) <- c("codigo", "1estrella","2estrellas","3estrellas","4estrellas")
+  emocion = melt(emocion_wide, id = c("codigo"))
+  emocion$value <- as.numeric(emocion$value)
+  
+  # Merge Beck_web from cuestionarios to emocion based on codigo
+  emocion <- merge(emocion, cuestionarios[, c("codigo", "Beck_web", "sexo")], by = "codigo")
+  # Definir los colores para las líneas de tendencia
+  colores <- c("green", "yellow", "orange", "red")
+  # Convertir la variable 'sexo' a factor para usarla como linetype
+  emocion$sexo <- as.factor(emocion$sexo)
+  
+  #codigo para el grafico de barras
+  datosGrafico <- ddply(emocion, "variable", summarize, media = mean(value, na.rm = TRUE), sd = std.error(value, na.rm = TRUE))
+  graficoBarra <- ggplot(data = datosGrafico, aes(x = variable, y = media)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_errorbar(mapping = aes(x = variable, ymin = pmax(media - sd, 0), ymax = media + sd), position = "dodge") +
+    scale_x_discrete(labels = c("1 Estrella", "2 Estrellas", "3 Estrellas", "4 Estrellas")) +
+    ylab("Media Emocion Reportada") +
+    theme(axis.title.x = element_blank()) +
+    scale_y_continuous(limits = c(-1, 8)) +
+    xlab("Number of stars of the rival") +
+    ggtitle(name)
+  
+  plot(graficoBarra)
+  # Código gráfico de dispersión con líneas de tendencia separadas por sexo y por variable
+  graficoDispersion <- ggplot(data = emocion, aes(x = Beck_web, y = value, color = variable, )) + #linetype = sexo
+    geom_point() +
+    geom_smooth(method = "lm", formula = y ~ x, size = 1, alpha = 0.5, se = FALSE) +
+    scale_color_manual(values = c("blue", "pink", "green", "orange", "red")) +  # Colores para las variables
+    scale_linetype_manual(values = c("solid", "dashed")) +  # Tipo de línea para sexo (M y F)
+    ylab("Valor Emoción") +
+    theme_minimal() +  # Cambiar tema si lo deseas
+    ggtitle("Gráfico de Dispersión con Líneas de Tendencia Separadas por Sexo y Variable")
+  
+  # Mostrar el gráfico corregido
+  print(graficoDispersion)
+ # Fit lineal model with random efect 
+  modelo <- lmer(data = emocion, value ~ variable * Beck_web + (1|codigo))
+  anovaOutcome <- Anova(modelo, type = 3, test.statistic = "F")
+  modelo.ref.grid <- ref_grid(modelo)
+  
+  print("###### RESULTADO DE ANOVA ######")
+  print(name)
+  print(anovaOutcome)
+  
+  print("###### EMMEAN ESTRELLAS ######")
+  pairwise.t.test(emocion$value, emocion$variable, p.adjust.method = "bonf", paired = TRUE)
+  print(emmeans(modelo.ref.grid, pairwise ~ variable))
+  
+  return(list(modelo.ref.grid, plot(graficoOutcome)))
+}
+
+# ----FUNCION ANALISIS EMOCION SCATTER PLOT Y BARPLOT GENERALIZADA----
+
+
+colores_lineas <- c("green", "yellow", "orange", "red")  # Colores para 1,2,3,4 respectivamente
+etiquetas_lineas <- c("1 estrella", "2 estrellas", "3 estrellas", "4 estrellas")
+
+analyse_emotion_estrellas <- function(name, col_ref, variable_psicologica) {
+  col_emocion_desde <- which(colnames(cuestionarios) == col_ref)
+  col_emocion_hasta <- col_emocion_desde + 3
+  
+  emocion_wide <- cuestionarios[, c(
+    which(colnames(cuestionarios) == "codigo"),
+    col_emocion_desde:col_emocion_hasta
+  )]
+  
+  emocion_wide <- emocion_wide[complete.cases(emocion_wide), ]
+  
+  colnames(emocion_wide) <- c("codigo", "1estrella", "2estrellas", "3estrellas", "4estrellas")
+  emocion <- melt(emocion_wide, id = c("codigo"))
+  emocion$value <- as.numeric(emocion$value)
+  
+  emocion <- merge(emocion, cuestionarios[, c("codigo", variable_psicologica, "sexo", "edad")], by = "codigo")
+  emocion$sexo <- as.factor(emocion$sexo)
+  emocion$edad <- as.numeric(as.character(emocion$edad))
+  emocion[[variable_psicologica]] <- as.numeric(as.character(emocion[[variable_psicologica]]))
+  emocion <- emocion[complete.cases(emocion[[variable_psicologica]], emocion$value), ]
+  
+  datosGrafico <- ddply(emocion, "variable", summarize, media = mean(value, na.rm = TRUE), sd = std.error(value, na.rm = TRUE))
+  graficoBarra <- ggplot(data = datosGrafico, aes(x = variable, y = media)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    geom_errorbar(mapping = aes(x = variable, ymin = pmax(media - sd, 0), ymax = media + sd), position = "dodge") +
+    scale_x_discrete(labels = c("1 Estrella", "2 Estrellas", "3 Estrellas", "4 Estrellas")) +
+    ylab("Media Emoción Reportada") +
+    theme(axis.title.x = element_blank()) +
+    scale_y_continuous(limits = c(-1, 8)) +
+    xlab("Número de estrellas del rival") +
+    ggtitle(name)
+  
+print(graficoBarra)
+  
+  graficoDispersion <- ggplot(data = emocion, aes(x = !!sym(variable_psicologica), y = value, color = variable)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y ~ x, linewidth = 1, alpha = 0.5, se = FALSE) +
+    scale_color_manual(values = c("blue", "pink", "green", "orange", "red")) +
+    ylab("Valor Emoción") +
+    theme_minimal() +
+    ggtitle(paste("Gráfico de Dispersión de",name, "con", variable_psicologica, "como variable psicológica"))
+  
+print(graficoDispersion)
+  
+  formula <- as.formula(paste("value ~ variable *", variable_psicologica, "+ sexo + edad + (1 | codigo)"))
+  modelo <- lmer(formula, data = emocion)
+  anovaOutcome <- Anova(modelo, type = 3, test.statistic = "F")
+  modelo.ref.grid <- ref_grid(modelo)
+  
+  print("###### RESULTADO DE ANOVA ######")
+  print(name)
+  print(anovaOutcome)
+  
+  print("###### EMMEAN ESTRELLAS ######")
+  pairwise.t.test(emocion$value, emocion$variable, p.adjust.method = "bonf", paired = TRUE)
+  print(emmeans(modelo.ref.grid, pairwise ~ variable))
+  
+  print("##### EMTRENDS #####")
+  #comparar pendientes
+  pends = emtrends(modelo,~variable,var=variable_psicologica)
+  print(pends)
+  print(contrast(pends,method="pairwise",adjust = "holm"))
+  
+  return(invisible(list(
+    modelo.ref.grid = modelo.ref.grid,
+    graficoDispersion = graficoDispersion,
+    graficoBarra = graficoBarra
+  )))
+}
+
+
+# Ejemplo de uso de la función para analizar otra variable psicológica:
+#analyse_emotion_estrellas("nombre de la variable", "columna_inicial", "variable_psicologica")
+
+
+# ---- FUNCION ANALISIS EMOCION POR SUJETO----
+analyse_emotion_stars_subject <- function(name, col_ref) {
+  col_emocion_desde = which(colnames(cuestionarios)==col_ref);
+  col_emocion_hasta = col_emocion_desde + 3;
+  
+  emocion_wide = cuestionarios[,c(
+    which(colnames(cuestionarios)=="codigo"),
+    col_emocion_desde:col_emocion_hasta)];
+  
+  #If there is a N/A in one cell, remove participant in this analysis
+  emocion_wide <- emocion_wide[complete.cases(emocion_wide),];
+  
+  colnames(emocion_wide)<-c("codigo","una_estrella","dos_estrellas","tres_estrellas","cuatro_estrellas")
+  emocion=melt(emocion_wide,id=c("codigo"))
+  emocion$value = as.numeric(emocion$value)
+  
+  # Plot emotions
+  datosGrafico = ddply(emocion,c("codigo","variable"),summarize,media=mean(value,na.rm=T),sd = std.error(value,na.rm=T))
+  graficoOutcome = ggplot(data = datosGrafico, mapping = aes(x = variable, y = media, fill=variable))
+  graficoOutcome=graficoOutcome + geom_bar(stat = "identity", position = "dodge") + 
+    geom_errorbar(mapping = aes(x=variable,ymin=pmax(media-sd,0),ymax=media+sd),position = "dodge") +
+    scale_x_discrete(labels=element_blank())+
+    scale_fill_discrete(labels=c("1 estrella","2 estrellas","3 estrellas","4 estrellas")) + 
+    ylab("Media Reporte Emocional") +   
+    theme(axis.title.x=element_blank()) + 
+    scale_y_continuous(limits = c(-1,8)) + 
+    xlab("rival category")+
+    ggtitle(name)+
+    facet_wrap(~codigo)
+  
+  plot(graficoOutcome)
+}
+
+# Elijo la emocion que quiero analizar ----
+#BECK
+felicidad   <- analyse_emotion_estrellas("felicidad",   "Felicidad_1estrella", "BECK_SESION")
+alivio    <- analyse_emotion_estrellas("alivio",    "Alivio_1estrella", "BECK_SESION")
+verguenza   <- analyse_emotion_estrellas("verguenza",   "Vergüenza_1estrella" , "BECK_SESION")
+nerviosismo       <- analyse_emotion_estrellas("nerviosismo",       "Nerviosismo_1estrella", "BECK_SESION")
+#LSAS
+felicidad   <- analyse_emotion_estrellas("felicidad",   "Felicidad_1estrella", "LSAS_Total")
+alivio    <- analyse_emotion_estrellas("alivio",    "Alivio_1estrella", "LSAS_Total")
+verguenza   <- analyse_emotion_estrellas("verguenza",   "Vergüenza_1estrella" , "LSAS_Total")
+nerviosismo       <- analyse_emotion_estrellas("nerviosismo",       "Nerviosismo_1estrella", "LSAS_Total")
+#STAI_ESTADO
+felicidad   <- analyse_emotion_estrellas("felicidad",   "Felicidad_1estrella", "STAI_ESTADO")
+alivio    <- analyse_emotion_estrellas("alivio",    "Alivio_1estrella", "STAI_ESTADO")
+verguenza   <- analyse_emotion_estrellas("verguenza",   "Vergüenza_1estrella" , "STAI_ESTADO")
+nerviosismo       <- analyse_emotion_estrellas("nerviosismo",       "Nerviosismo_1estrella", "STAI_ESTADO")
+#STAI_RASGO
+felicidad   <- analyse_emotion_estrellas("felicidad",   "Felicidad_1estrella", "STAI_RASGO")
+alivio    <- analyse_emotion_estrellas("alivio",    "Alivio_1estrella", "STAI_RASGO")
+verguenza   <- analyse_emotion_estrellas("verguenza",   "Vergüenza_1estrella" , "STAI_RASGO")
+nerviosismo       <- analyse_emotion_estrellas("nerviosismo",       "Nerviosismo_1estrella", "STAI_RASGO")
+#PCA
+felicidad   <- analyse_emotion_estrellas("felicidad",   "Felicidad_1estrella", "PCA")
+alivio    <- analyse_emotion_estrellas("alivio",    "Alivio_1estrella", "PCA")
+verguenza   <- analyse_emotion_estrellas("verguenza",   "Vergüenza_1estrella" , "PCA")
+nerviosismo       <- analyse_emotion_estrellas("nerviosismo",       "Nerviosismo_1estrella", "PCA")
+
+#Elijo la emocion que quiero graficar, facetado por sujeto ----
+felicidad   <- analyse_emotion_stars_subject("felicidad",   "Felicidad_1estrella")
+alivio    <- analyse_emotion_stars_subject("alivio",    "Alivio_1estrella")
+vergüenza   <- analyse_emotion_stars_subject("verguenza",   "Verguenza_1estrella")
+nerviosismo       <- analyse_emotion_stars_subject("nerviosismo",       "Nerviosismo_1estrella")
+
+dev.off()
+

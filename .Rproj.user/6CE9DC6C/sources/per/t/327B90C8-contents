@@ -1,0 +1,226 @@
+#Grafico beta PCA simplificado
+
+# Visualización de cómo MB y MM cambian con síntomas A-D
+# Genera gráficos claros para mostrar patrones de activación
+
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(stringr)
+library(tidyr)
+library(broom)
+
+# Cargar datos psicológicos
+df_psico <- read_csv("psicologicos/psicologicos.csv",
+                     show_col_types = FALSE)
+
+# Archivos y salida
+input_dir <- "input"
+files <- list.files(input_dir, pattern = "^intensities_.*\\.csv$",
+                    full.names = TRUE)
+out_dir <- "figuras/beta_pca"
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+# Paleta para gráficos
+paleta_named <- c(BB = "#1b9e77", BM = "#d95f02", 
+                  MB = "#7570b3", MM = "#e7298a")
+
+# Procesar cada archivo
+for (f in files) {
+  # Extraer nombre de ROI
+  roi_name <- basename(f) %>%
+    str_remove("^intensities_") %>%
+    str_remove("\\.csv$")
+  
+  cat("\n=== Procesando:", roi_name, "===\n")
+  
+  # Leer archivo
+  df_int <- read_csv(f, show_col_types = FALSE)
+  
+  # Normalizar IDs y unir con PCA
+  df_plot <- df_int %>%
+    mutate(codigo = tolower(str_replace_all(participant, "\\s+", ""))) %>%
+    left_join(df_psico %>% select(codigo, PCA), by = "codigo") %>%
+    filter(!is.na(mean_intensity) & !is.na(PCA)) %>%
+    mutate(contrast = as.factor(contrast))
+  
+  if (nrow(df_plot) < 3) next
+  
+  # ============================================================
+  # ANÁLISIS POR PARES
+  # ============================================================
+  
+  pares <- list(
+    list(c1 = "BB", c2 = "BM", nombre = "BB vs BM"),
+    list(c1 = "MB", c2 = "MM", nombre = "MB vs MM")
+  )
+  
+  for (par in pares) {
+    c1 <- par$c1
+    c2 <- par$c2
+    nombre_par <- par$nombre
+    
+    # Filtrar par
+    df_par <- df_plot %>% filter(contrast %in% c(c1, c2))
+    if (nrow(df_par) == 0) next
+    if (!all(c(c1, c2) %in% unique(df_par$contrast))) next
+    
+    cat("\n", nombre_par, "\n")
+    
+    # Calcular estadísticas de pendientes
+    stats <- df_par %>%
+      group_by(contrast) %>%
+      do(tidy(lm(mean_intensity ~ PCA, data = .))) %>%
+      filter(term == "PCA") %>%
+      select(contrast, estimate, p.value)
+    
+    # Análisis paired para el efecto total
+    df_paired <- df_par %>%
+      select(codigo, PCA, contrast, mean_intensity) %>%
+      pivot_wider(names_from = contrast, values_from = mean_intensity) %>%
+      filter(!is.na(!!sym(c1)) & !is.na(!!sym(c2))) %>%
+      mutate(diferencia = !!sym(c1) - !!sym(c2))
+    
+    cor_paired <- cor.test(df_paired$PCA, df_paired$diferencia)
+    
+    # Crear texto informativo
+    slope_c1 <- stats$estimate[stats$contrast == c1]
+    slope_c2 <- stats$estimate[stats$contrast == c2]
+    p_c1 <- stats$p.value[stats$contrast == c1]
+    p_c2 <- stats$p.value[stats$contrast == c2]
+    
+    info_text <- sprintf(
+      "%s: β=%.4f %s | %s: β=%.4f %s\nDiferencia paired: r=%.3f, p=%.4f",
+      c1, slope_c1, ifelse(p_c1 < 0.05, "*", ""),
+      c2, slope_c2, ifelse(p_c2 < 0.05, "*", ""),
+      cor_paired$estimate, cor_paired$p.value
+    )
+    
+    cat("  ", c1, ": pendiente =", round(slope_c1, 5), 
+        ifelse(p_c1 < 0.05, "(sig)", "(ns)"), "\n")
+    cat("  ", c2, ": pendiente =", round(slope_c2, 5), 
+        ifelse(p_c2 < 0.05, "(sig)", "(ns)"), "\n")
+    cat("  Diferencia paired: r =", round(cor_paired$estimate, 3), 
+        ", p =", round(cor_paired$p.value, 4), "\n")
+    
+    # ============================================================
+    # GRÁFICO 1: PANEL MÚLTIPLE CON 3 VISTAS
+    # ============================================================
+    
+    # Vista A: Ambos contrastes juntos
+    p_ambos <- ggplot(df_par, aes(x = PCA, y = mean_intensity, color = contrast)) +
+      geom_point(size = 2, alpha = 0.6) +
+      geom_smooth(method = "lm", se = TRUE, linewidth = 1.5, alpha = 0.2) +
+      scale_color_manual(values = paleta_named) +
+      labs(subtitle = "A) Ambos contrastes", x = NULL, y = "Beta") +
+      theme_minimal(base_size = 11) +
+      theme(legend.position = "bottom",
+            panel.grid.minor = element_blank())
+    
+    # Vista B: Diferencia paired
+    p_diff <- ggplot(df_paired, aes(x = PCA, y = diferencia)) +
+      geom_hline(yintercept = 0, linetype = "dashed", color = "gray40") +
+      geom_point(size = 2, alpha = 0.6, color = paleta_named[c1]) +
+      geom_smooth(method = "lm", se = TRUE, linewidth = 1.5, 
+                  color = paleta_named[c1], fill = paleta_named[c1], alpha = 0.2) +
+      labs(subtitle = sprintf("B) Diferencia (%s - %s)", c1, c2), 
+           x = NULL, y = "Δ Beta") +
+      theme_minimal(base_size = 11) +
+      theme(panel.grid.minor = element_blank())
+    
+    # Vista C: Facetas separadas
+    p_facet <- ggplot(df_par, aes(x = PCA, y = mean_intensity)) +
+      geom_point(aes(color = contrast), size = 2, alpha = 0.6) +
+      geom_smooth(aes(color = contrast), method = "lm", se = TRUE, 
+                  linewidth = 1.5, alpha = 0.2) +
+      scale_color_manual(values = paleta_named) +
+      facet_wrap(~ contrast, ncol = 2) +
+      labs(subtitle = "C) Contrastes separados", 
+           x = "Síntomas A-D (PCA)", y = "Beta") +
+      theme_minimal(base_size = 11) +
+      theme(legend.position = "none",
+            panel.grid.minor = element_blank(),
+            strip.background = element_rect(fill = "gray95", color = NA))
+    
+    # Combinar en panel
+    library(patchwork)
+    p_combined <- (p_ambos / p_diff / p_facet) +
+      plot_annotation(
+        title = paste0(roi_name, ": ", nombre_par),
+        subtitle = info_text,
+        theme = theme(
+          plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+          plot.subtitle = element_text(size = 9, hjust = 0.5, color = "gray30")
+        )
+      )
+    
+    plot_file <- file.path(out_dir, 
+                           paste0("explicativo_", roi_name, "_", c1, "_", c2, ".png"))
+    ggsave(plot_file, p_combined, width = 8, height = 10, dpi = 300)
+    cat("  ✓ Gráfico guardado:", basename(plot_file), "\n")
+    
+    # ============================================================
+    # GRÁFICO 2: VERSIÓN SIMPLE PARA PRESENTACIÓN
+    # ============================================================
+    
+    # Determinar mensaje principal
+    if (cor_paired$p.value < 0.05) {
+      if (abs(slope_c1) > abs(slope_c2) && slope_c1 > 0) {
+        mensaje <- sprintf("%s aumenta más con síntomas que %s", c1, c2)
+      } else if (abs(slope_c2) > abs(slope_c1) && slope_c2 > 0) {
+        mensaje <- sprintf("%s aumenta más con síntomas que %s", c2, c1)
+      } else if (slope_c1 > 0 && slope_c2 < 0) {
+        mensaje <- sprintf("%s aumenta mientras %s disminuye con síntomas", c1, c2)
+      } else {
+        mensaje <- sprintf("La diferencia %s - %s aumenta con síntomas", c1, c2)
+      }
+    } else {
+      mensaje <- "Sin cambios significativos con síntomas"
+    }
+    
+    p_simple <- ggplot(df_par, aes(x = PCA, y = mean_intensity, 
+                                   color = contrast, fill = contrast)) +
+      geom_point(size = 3, alpha = 0.5) +
+      geom_smooth(method = "lm", se = TRUE, linewidth = 1.8, alpha = 0.15) +
+      scale_color_manual(values = paleta_named,
+                         labels = c(MB = "MB", MM = "MM",
+                                    BB = "BB", BM = "BM")) +
+      scale_fill_manual(values = paleta_named,
+                        labels = c(MB = "MB", MM = "MM",
+                                   BB = "BB", BM = "BM")) +
+      labs(
+        title = roi_name,
+      
+        x = "Puntuación síntomas ansioso-depresivos (PCA)",
+        y = "Activación cerebral (beta)",
+        color = "Contraste",
+        fill = "Contraste"
+      ) +
+      theme_minimal(base_size = 14) +
+      theme(
+        plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+        plot.subtitle = element_text(size = 12, hjust = 0.5, 
+                                     color = ifelse(cor_paired$p.value < 0.05, 
+                                                    "darkgreen", "gray40"),
+                                     margin = margin(b = 15)),
+        panel.background = element_rect(fill = "white", colour = NA),
+        plot.background = element_rect(fill = "white", colour = NA),
+        panel.grid.major = element_line(color = "grey90"),
+        panel.grid.minor = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_text(face = "bold"),
+        axis.title = element_text(face = "bold"),
+        axis.text = element_text(size = 11)
+      )
+    
+    plot_file2 <- file.path(out_dir, 
+                            paste0("presentacion_", roi_name, "_", c1, "_", c2, ".png"))
+    ggsave(plot_file2, p_simple, width = 9, height = 6, dpi = 300)
+    cat("  ✓ Gráfico presentación:", basename(plot_file2), "\n")
+  }
+}
+
+cat("\n✓ Proceso completado. Gráficos en:", out_dir, "\n")
+cat("\nTipos de gráficos generados:\n")
+cat("  - explicativo_*.png: Panel con 3 vistas (completo para análisis)\n")
+cat("  - presentacion_*.png: Versión simple para presentar/publicar\n")

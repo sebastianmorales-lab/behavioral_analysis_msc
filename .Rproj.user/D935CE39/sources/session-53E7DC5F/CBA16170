@@ -1,0 +1,30 @@
+{
+    "id": "CBA16170",
+    "path": "/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_final_MAESTRIA_R/scripts/modelo_GLM_PCA.Rmd",
+    "project_path": "scripts/modelo_GLM_PCA.Rmd",
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1750974338114.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "Source": "Source",
+        "cursorPosition": "0,1",
+        "scrollLine": "0",
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "2:0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1744397649,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1744397649,
+    "read_only": false,
+    "read_only_alternatives": []
+}

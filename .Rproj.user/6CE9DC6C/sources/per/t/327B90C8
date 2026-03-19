@@ -1,0 +1,27 @@
+{
+    "id": "327B90C8",
+    "path": "D:/Expansion/maestria_task/proyecto_final_MAESTRIA_R/scripts/grafico_beta_pca_simplificado.R",
+    "project_path": "scripts/grafico_beta_pca_simplificado.R",
+    "type": "r_source",
+    "hash": "3519961838",
+    "contents": "",
+    "dirty": false,
+    "created": 1764659665175.0,
+    "source_on_save": false,
+    "relative_order": 9,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "192,6",
+        "scrollLine": "184"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1764660385,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1764660385190,
+    "read_only": false,
+    "read_only_alternatives": []
+}

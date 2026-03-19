@@ -1,0 +1,24 @@
+{
+    "id": "C5B3840E",
+    "path": "D:/Expansion/maestria_task/proyecto_final_MAESTRIA_R/scripts/plot_spm_betas (1).r",
+    "project_path": "scripts/plot_spm_betas (1).r",
+    "type": "r_source",
+    "hash": "2723509142",
+    "contents": "",
+    "dirty": false,
+    "created": 1764658022065.0,
+    "source_on_save": false,
+    "relative_order": 8,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1764657958,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1764657958,
+    "read_only": false,
+    "read_only_alternatives": []
+}

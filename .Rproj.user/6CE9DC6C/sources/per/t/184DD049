@@ -1,0 +1,28 @@
+{
+    "id": "184DD049",
+    "path": "D:/Expansion/maestria_task/proyecto_final_MAESTRIA_R/scripts/modelo_GLM.Rmd",
+    "project_path": "scripts/modelo_GLM.Rmd",
+    "type": "r_markdown",
+    "hash": "293725858",
+    "contents": "",
+    "dirty": false,
+    "created": 1743567793863.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "chunk_output_type": "inline",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "718,0",
+        "scrollLine": "0",
+        "last_setup_crc32": ""
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1747255997,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1747255997,
+    "read_only": false,
+    "read_only_alternatives": []
+}

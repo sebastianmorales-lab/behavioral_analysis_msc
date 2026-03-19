@@ -1,0 +1,29 @@
+{
+    "id": "FF10A271",
+    "path": "/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_final_MAESTRIA_R/scripts/modelo_GLM.Rmd",
+    "project_path": "scripts/modelo_GLM.Rmd",
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1745339684449.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "chunk_output_type": "inline",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "538,28",
+        "scrollLine": "0",
+        "last_setup_crc32": "",
+        "ignored_words": "tendencia\n"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1750964814,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1750964814719,
+    "read_only": false,
+    "read_only_alternatives": []
+}

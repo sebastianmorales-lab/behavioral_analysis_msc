@@ -1,0 +1,76 @@
+"1","
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KGdncHVicilcbmxpYnJhcnkoZHBseXIpXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmxpYnJhcnkocGxvdHJpeClcbmQyIDwtIGRhdG9zTGltcGlvcyAlPiVcbiAgICBncm91cF9ieShjb2RlLGdhbWVfdHlwZSxyaXZhbCxwYXlfY29tcGV0aXRpdmUpICU+JSBcbiAgZHBseXI6OnN1bW1hcmlzZShuPW4oKSkgIFxuZDIgJT4lICBcbiAgZmlsdGVyKGdhbWVfdHlwZSE9IFwiXCIpICU+JSBcbiAgZmlsdGVyKGdhbWVfdHlwZSA9PSAnY29tcGV0aXRpdmUnKSAlPiVcbiAgbXV0YXRlKHJpdmFsID0gYXMuZmFjdG9yKHJpdmFsKSxcbiAgICAgICAgICAgICAgZ2FtZV90eXBlID0gYXMuZmFjdG9yKGdhbWVfdHlwZSksXG4gICAgICAgICBwYXlfY29tcGV0aXRpdmUgPSBhcy5mYWN0b3IocGF5X2NvbXBldGl0aXZlKSkgJT4lXG4gIGdyb3VwX2J5KHBheV9jb21wZXRpdGl2ZSwgcml2YWwpICU+JVxuICBkcGx5cjo6c3VtbWFyaXNlKFxuICAgIG1lYW4gPSBtZWFuKG4pKjEwMC8zMixcbiAgICBzZCA9IHN0ZC5lcnJvcihuKSxcbiAgICBuID0gbigpKSAlPiVcbiAgZ2dwbG90KGFlcyh4ID0gcGF5X2NvbXBldGl0aXZlLCB5ID0gbWVhbiwgZmlsbCA9IHJpdmFsKSkgK1xuICBnZW9tX2NvbChwb3NpdGlvbiA9IHBvc2l0aW9uX2RvZGdlKCkpICtcbiAgZ2VvbV9lcnJvcmJhcihcbiAgICBhZXMoeW1pbiA9IG1lYW4gLSBzZCwgeW1heCA9IG1lYW4gKyBzZCksIFxuICAgIHBvc2l0aW9uID0gcG9zaXRpb25fZG9kZ2UyKHBhZGRpbmcgPSAwLjUpXG4gICkgK1xuICBsYWJzKFxuICAgIHg9ICduaXZlbCBkZSByZWNvbXBlbnNhJyxcbiAgICB5PSAncG9yY2VudGFqZSBkZSBlbGVjY2lvbmVzIGNvbXBldGl0aXZhcycsXG4gICAgdGl0bGUgPSBcIlwiXG4gICkrIHNjYWxlX3hfZGlzY3JldGUobGFiZWxzPWMoXCIxXCIsXCIyXCIsXCIzXCIsXCI0XCIpKSArc2NhbGVfZmlsbF9kaXNjcmV0ZShcInJpdmFsXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbGFiZWxzPWMoXCJ1bm9cIixcImRvc1wiLFwidHJlc1wiLFwiY3VhdHJvXCIpKVxud3JpdGUuY3N2KGQyLCBoZXJlOjpoZXJlKFwiZGF0YS9jb21wZXRpcl9kZXNwbGVnYWRvX3BhZ28uY3N2XCIpKVxuXG5gYGAifQ== -->
+
+```r
+
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(plotrix)
+d2 <- datosLimpios %>%
+    group_by(code,game_type,rival,pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+d2 %>%  
+  filter(game_type!= \"\") %>% 
+  filter(game_type == 'competitive') %>%
+  mutate(rival = as.factor(rival),
+              game_type = as.factor(game_type),
+         pay_competitive = as.factor(pay_competitive)) %>%
+  group_by(pay_competitive, rival) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/32,
+    sd = std.error(n),
+    n = n()) %>%
+  ggplot(aes(x = pay_competitive, y = mean, fill = rival)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - sd, ymax = mean + sd), 
+    position = position_dodge2(padding = 0.5)
+  ) +
+  labs(
+    x= 'nivel de recompensa',
+    y= 'porcentaje de elecciones competitivas',
+    title = \"\"
+  )+ scale_x_discrete(labels=c(\"1\",\"2\",\"3\",\"4\")) +scale_fill_discrete(\"rival\",
+                                                                      labels=c(\"uno\",\"dos\",\"tres\",\"cuatro\"))
+write.csv(d2, here::here(\"data/competir_desplegado_pago.csv\"))
+
+```
+
+<!-- rnb-source-end -->
+"
+"0","```r
+
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+library(plotrix)
+d2 <- datosLimpios %>%
+    group_by(code,game_type,rival,pay_competitive) %>% 
+  dplyr::summarise(n=n())  
+d2 %>%  
+  filter(game_type!= \"\") %>% 
+  filter(game_type == 'competitive') %>%
+  mutate(rival = as.factor(rival),
+              game_type = as.factor(game_type),
+         pay_competitive = as.factor(pay_competitive)) %>%
+  group_by(pay_competitive, rival) %>%
+  dplyr::summarise(
+    mean = mean(n)*100/32,
+    sd = std.error(n),
+    n = n()) %>%
+  ggplot(aes(x = pay_competitive, y = mean, fill = rival)) +
+  geom_col(position = position_dodge()) +
+  geom_errorbar(
+    aes(ymin = mean - sd, ymax = mean + sd), 
+    position = position_dodge2(padding = 0.5)
+  ) +
+  labs(
+    x= 'nivel de recompensa',
+    y= 'porcentaje de elecciones competitivas',
+    title = \"\"
+  )+ scale_x_discrete(labels=c(\"1\",\"2\",\"3\",\"4\")) +scale_fill_discrete(\"rival\",
+                                                                      labels=c(\"uno\",\"dos\",\"tres\",\"cuatro\"))
+write.csv(d2, here::here(\"data/competir_desplegado_pago.csv\"))
+
+```"
