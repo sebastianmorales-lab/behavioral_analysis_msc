@@ -342,7 +342,34 @@ anova(modelo_pca6, modelo_x)  # Con vs sin pendientes aleatorias
 anova(modelo_pca6, modelo_y)  # Con vs solo rival como pendiente aleatoria
 anova(modelo_pca6, modelo_z)  # Con vs solo pago como pendiente aleatoria
 anova(modelo_x,modelo_y,modelo_z,modelo_pca6) # Comparación entre todos los modelos
+modelos <- list(
+  modelo_pca6 = modelo_pca6,
+  modelo_x = modelo_x,
+  modelo_y = modelo_y,
+  modelo_z = modelo_z
+)
 
+tabla <- data.frame(
+  modelo = names(modelos),
+  AIC = sapply(modelos, AIC),
+  BIC = sapply(modelos, BIC),
+  logLik = sapply(modelos, function(m) as.numeric(logLik(m)))
+)
+
+tabla <- tabla[order(tabla$AIC), ]
+tabla$delta_AIC <- tabla$AIC - min(tabla$AIC)
+tabla$peso_AIC <- exp(-0.5 * tabla$delta_AIC)
+tabla$peso_AIC <- tabla$peso_AIC / sum(tabla$peso_AIC)
+
+print(tabla)
+
+diag <- data.frame(
+  modelo = names(modelos),
+  singular = sapply(modelos, lme4::isSingular, tol = 1e-4),
+  convergencia_ok = sapply(modelos, function(m) is.null(m@optinfo$conv$lme4$messages))
+)
+
+print(diag)
 
 # --- VISUALIZAR efecto principal del rival ----
 library(emmeans)
