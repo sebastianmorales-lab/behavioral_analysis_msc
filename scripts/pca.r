@@ -337,7 +337,11 @@ modelo_z <- glmer(
 summary(modelo_z)
 Anova(modelo_z, type=3)
 
-
+# Comparación de modelos con y sin pendientes aleatorias
+anova(modelo_pca6, modelo_x)  # Con vs sin pendientes aleatorias
+anova(modelo_pca6, modelo_y)  # Con vs solo rival como pendiente aleatoria
+anova(modelo_pca6, modelo_z)  # Con vs solo pago como pendiente aleatoria
+anova(modelo_x,modelo_y,modelo_z,modelo_pca6) # Comparación entre todos los modelos
 
 
 # --- VISUALIZAR efecto principal del rival ----
