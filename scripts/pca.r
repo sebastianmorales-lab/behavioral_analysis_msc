@@ -26,7 +26,7 @@ load("/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_fin
 data <- datosLimpios
 rm(datosLimpios)
 psico = read.csv('./psicologicos/psicologicos.csv')
-psico <- psico %>% filter(second_level==0)
+#psico <- psico %>% filter(second_level==0)
 
 
 # psico <- psico %>% select(Beck_web,LSAS_Total,
@@ -265,7 +265,7 @@ modelo_pca2 <- glmer(game_type.f~rival.n*PCAsimple*pay_competitive.n+(1|code),da
 summary(modelo_pca2)
 
 Anova(modelo_pca2,type = 3)
-# modelo PCA3 todos como numericos
+## ---- modelo PCA3 todos como numericos ----
 modelo_pca3 <- glmer(game_type.f~scale(rival.n)*PCA*scale(pay_competitive.n)+edad+sexo+(1|code),data = data,family = binomial,control=glmerControl(optCtrl=list(maxfun = 100000),optimizer = "bobyqa"))
 summary(modelo_pca3)
 
@@ -282,6 +282,64 @@ summary(modelo_pca5)
 Anova(modelo_pca4, type=3)
 
 anova(modelo_pca3,modelo_pca4)
+#---Modelos con variables ordinales y pendientes aleatorias----
+## ---- Modelo PCA6 rival y pago como ordinales con pendientes aleatorias----
+datos_ordinales <- data %>%
+  mutate(rival_ordinal = as.ordered(rival.n),
+         pay_competitive_ordinal = as.ordered(pay_competitive.n))
+
+modelo_pca6 <- glmer(
+  game_type.f ~ rival_ordinal*PCA*pay_competitive_ordinal +
+    scale(edad) + sexo +
+    (1 + rival_ordinal+pay_competitive_ordinal | code),
+  data = datos_ordinales,
+  family = binomial,
+  control = glmerControl(optCtrl = list(maxfun = 100000), optimizer = "bobyqa")
+)
+
+summary(modelo_pca6)
+anova(modelo_pca3,modelo_pca6)
+Anova(modelo_pca6, type=3)
+
+##---- Modelo con variables ordinales pero sin pendientes aleatorias----
+modelo_x <- glmer(
+  game_type.f ~ rival_ordinal*PCA*pay_competitive_ordinal +
+    scale(edad) + sexo +
+    (1 | code),
+  data = datos_ordinales,
+  family = binomial,
+  control = glmerControl(optCtrl = list(maxfun = 100000), optimizer = "bobyqa")
+)
+summary(modelo_x)
+Anova(modelo_x, type=3)
+
+## --- Modelo con variables ordinales y rival como pendiente aleatoria pero sin pago como pendiente aleatoria ----
+modelo_y <- glmer(
+  game_type.f ~ rival_ordinal*PCA*pay_competitive_ordinal +
+    scale(edad) + sexo +
+    (1 + rival_ordinal | code),
+  data = datos_ordinales,
+  family = binomial,
+  control = glmerControl(optCtrl = list(maxfun = 100000), optimizer = "bobyqa")
+)
+Anova(modelo_y, type=3)
+summary(modelo_y)
+
+## --- Modelo con variables ordinales y pago como pendiente aleatoria pero sin rival como pendiente aleatoria ----
+modelo_z <- glmer(
+  game_type.f ~ rival_ordinal*PCA*pay_competitive_ordinal +
+    scale(edad) + sexo +
+    (1 + pay_competitive_ordinal | code),
+  data = datos_ordinales,
+  family = binomial,
+  control = glmerControl(optCtrl = list(maxfun = 100000), optimizer = "bobyqa")
+)
+summary(modelo_z)
+Anova(modelo_z, type=3)
+
+
+
+
 # --- VISUALIZAR efecto principal del rival ----
 library(emmeans)
 
