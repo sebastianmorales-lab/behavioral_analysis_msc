@@ -25,6 +25,12 @@ library(RColorBrewer)
 load("/media/usuario/Seagate Portable Drive/Expansion/maestria_task/proyecto_final_MAESTRIA_R/input/datosLimpios2.RData")
 data <- datosLimpios
 rm(datosLimpios)
+# glmer(binomial) con respuesta factor: R modela P(ultimo nivel). Ordenamos niveles
+# para que "competitive" sea el ultimo -> coeficientes y ggpredict = P(eleccion competitiva).
+data <- data %>%
+  mutate(
+    game_type.f = factor(as.character(game_type.f), levels = c("individual", "competitive"))
+  )
 psico = read.csv('./psicologicos/psicologicos.csv')
 #psico <- psico %>% filter(second_level==0)
 
@@ -342,6 +348,7 @@ anova(modelo_pca6, modelo_x)  # Con vs sin pendientes aleatorias
 anova(modelo_pca6, modelo_y)  # Con vs solo rival como pendiente aleatoria
 anova(modelo_pca6, modelo_z)  # Con vs solo pago como pendiente aleatoria
 anova(modelo_x,modelo_y,modelo_z,modelo_pca6) # Comparación entre todos los modelos
+#Diagnostico de los modelos
 modelos <- list(
   modelo_pca6 = modelo_pca6,
   modelo_x = modelo_x,

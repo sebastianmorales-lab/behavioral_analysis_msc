@@ -192,11 +192,11 @@ ggplot(predicciones, aes(x = x, y = predicted, color = group)) +
   geom_line() +
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), 
               alpha = 0.2, linetype = "dotted") +
-  facet_wrap(~facet, scales = "free_y", labeller = labeller(facet = labels_pago)) +
+  facet_wrap(~facet, scales = "fixed", labeller = labeller(facet = labels_pago)) +
   labs(
-    x = "puntuación A-D", 
-    y = "Predicción", 
-    color = "Rival", 
+    x = "puntuación A-D",
+    y = "Predicción",
+    color = "Rival",
     fill = "Rival"
   ) +
   theme_minimal()+
@@ -209,6 +209,7 @@ ggplot(predicciones, aes(x = x, y = predicted, color = group)) +
     panel.grid.major = element_line(color = "grey90"),
     panel.grid.minor = element_blank()
   )
+
 
 
 # ---- *** EFECTO DE LA EDAD Y EL SEXO *** ----
