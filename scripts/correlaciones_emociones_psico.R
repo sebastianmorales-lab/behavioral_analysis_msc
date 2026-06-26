@@ -6,7 +6,7 @@ library(dplyr)
 library(corrplot)
 
 # Raiz del proyecto (funciona al ejecutar desde scripts/ o desde la raiz con Rscript)
-proj_dir <- Sys.getenv("PROYECTO_MAESTRIA_R", unset = "")
+proj_dir <- Sys.getenv("proyecto_final_MAESTRIA_R", unset = "")
 if (nzchar(proj_dir)) {
   proj_dir <- normalizePath(proj_dir, winslash = "/", mustWork = TRUE)
 } else {
@@ -67,7 +67,7 @@ primer_no_na <- function(x) {
 vars_agg <- todas
 datos_por_sujeto <- datos %>%
   group_by(code) %>%
-  summarise(across(all_of(vars_agg), primer_no_na), .groups = "drop")
+  dplyr::summarise(across(all_of(vars_agg), primer_no_na), .groups = "drop")
 
 message(
   "Filas en datos largos: ", nrow(datos),
@@ -243,3 +243,4 @@ message("\nCSV guardados en: ", out_dir)
 message(" - datosLimpios_un_valor_por_code.csv")
 message(" - correlaciones_expectativa_rendimiento_vs_psico_por_sujeto.csv")
 message(" - correlaciones_emociones_vs_psico_por_sujeto.csv")
+
