@@ -230,7 +230,7 @@ alivio      <- analyse_emotion_subject("relief",  "Alivio_bb")
 
 ```{r,echo=FALSE, message=FALSE}
 #verguenza
-verguenza   <- analyse_emotion("shame",   "Verguenza_bb")
+verguenza   <- analyse_emotion("shame",   "Vergüenza_bb")
 
 ```
 

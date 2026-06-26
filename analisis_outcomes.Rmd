@@ -1,7 +1,7 @@
 ---
 title: "analisis_outcomes"
 author: "Sebastián Morales"
-date: "27/05/2025"
+date: "26/06/2026"
 output:
   html_notebook: default
   word_document: default
@@ -315,13 +315,31 @@ analyse_emotion <- function(name, col_ref, variable_psicologica) {
   print(emmeans(modelo.ref.grid, ~resultadoParticipante))
   print(emmeans(modelo.ref.grid, ~resultadoCojugador))
   print(emmeans(modelo.ref.grid, pairwise ~ resultadoParticipante * resultadoCojugador))
+  
+  #Calcular y comparar pendientes (emtrends) para cada nivel de resultadoParticipante y resultadoCojugador
+  
+  # Efecto marginal (interacción doble)
+print("##### EMTRENDS efecto marginal #####")
 
+pends1 <- emtrends(
+  modelo,
+  ~ resultadoParticipante,
+  var = variable_psicologica
+)
+
+print(summary(pends1, infer = c(TRUE, TRUE)))
+print(pairs(pends1, adjust = "holm"))
   # Calcular y comparar pendientes (emtrends)
-  print('##### EMTRENDS #####')
-  pends <- emtrends(modelo, ~resultadoParticipante * resultadoCojugador, var = variable_psicologica)
-  print(pends)
-  print(contrast(pends, method = 'pairwise', adjust = 'holm'))
+print("##### EMTRENDS interacción completa #####")
 
+pends2 <- emtrends(
+  modelo,
+  ~ resultadoParticipante * resultadoCojugador,
+  var = variable_psicologica
+)
+
+print(pends2)
+print(pairs(pends2, adjust = "holm"))
   return(modelo.ref.grid)
 }
 
